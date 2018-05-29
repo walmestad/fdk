@@ -20,7 +20,7 @@ public class ControllerTest {
     @WithMockUser(authorities = "INTERNAL_CALL" )
     public void addSubject() throws  Throwable{
 
-        controller.getRemoteResourceForSubject("https://data-david.github.io/Begrep/begrep/Organisasjonsnummer");
+        //controller.getRemoteResourceForSubject("https://data-david.github.io/Begrep/begrep/Organisasjonsnummer");
 
         controller.getRemoteResourceForSubject("http://localhost:8950/subject/s001");
 
