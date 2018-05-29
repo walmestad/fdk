@@ -1,33 +1,33 @@
 package no.dcat.themes.builders;
 
 
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-
-import org.apache.jena.ext.com.google.common.base.Utf8;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.RestTemplate;
+
+import java.net.URLEncoder;
 
 public class SubjectsRestAPITests {
+    private static Logger logger = LoggerFactory.getLogger(SubjectsRestAPITests.class);
 
-    private CloseableHttpClient httpClient = HttpClients.createDefault();
 
     @Test
-    public void testGetSubject()  {
+    public void testGetSubject() throws Throwable  {
 
-            RestTemplate restTemplate = new RestTemplate();
-        for(int i = 0; i < 100; i++) {
+        TestRestTemplate restTemplate = new TestRestTemplate();
+        restTemplate.withBasicAuth("user", "password");
+
+        for(int i = 0; i < 2; i++) {
             ResponseEntity<String> responseEntity;
             try {
-                responseEntity = restTemplate.getForEntity("http://localhost:8100/subject/uri=" + URLEncoder.encode("http://dummyrestserver:8950/s" + i), String.class);
+                String subjectUrl = "http://dummyrestserver:8950/subject/s" + i;
+                responseEntity = restTemplate
+                        .withBasicAuth("user", "password")
+                        .getForEntity("http://localhost:8100/subjects?uri=" + subjectUrl, String.class);
+                logger.info("{} - response: {} {}", i, responseEntity.getStatusCode(), responseEntity.getHeaders());
             }
             catch(HttpClientErrorException e){
                 System.out.println(e);
