@@ -8,6 +8,7 @@ import no.dcat.themes.database.TDBService;
 import no.dcat.themes.service.SubjectsService;
 import org.apache.jena.vocabulary.SKOS;
 import org.hamcrest.Matchers;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -30,6 +31,7 @@ public class SubjectsTests {
     @Rule
     public TemporaryFolder testFolder = new TemporaryFolder();
 
+    @Ignore
     @Test
     public void testDataFromGithub() throws IOException {
         TDBService tdbService = new TDBService(testFolder.getRoot().getCanonicalPath());
@@ -45,7 +47,7 @@ public class SubjectsTests {
         checkSubject(tdbConnection, "https://data-david.github.io/Begrep/begrep/Underenhet", "underenhet");
     }
 
-
+    @Ignore
     @Test(expected = MalformedURLException.class)
     public void testLocalAccessDoesNotWork() throws IOException {
         TDBService tdbService = new TDBService(testFolder.getRoot().getCanonicalPath());

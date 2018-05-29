@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.NoSuchElementException;
 
 @Service
 public class SubjectsService extends BaseServiceWithFraming {
@@ -45,7 +46,7 @@ public class SubjectsService extends BaseServiceWithFraming {
                 connection.addModelToGraph(model, Types.subject.toString());
                 return null;
             });
-
+            logger.info(uri);
             return getSubject(uri);
         }
 
@@ -57,15 +58,19 @@ public class SubjectsService extends BaseServiceWithFraming {
 
             ResIterator resIterator = dataset.getDefaultModel().listResourcesWithProperty(RDF.type, SKOS.Concept);
 
-            Resource resource = resIterator.nextResource();
-            if (resource.getURI().equals(uri)) {
+            try {
+                Resource resource = resIterator.nextResource();
+                if (resource.getURI().equals(uri)) {
 
-                Subject result = DatasetBuilder.extractSubject(resource);
+                    Subject result = DatasetBuilder.extractSubject(resource);
 
-                dataset.close();
-                return result;
+                    dataset.close();
+                    return result;
+                }
             }
-
+            catch(NoSuchElementException e){
+                logger.info(e.getLocalizedMessage());
+            }
             dataset.close();
             return null;
         });

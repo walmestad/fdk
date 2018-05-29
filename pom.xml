@@ -26,6 +26,7 @@
 
 	<modules>
 		<module>applications</module>
+		<module>dev-tools</module>
 		<module>libraries</module>
 	</modules>
 

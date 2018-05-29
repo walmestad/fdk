@@ -106,7 +106,7 @@ public class Controller {
             logger.info("Return subject: {}", subject);
             return subject;
         }catch (Exception e){
-            logger.error("Unable to find subject with URI <{}>. Reason {}",uri, e.getLocalizedMessage());
+            logger.error("Unable to find subject with URI <{}>. Reason {}",uri, e.getLocalizedMessage(),e);
             throw e;
         }
     }

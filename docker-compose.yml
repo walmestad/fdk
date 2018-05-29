@@ -116,6 +116,11 @@ services:
     networks:
       platform:
 
+  dummyrestserver:
+    image: dcatno/dummyrestserver:latest
+    networks:
+      platform:
+
   registration-auth:
     image: dcatno/registration-auth:latest
     networks:

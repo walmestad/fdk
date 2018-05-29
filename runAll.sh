@@ -11,4 +11,4 @@ docker-compose up -d
 
 ./waitForDocker.sh
 
-say "Docker is running"
+#say "Docker is running"
