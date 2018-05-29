@@ -1,6 +1,5 @@
 package no.dcat.themes.builders;
 
-
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -9,14 +8,12 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 
-import java.net.URLEncoder;
-
 @Ignore
 public class SubjectsRestAPITests {
-    private static Logger logger = LoggerFactory.getLogger(SubjectsRestAPITests.class);
+    private final static Logger logger = LoggerFactory.getLogger(SubjectsRestAPITests.class);
 
     @Test
-    public void testGetSubject() throws Throwable  {
+    public void testGetSubject() {
 
         TestRestTemplate restTemplate = new TestRestTemplate();
 

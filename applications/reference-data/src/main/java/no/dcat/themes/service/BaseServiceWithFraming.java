@@ -25,7 +25,7 @@ import java.util.Map;
 
 abstract class BaseServiceWithFraming {
 
-    TDBConnection tdbConnection;
+    final TDBConnection tdbConnection;
 
     static private final Logger logger = LoggerFactory.getLogger(BaseServiceWithFraming.class);
 
@@ -74,9 +74,7 @@ abstract class BaseServiceWithFraming {
             }
 
             logger.warn("Couldn't read <{}>. Tried the following formats {}", uri, noSucessWithSyntax.keySet().toString());
-            noSucessWithSyntax.forEach( (key, value) -> {
-                logger.warn("Format {} caused {}", key, value);
-            });
+            noSucessWithSyntax.forEach( (key, value) -> logger.warn("Format {} caused {}", key, value));
 
         } else {
             throw new MalformedURLException("Protocol not supported");
