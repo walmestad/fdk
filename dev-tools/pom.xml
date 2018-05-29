@@ -11,8 +11,8 @@
     <modules>
         <module>DummyRestServer</module>
     </modules>
-    <groupId>no.dcat</groupId>
-    <artifactId>dev-tools</artifactId>
+    <groupId>no.dcat.dev-tools</groupId>
+    <artifactId>no.dcat.dev-tools</artifactId>
     <version>0.2.4-SNAPSHOT</version>
     <packaging>pom</packaging>
 </project>
