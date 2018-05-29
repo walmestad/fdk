@@ -1,6 +1,7 @@
 package no.dcat.themes.builders;
 
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,15 +11,14 @@ import org.springframework.web.client.HttpClientErrorException;
 
 import java.net.URLEncoder;
 
+@Ignore
 public class SubjectsRestAPITests {
     private static Logger logger = LoggerFactory.getLogger(SubjectsRestAPITests.class);
-
 
     @Test
     public void testGetSubject() throws Throwable  {
 
         TestRestTemplate restTemplate = new TestRestTemplate();
-        restTemplate.withBasicAuth("user", "password");
 
         for(int i = 0; i < 100; i++) {
             ResponseEntity<String> responseEntity;
@@ -27,12 +27,12 @@ public class SubjectsRestAPITests {
                 responseEntity = restTemplate
                         .withBasicAuth("user", "password")
                         .getForEntity("http://localhost:8100/subjects?uri=" + subjectUrl, String.class);
+
                 logger.info("{} - response: {} {}", i, responseEntity.getStatusCode(), responseEntity.getBody());
             }
             catch(HttpClientErrorException e){
                 System.out.println(e);
             }
-
 
         }
 

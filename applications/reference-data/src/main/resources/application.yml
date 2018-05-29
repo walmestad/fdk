@@ -15,6 +15,8 @@ application:
   httpUsername: ${themesHttpUsername:user}
   httpPassword: ${themesHttpPassword:password}
 
+management:
+
 ---
 
 spring:
