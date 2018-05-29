@@ -13,39 +13,29 @@ import {
 import './index.scss';
 
 const renderFormats = (source, code) => {
-  let formatNodes;
   const { distribution } = source;
 
-  const children = (items, code) =>
-    items.map(item => {
-      if (typeof item !== 'undefined') {
-        const formatArray = item.trim().split(',');
-        return formatArray.map((item, index) => (
-          /*
-          if (typeof item == 'undefined') {
-            return null;
-          }
-          */
+  const children = (distributions, code) => {
+    const nodes = [];
+    distributions.forEach(item => {
+      const { format, type } = item;
+      if (format && typeof format !== 'undefined') {
+        const formatNodes = Object.keys(format).map(key => (
           <DistributionFormat
-            key={`dataset-distribution-format${index}`}
+            key={`dataset-distribution-format${key}`}
             code={code}
-            text={item}
+            text={format[key]}
+            type={type}
           />
         ));
+        nodes.push(formatNodes);
       }
-      return null;
     });
+    return nodes;
+  };
 
   if (distribution && _.isArray(Object.keys(distribution))) {
-    formatNodes = Object.keys(distribution).map(key => {
-      if (distribution[key].format) {
-        return distribution[key].format[0];
-      }
-      return null;
-    });
-    if (formatNodes && formatNodes[0] !== null) {
-      return <div>{children(formatNodes, code)}</div>;
-    }
+    return <div>{children(distribution, code)}</div>;
   }
   return null;
 };
@@ -76,7 +66,10 @@ const renderThemes = (source, selectedLanguageCode) => {
   const { theme } = source;
   if (theme) {
     themeNodes = theme.map((singleTheme, index) => (
-      <div key={`dataset-description-theme-${index}`} className="fdk-label">
+      <div
+        key={`dataset-description-theme-${index}`}
+        className="fdk-label mr-2 mb-2"
+      >
         <span className="uu-invisible" aria-hidden="false">
           Datasettets tema.
         </span>
