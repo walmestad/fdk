@@ -22,7 +22,7 @@ import static org.junit.Assert.assertThat;
  * Test class for CodeBuildersTest
  */
 public class SubjectsTests {
-    private static Logger logger = LoggerFactory.getLogger(SubjectsTests.class);
+    private final static Logger logger = LoggerFactory.getLogger(SubjectsTests.class);
 
     @Rule
     public TemporaryFolder testFolder = new TemporaryFolder();

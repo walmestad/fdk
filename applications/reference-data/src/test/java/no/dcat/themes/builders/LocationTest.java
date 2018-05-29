@@ -39,10 +39,10 @@ public class LocationTest {
         assertEquals("Norge", code.getPrefLabel().get("no"));
 
         List<SkosCode> locations = codesService.getCodes(Types.location);
-        assertTrue(locations.size() == 1);
+        assertEquals(1, locations.size());
 
         List<SkosCode> subjects = codesService.getCodes(Types.subject);
-        assertTrue(subjects.size() == 0);
+        assertEquals(0, subjects.size());
 
 
     }

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Scope("thread")
 public class TDBConnection {
 
-    private TDBInferenceService tdbService;
+    private final TDBInferenceService tdbService;
 
     @Autowired
     public TDBConnection(TDBInferenceService tdbService) {

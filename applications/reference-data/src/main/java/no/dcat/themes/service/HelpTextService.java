@@ -29,7 +29,7 @@ import java.util.List;
 
 public class HelpTextService extends BaseServiceWithFraming {
 
-    private static Logger logger = LoggerFactory.getLogger(HelpTextService.class);
+    private final static Logger logger = LoggerFactory.getLogger(HelpTextService.class);
     private static final String frame;
 
     static {

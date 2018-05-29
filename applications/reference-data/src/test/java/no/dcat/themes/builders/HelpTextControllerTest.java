@@ -27,13 +27,13 @@ public class HelpTextControllerTest {
 
 
     @Test
-    public void helpTextsMoreisMore() throws Throwable {
+    public void helpTextsMoreisMore() {
         List<HelpText> helpTexts = controller.helpTexts();
         assertThat(helpTexts.size(), greaterThan(1));
     }
 
     @Test
-    public void helpTextsSingleHasDesc() throws Throwable {
+    public void helpTextsSingleHasDesc() {
         HelpText helpText = controller.helpTexts("Dataset_description");
         assertThat(helpText.getDescription(), is(notNullValue()));
      //   assertThat(helpTexts.get(0).getDescription(), isMapContaining); Want to test the Map<String, String> structure
@@ -41,7 +41,7 @@ public class HelpTextControllerTest {
     }
 
     @Test
-    public void helpTextsSingleHasAbstract() throws Throwable {
+    public void helpTextsSingleHasAbstract() {
         HelpText helpText = controller.helpTexts("Dataset_description");
         assertThat(helpText.getShortdesc(), is(notNullValue()));
         //   assertThat(helpTexts.get(0).getShortdesc(), isMapContaining); Want to test the Map<String, String> structure
@@ -49,12 +49,12 @@ public class HelpTextControllerTest {
     }
 
     @Test(expected = NotFoundException.class)
-    public void helpTextSingleThrows() throws Throwable {
+    public void helpTextSingleThrows() {
         HelpText helpText = controller.helpTexts("Dahut_description");
     }
 
         @Test
-    public void helpTextsMoreHasDesc() throws Throwable {
+    public void helpTextsMoreHasDesc() {
         List<HelpText> helpTexts = controller.helpTexts();
         assertThat(helpTexts.get(0).getDescription(), is(notNullValue()));
         //   assertThat(helpTexts.get(0).getDescription(), isMapContaining); Want to test the Map<String, String> structure
@@ -64,7 +64,7 @@ public class HelpTextControllerTest {
     }
 
     @Test
-    public void helpTextsMoreHasAbstract() throws Throwable {
+    public void helpTextsMoreHasAbstract() {
         List<HelpText> helpTexts = controller.helpTexts();
         assertThat(helpTexts.get(0).getShortdesc(), is(notNullValue()));
 
@@ -74,7 +74,7 @@ public class HelpTextControllerTest {
     }
 
     @Test
-    public void helpTextsMoreHasIds() throws Throwable {
+    public void helpTextsMoreHasIds() {
         List<HelpText> helpTexts = controller.helpTexts();
         assertThat(helpTexts.get(0).getId(), is(notNullValue()));
         assertThat(helpTexts.get(0).getURI(), is(notNullValue()));
