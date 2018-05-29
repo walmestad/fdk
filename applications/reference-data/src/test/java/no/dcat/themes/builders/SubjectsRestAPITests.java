@@ -20,18 +20,14 @@ public class SubjectsRestAPITests {
 
     private CloseableHttpClient httpClient = HttpClients.createDefault();
 
-    @Test @Ignore
+    @Test
     public void testGetSubject()  {
 
             RestTemplate restTemplate = new RestTemplate();
         for(int i = 0; i < 100; i++) {
             ResponseEntity<String> responseEntity;
             try {
-                responseEntity = restTemplate.getForEntity("http://localhost:8100/subject/uri=" + URLEncoder.encode("http://localhost:8950/s" + i), String.class);
-                MediaType contentType = responseEntity.getHeaders().getContentType();
-                HttpStatus statusCode = responseEntity.getStatusCode();
-                String kake = responseEntity.getBody();
-                System.out.println(URLDecoder.decode(kake));
+                responseEntity = restTemplate.getForEntity("http://localhost:8100/subject/uri=" + URLEncoder.encode("http://dummyrestserver:8950/s" + i), String.class);
             }
             catch(HttpClientErrorException e){
                 System.out.println(e);
