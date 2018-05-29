@@ -24,7 +24,7 @@ public class DummyRestServer {
                 "@prefix dct:\t<http://purl.org/dc/terms/> .\n" +
                 "@prefix skos: \t<http://www.w3.org/2004/02/skos/core#> .\n" +
                 "@prefix xsd:\t<http://www.w3.org/2001/XMLSchema#> .\n" +
-                "@prefix :\t<https://data-david.github.io/Begrep/begrep/> .\n" +
+                "@prefix :\t<http://dummyrestserver:8950/subject/> .\n" +
                 "\n" +
                 ":Hovedenhet\n" +
                 "\t\ta skos:Concept ;\n" +

@@ -20,14 +20,14 @@ public class SubjectsRestAPITests {
         TestRestTemplate restTemplate = new TestRestTemplate();
         restTemplate.withBasicAuth("user", "password");
 
-        for(int i = 0; i < 2; i++) {
+        for(int i = 0; i < 100; i++) {
             ResponseEntity<String> responseEntity;
             try {
                 String subjectUrl = "http://dummyrestserver:8950/subject/s" + i;
                 responseEntity = restTemplate
                         .withBasicAuth("user", "password")
                         .getForEntity("http://localhost:8100/subjects?uri=" + subjectUrl, String.class);
-                logger.info("{} - response: {} {}", i, responseEntity.getStatusCode(), responseEntity.getHeaders());
+                logger.info("{} - response: {} {}", i, responseEntity.getStatusCode(), responseEntity.getBody());
             }
             catch(HttpClientErrorException e){
                 System.out.println(e);
