@@ -31,7 +31,6 @@ public class SubjectsTests {
     @Rule
     public TemporaryFolder testFolder = new TemporaryFolder();
 
-    @Ignore
     @Test
     public void testDataFromGithub() throws IOException {
         TDBService tdbService = new TDBService(testFolder.getRoot().getCanonicalPath());
@@ -47,7 +46,7 @@ public class SubjectsTests {
         checkSubject(tdbConnection, "https://data-david.github.io/Begrep/begrep/Underenhet", "underenhet");
     }
 
-    @Ignore
+
     @Test(expected = MalformedURLException.class)
     public void testLocalAccessDoesNotWork() throws IOException {
         TDBService tdbService = new TDBService(testFolder.getRoot().getCanonicalPath());
