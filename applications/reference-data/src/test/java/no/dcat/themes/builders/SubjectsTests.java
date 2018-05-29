@@ -1,14 +1,11 @@
 package no.dcat.themes.builders;
 
-import no.dcat.shared.SkosCode;
 import no.dcat.shared.Subject;
 import no.dcat.themes.database.TDBConnection;
 import no.dcat.themes.database.TDBInferenceService;
 import no.dcat.themes.database.TDBService;
 import no.dcat.themes.service.SubjectsService;
-import org.apache.jena.vocabulary.SKOS;
 import org.hamcrest.Matchers;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -19,7 +16,6 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
 /**
