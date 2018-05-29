@@ -36,24 +36,23 @@ public class DummyRestServer {
         logger.info(begrep);
 
         ResponseEntity responseEntity = new ResponseEntity(begrep,null, HttpStatus.OK);
-        return responseEntity;
-//        Random random = new Random();
-//
-//        int latency = random.nextInt(3000);
-//        boolean fail = random.nextInt(5) == 1;
-//        try {
-//            Thread.sleep(latency);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//        logger.info(begrep);
-//
-//        if(fail) {
-//            return new ResponseEntity(HttpStatus.NOT_FOUND);
-//        }
-//        else {
-//            return responseEntity;
-//        }
+        Random random = new Random();
+
+        int latency = random.nextInt(3000);
+        boolean fail = random.nextInt(5) == 1;
+        try {
+            Thread.sleep(latency);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        logger.info(begrep);
+
+        if(fail) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+        else {
+            return responseEntity;
+        }
     }
 }
 
