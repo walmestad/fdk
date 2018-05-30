@@ -35,7 +35,7 @@ public class TDBService {
     private final Dataset dataset;
 
 
-    private Model schema = FileManager.get().loadModel("ontology.ttl");
+    private final Model schema = FileManager.get().loadModel("ontology.ttl");
 
     public TDBService() {
         this("./tdb");

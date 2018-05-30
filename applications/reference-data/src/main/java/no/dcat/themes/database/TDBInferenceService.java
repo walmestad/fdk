@@ -23,7 +23,7 @@ import org.springframework.stereotype.Service;
 @Scope("thread")
 public class TDBInferenceService {
     private final TDBService tdbService;
-    private Model schema  = FileManager.get().loadModel("ontology.ttl");
+    private final Model schema  = FileManager.get().loadModel("ontology.ttl");
 
     static private final Logger logger = LoggerFactory.getLogger(TDBInferenceService.class);
 
