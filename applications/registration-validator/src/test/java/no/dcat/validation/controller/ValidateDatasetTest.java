@@ -57,7 +57,7 @@ public class ValidateDatasetTest {
         dataset.put("title", map("nb", "Tittel"));
 
         ValidatorController validatorSpy = spy(controller);
-        doReturn(null).when(validatorSpy).validate(anyObject(), anyObject());
+        doReturn(null).when(validatorSpy).validate(any(), any());
 
 
         ResponseEntity<Validation> actualResponse = validatorSpy.validateDataset(dataset,

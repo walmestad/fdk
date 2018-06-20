@@ -24,8 +24,8 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.anyObject;
-import static org.mockito.Mockito.anyString;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 /**
@@ -147,7 +147,7 @@ public class RdfCatalogControllerTest {
             }
         };
 
-        when(mockDR.findByCatalogId(anyString(), (Pageable) anyObject())).thenReturn(pagedDataset);
+        when(mockDR.findByCatalogId(anyString(), any(Pageable.class))).thenReturn(pagedDataset);
 
         HttpEntity<Catalog> actualEntity = controller.getCatalog(catalogId);
 

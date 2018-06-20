@@ -109,7 +109,7 @@ public class CrawlerJobTest {
         DcatSource dcatSource = new DcatSource("http//dcat.difi.no/test", "Test", resource.getURL().toString(), "tester", "123456789");
 
         DcatDataStore dcatDataStore = Mockito.mock(DcatDataStore.class);
-        Mockito.doThrow(Exception.class).when(dcatDataStore).saveDataCatalogue(Mockito.anyObject(), Mockito.anyObject());
+        Mockito.doThrow(Exception.class).when(dcatDataStore).saveDataCatalogue(Mockito.any(), Mockito.any());
 
         FusekiResultHandler handler = new FusekiResultHandler(dcatDataStore, null);
 
@@ -130,7 +130,7 @@ public class CrawlerJobTest {
         DcatSource dcatSource = new DcatSource("http//dcat.difi.no/test", "Test", resource.getURL().toString(), "tester", "123456789");
 
         DcatDataStore dcatDataStore = Mockito.mock(DcatDataStore.class);
-        Mockito.doThrow(Exception.class).when(dcatDataStore).saveDataCatalogue(Mockito.anyObject(), Mockito.anyObject());
+        Mockito.doThrow(Exception.class).when(dcatDataStore).saveDataCatalogue(Mockito.any(), Mockito.any());
 
         FusekiResultHandler handler = new FusekiResultHandler(dcatDataStore, null);
 
@@ -157,7 +157,7 @@ public class CrawlerJobTest {
         DcatSource dcatSource = new DcatSource("http//dcat.difi.no/test", "Test", resource.getURL().toString(), "tester", "123456789");
 
         DcatDataStore dcatDataStore = Mockito.mock(DcatDataStore.class);
-        Mockito.doThrow(Exception.class).when(dcatDataStore).saveDataCatalogue(Mockito.anyObject(), Mockito.anyObject());
+        Mockito.doThrow(Exception.class).when(dcatDataStore).saveDataCatalogue(Mockito.any(), Mockito.any());
 
         FusekiResultHandler handler = new FusekiResultHandler(dcatDataStore, null);
 

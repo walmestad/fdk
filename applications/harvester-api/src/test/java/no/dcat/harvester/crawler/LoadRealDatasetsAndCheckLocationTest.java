@@ -37,16 +37,15 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.mockito.Mockito.anyObject;
-import static org.mockito.Mockito.anyString;
-import static org.mockito.Mockito.doNothing;
+import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 import static org.junit.Assert.*;
-import static org.hamcrest.Matchers.*;
 
 /**
  * Created by bgrova on 11.10.2016.
@@ -97,7 +96,7 @@ public class LoadRealDatasetsAndCheckLocationTest {
         DcatSource dcatSource = new DcatSource("http//dcat.no/test", "Test", resource.getURL().toString(), "admin_user", "123456789");
 
         DcatDataStore dcatDataStore = mock(DcatDataStore.class);
-        doThrow(Exception.class).when(dcatDataStore).saveDataCatalogue(anyObject(), anyObject());
+        doThrow(Exception.class).when(dcatDataStore).saveDataCatalogue(any(), any());
 
         PowerMockito.mockStatic(RetrieveCodes.class);
         when(RetrieveCodes.getAllCodes(anyString())).thenReturn(extractLocationCodes(resource, getCodes()));
@@ -106,7 +105,7 @@ public class LoadRealDatasetsAndCheckLocationTest {
         AdminDataStore adminDataStore = mock(AdminDataStore.class);
         ElasticSearchResultHandler spyHandler = PowerMockito.spy(esHandler);
         PowerMockito.doNothing()
-                .when(spyHandler, "updateDatasets", anyObject(), anyObject(), anyObject(), anyObject(), anyObject(), anyObject(), anyObject());
+                .when(spyHandler, "updateDatasets", any(), any(), any(), any(), any(), any(), any());
 
 
         CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, null, spyHandler);
