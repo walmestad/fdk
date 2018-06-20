@@ -30,6 +30,7 @@
 	</modules>
 
 	<properties>
+		<springframework.version>1.5.6.RELEASE</springframework.version>
         <fdk.version>0.2.4-SNAPSHOT</fdk.version>
 		<java.encoding>UTF-8</java.encoding>
 		<java.version>1.8</java.version>
@@ -377,6 +378,30 @@
 				<version>4.12</version>
 				<scope>test</scope>
 			</dependency>
+
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-test</artifactId>
+				<version>${springframework.version}</version>
+				<scope>test</scope>
+				<exclusions>
+					<exclusion>
+						<groupId>com.vaadin.external.google</groupId>
+						<artifactId>android-json</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.mockito</groupId>
+						<artifactId>mockito-core</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.mockito</groupId>
+				<artifactId>mockito-core</artifactId>
+				<version>2.19.0</version>
+				<scope>test</scope>
+			</dependency>
+
 		</dependencies>
 
 
