@@ -102,7 +102,7 @@ public class UrlEncodedIdWorksTest {
         when(action.actionGet()).thenReturn(response);
 
         SearchRequestBuilder builder = mock(SearchRequestBuilder.class);
-        when(builder.setQuery(any(QueryBuilder.class))).thenReturn(builder);
+        when(builder.setQuery((QueryBuilder)any())).thenReturn(builder);
         when(builder.execute()).thenReturn(action);
 
         when(client.prepareSearch("dcat")).thenReturn(builder);

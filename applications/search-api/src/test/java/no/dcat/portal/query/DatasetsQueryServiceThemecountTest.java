@@ -73,24 +73,15 @@ public class DatasetsQueryServiceThemecountTest {
 
 
     private void populateMock() {
-        SearchHit[] hits = null;
-
-        SearchHits searchHits = mock(SearchHits.class);
-        when(searchHits.getHits()).thenReturn(hits);
-
         SearchResponse response = mock(SearchResponse.class);
-        when(response.getHits()).thenReturn(searchHits);
-
 
         ListenableActionFuture<SearchResponse> action = mock(ListenableActionFuture.class);
         when(action.actionGet()).thenReturn(response);
 
         SearchRequestBuilder builder = mock(SearchRequestBuilder.class);
         when(builder.setTypes("dataset")).thenReturn(builder);
-        when(builder.setQuery(any(QueryBuilder.class))).thenReturn(builder);
-        when(builder.setFrom(anyInt())).thenReturn(builder);
+        when(builder.setQuery((QueryBuilder)any())).thenReturn(builder);
         when(builder.setSize(anyInt())).thenReturn(builder);
-        when(builder.addSort(anyString(), any(SortOrder.class))).thenReturn(builder);
         when(builder.addAggregation(any(AbstractAggregationBuilder.class))).thenReturn(builder);
         when(builder.execute()).thenReturn(action);
 
