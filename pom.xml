@@ -14,7 +14,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.5.6.RELEASE</version>
+		<version>2.0.2.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
@@ -36,8 +36,6 @@
 		<docker.image.prefix>dcatno</docker.image.prefix>
 		<docker.registry />
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<spring.boot.version>1.5.1.RELEASE</spring.boot.version>
-		<elasticsearch.version>2.4.1</elasticsearch.version>
 		<build.profile.id>dev</build.profile.id>
 
 		<unittest.category/>
@@ -306,14 +304,6 @@
 				<artifactId>jquery</artifactId>
 				<version>3.1.1</version>
 				<scope>runtime</scope>
-			</dependency>
-			<!-- Necessary for running on RedHat Openshift-->
-			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>Brixton.RELEASE</version>
-				<type>pom</type>
-				<scope>import</scope>
 			</dependency>
 
 			<!-- Cucumber -->
