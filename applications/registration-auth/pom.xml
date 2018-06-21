@@ -24,11 +24,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-        <!-- Nødvendig for å bruke configserver på openshift -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-config</artifactId>
-        </dependency>
         <!-- må ha actuator for å kjøre på openshift. kreves av readyness probe -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

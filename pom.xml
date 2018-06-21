@@ -307,14 +307,6 @@
 				<version>3.1.1</version>
 				<scope>runtime</scope>
 			</dependency>
-			<!-- Necessary for running on RedHat Openshift-->
-			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>Brixton.RELEASE</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
 
 			<!-- Cucumber -->
 			<dependency>
