@@ -22,8 +22,8 @@ import java.util.Map;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.anyObject;
-import static org.mockito.Mockito.anyString;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 /**
@@ -64,7 +64,7 @@ public class DatasetControllerTest {
         title.put("nb", "test");
         copy.setTitle(title);
 
-        when(mockDatasetRepository.save((Dataset) anyObject())).thenReturn(copy);
+        when(mockDatasetRepository.save((Dataset) any())).thenReturn(copy);
 
         HttpEntity<Dataset> actualEntity = datasetController.saveDataset(catalogId, copy);
 

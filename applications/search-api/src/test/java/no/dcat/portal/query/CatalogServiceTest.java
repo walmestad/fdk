@@ -30,8 +30,8 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Mockito.anyString;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.spy;
@@ -65,7 +65,7 @@ public class CatalogServiceTest {
         String queryString = read(queryResource.getInputStream());
         QueryExecution qe = QueryExecutionFactory.create(QueryFactory.create(queryString), model);
 
-        doReturn(qe).when(spy).getQueryExecution(anyObject());
+        doReturn(qe).when(spy).getQueryExecution(any());
 
         ResponseEntity<String> response = spy.getCatalogs();
 
@@ -77,7 +77,7 @@ public class CatalogServiceTest {
     public void getCatalogsFailsOnIOError() throws Throwable {
         CatalogService spy = spy(catalogService);
 
-        doThrow(new IOException("force exception")).when(spy).read(anyObject());
+        doThrow(new IOException("force exception")).when(spy).read(any());
 
         ResponseEntity<String> response = spy.getCatalogs();
 
@@ -98,7 +98,7 @@ public class CatalogServiceTest {
         Resource queryResource = new ClassPathResource("sparql/allcatalogs.sparql");
         String queryString = read(queryResource.getInputStream());
         QueryExecution qe = QueryExecutionFactory.create(QueryFactory.create(queryString), model);
-        doReturn(qe).when(spy).getQueryExecution(anyObject());
+        doReturn(qe).when(spy).getQueryExecution(any());
 
         // do call
         ResponseEntity<String> response = spy.getCatalogs();
@@ -266,7 +266,7 @@ public class CatalogServiceTest {
     @Test
     public void invokeFusekiQueryThrowsExceptionbecauseOfIOErrorInFuseki() {
         CatalogService spy = spy(catalogService);
-        doThrow(new QueryExceptionHTTP(404, "force exception")).when(spy).getQueryExecution(anyObject());
+        doThrow(new QueryExceptionHTTP(404, "force exception")).when(spy).getQueryExecution(any());
 
         ResponseEntity<String> response = spy.invokeFusekiQuery("http://data.brreg.no/datakatalog/katalog/974761076/5",
                 null, "application/ld+json", "sparql/catalog.sparql");
@@ -277,7 +277,7 @@ public class CatalogServiceTest {
     @Test
     public void getCatalogsThrowsExceptionBecauseOfIOErrorInFuseki() {
         CatalogService spy = spy(catalogService);
-        doThrow(new QueryExceptionHTTP(406, "force exception")).when(spy).getQueryExecution(anyObject());
+        doThrow(new QueryExceptionHTTP(406, "force exception")).when(spy).getQueryExecution(any());
 
         ResponseEntity<String> response = spy.getCatalogs();
 

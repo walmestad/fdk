@@ -6,20 +6,13 @@ import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.index.query.QueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.search.SearchHit;
-import org.elasticsearch.search.SearchHits;
-import org.elasticsearch.search.internal.InternalSearchHit;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import java.util.List;
-
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Matchers.anyString;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
@@ -67,7 +60,7 @@ public class TermsQueryServiceTest {
         when(searchRequestBuilder.setQuery(queryBuilder)).thenReturn(searchRequestBuilder);
         when(searchRequestBuilder.setFrom(0)).thenReturn(searchRequestBuilder);
         when(searchRequestBuilder.setSize(20)).thenReturn(searchRequestBuilder);
-        when(searchRequestBuilder.addAggregation(anyObject())).thenReturn(searchRequestBuilder);
+        when(searchRequestBuilder.addAggregation(any())).thenReturn(searchRequestBuilder);
 
         ListenableActionFuture listenableActionFuture = mock(ListenableActionFuture.class);
         when(searchRequestBuilder.execute()).thenReturn(listenableActionFuture);

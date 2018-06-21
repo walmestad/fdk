@@ -9,7 +9,6 @@ import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.internal.InternalSearchHit;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -21,11 +20,11 @@ import org.springframework.http.ResponseEntity;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 
-import static org.mockito.Matchers.any;
+import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.junit.Assert.*;
-import static org.hamcrest.Matchers.*;
 
 /**
  * Created by nodavsko on 12.10.2017.

@@ -2,7 +2,6 @@ package no.dcat.harvester.crawler.converters;
 
 import com.google.common.cache.LoadingCache;
 import no.dcat.harvester.ForwardingCacheLoader;
-import no.dcat.harvester.HarvesterApplication;
 import no.dcat.shared.testcategories.UnitTest;
 import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
@@ -20,7 +19,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 
-import static org.mockito.Matchers.anyString;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.hamcrest.Matchers.*;
 
 

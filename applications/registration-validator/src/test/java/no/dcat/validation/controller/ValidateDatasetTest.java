@@ -22,9 +22,12 @@ import java.util.List;
 import java.util.Map;
 
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.spy;
 
 
 /**
@@ -57,7 +60,7 @@ public class ValidateDatasetTest {
         dataset.put("title", map("nb", "Tittel"));
 
         ValidatorController validatorSpy = spy(controller);
-        doReturn(null).when(validatorSpy).validate(anyObject(), anyObject());
+        doReturn(null).when(validatorSpy).validate(any(), any());
 
 
         ResponseEntity<Validation> actualResponse = validatorSpy.validateDataset(dataset,

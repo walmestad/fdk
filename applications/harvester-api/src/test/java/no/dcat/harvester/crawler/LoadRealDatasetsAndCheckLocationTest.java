@@ -21,7 +21,6 @@ import org.apache.jena.vocabulary.DCTerms;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
-import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
@@ -37,16 +36,13 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.mockito.Mockito.anyObject;
-import static org.mockito.Mockito.anyString;
-import static org.mockito.Mockito.doNothing;
+import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.when;
 import static org.junit.Assert.*;
-import static org.hamcrest.Matchers.*;
+import static org.powermock.api.mockito.PowerMockito.*;
 
 /**
  * Created by bgrova on 11.10.2016.
@@ -97,17 +93,15 @@ public class LoadRealDatasetsAndCheckLocationTest {
         DcatSource dcatSource = new DcatSource("http//dcat.no/test", "Test", resource.getURL().toString(), "admin_user", "123456789");
 
         DcatDataStore dcatDataStore = mock(DcatDataStore.class);
-        doThrow(Exception.class).when(dcatDataStore).saveDataCatalogue(anyObject(), anyObject());
+        doThrow(RuntimeException.class).when(dcatDataStore).saveDataCatalogue(any(), any());
 
-        PowerMockito.mockStatic(RetrieveCodes.class);
+        mockStatic(RetrieveCodes.class);
         when(RetrieveCodes.getAllCodes(anyString())).thenReturn(extractLocationCodes(resource, getCodes()));
 
         ElasticSearchResultHandler esHandler = new ElasticSearchResultHandler("localhost", 9300, "elasticsearch", "http://localhost:8100", "user", "password");
         AdminDataStore adminDataStore = mock(AdminDataStore.class);
-        ElasticSearchResultHandler spyHandler = PowerMockito.spy(esHandler);
-        PowerMockito.doNothing()
-                .when(spyHandler, "updateDatasets", anyObject(), anyObject(), anyObject(), anyObject(), anyObject(), anyObject(), anyObject());
-
+        ElasticSearchResultHandler spyHandler = spy(esHandler);
+        doNothing().when(spyHandler, "updateDatasets", any(), any(), any(), any(), any(), any(), any());
 
         CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, null, spyHandler);
         CrawlerJob spyJob = spy(job);
