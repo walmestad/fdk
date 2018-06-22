@@ -4,16 +4,17 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.apache.commons.io.IOUtils;
 import org.elasticsearch.action.ActionRequestValidationException;
+import org.elasticsearch.action.DocWriteResponse;
 import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
-import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.cluster.health.ClusterHealthStatus;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.transport.client.PreBuiltTransportClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
@@ -83,8 +84,7 @@ public class Elasticsearch implements AutoCloseable {
                     .put(CLUSTER_NAME, clusterName)
                     .build();
 
-            client = TransportClient.builder().settings(settings).build()
-                    .addTransportAddress(address);
+            client = new PreBuiltTransportClient(settings).addTransportAddress(address);
 
             logger.debug("Client returns! " + address.toString());
 
@@ -257,7 +257,7 @@ public class Elasticsearch implements AutoCloseable {
      */
     public boolean indexDocument(String index, String type, String id, JsonObject jsonObject) {
         IndexResponse rsp = client.prepareIndex(index, type, id).setSource(jsonObject).execute().actionGet();
-        return rsp.isCreated();
+        return rsp.getResult() == DocWriteResponse.Result.CREATED;
     }
 
 
@@ -272,7 +272,7 @@ public class Elasticsearch implements AutoCloseable {
      */
     public boolean indexDocument(String index, String type, String id, JsonArray jsonArray) {
         IndexResponse rsp = client.prepareIndex(index, type, id).setSource(jsonArray).execute().actionGet();
-        return rsp.isCreated();
+        return rsp.getResult() == DocWriteResponse.Result.CREATED;
     }
 
 
@@ -287,7 +287,7 @@ public class Elasticsearch implements AutoCloseable {
      */
     public boolean indexDocument(String index, String type, String id, String string) {
         IndexResponse rsp = client.prepareIndex(index, type, id).setSource(string).execute().actionGet();
-        return rsp.isCreated();
+        return rsp.getResult() == DocWriteResponse.Result.CREATED;
     }
 
 
@@ -302,7 +302,7 @@ public class Elasticsearch implements AutoCloseable {
      */
     public boolean indexDocument(String index, String type, String id, Map<String, Object> map) {
         IndexResponse rsp = client.prepareIndex(index, type, id).setSource(map).execute().actionGet();
-        return rsp.isCreated();
+        return rsp.getResult() == DocWriteResponse.Result.CREATED;
     }
 
 
@@ -316,7 +316,7 @@ public class Elasticsearch implements AutoCloseable {
      */
     public boolean deleteDocument(String index, String type, String id) {
         DeleteResponse rsp = client.prepareDelete(index, type, id).execute().actionGet();
-        return !rsp.isFound();
+        return rsp.getResult() != DocWriteResponse.Result.DELETED;
     }
 
     /**

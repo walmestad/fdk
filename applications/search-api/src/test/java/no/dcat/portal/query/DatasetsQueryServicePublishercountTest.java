@@ -11,7 +11,7 @@ import org.elasticsearch.search.aggregations.AbstractAggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
-import org.elasticsearch.search.aggregations.bucket.terms.TermsBuilder;
+import org.elasticsearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -52,7 +52,7 @@ public class DatasetsQueryServicePublishercountTest {
 
         ResponseEntity<String> actual =  sqs.publisherCount("");
 
-        TermsBuilder builder = AggregationBuilders
+        TermsAggregationBuilder builder = AggregationBuilders
                 .terms("publisherCount")
                 .field("publisher.name.raw")
                 .size(1000)

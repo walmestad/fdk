@@ -8,7 +8,6 @@ import org.elasticsearch.client.Client;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
-import org.elasticsearch.search.internal.InternalSearchHit;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -85,7 +84,7 @@ public class UrlEncodedIdWorksTest {
         String id = URLEncoder.encode("http://brreg.no/this/is/the/dataset/23", "utf-8");
 
         SearchHit[] hits = null;
-        SearchHit hit = mock(InternalSearchHit.class);
+        SearchHit hit = mock(SearchHit.class);
 
         SearchHits searchHits = mock(SearchHits.class);
         when(searchHits.getHits()).thenReturn(hits);
@@ -101,7 +100,7 @@ public class UrlEncodedIdWorksTest {
         when(action.actionGet()).thenReturn(response);
 
         SearchRequestBuilder builder = mock(SearchRequestBuilder.class);
-        when(builder.setQuery((QueryBuilder)any())).thenReturn(builder);
+        when(builder.setQuery(any(QueryBuilder.class))).thenReturn(builder);
         when(builder.execute()).thenReturn(action);
 
         when(client.prepareSearch("dcat")).thenReturn(builder);

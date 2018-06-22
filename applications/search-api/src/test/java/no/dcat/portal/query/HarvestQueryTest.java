@@ -2,7 +2,6 @@ package no.dcat.portal.query;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -16,14 +15,9 @@ import org.apache.commons.io.FileUtils;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.index.IndexRequest;
-import org.elasticsearch.action.search.SearchRequestBuilder;
-import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.node.Node;
-import org.elasticsearch.node.NodeBuilder;
-import org.elasticsearch.search.aggregations.Aggregations;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -65,15 +59,12 @@ public class HarvestQueryTest {
     public void setUp() throws Exception {
 
         dataDir = new File(DATA_DIR);
-        Settings settings = Settings.settingsBuilder()
+        Settings settings = Settings.builder()
                 .put("http.enabled", "false")
                 .put("path.home", dataDir.toString())
                 .build();
 
-        node = NodeBuilder.nodeBuilder()
-                .local(true)
-                .settings(settings)
-                .build();
+        node = new Node(settings);
 
         node.start();
         client = node.client();

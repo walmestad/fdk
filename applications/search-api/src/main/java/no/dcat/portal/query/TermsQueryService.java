@@ -133,7 +133,7 @@ import org.springframework.web.bind.annotation.RestController;
         if (!StringUtils.isEmpty(creator)) {
             BoolQueryBuilder boolFilterPublisher = QueryBuilders.boolQuery();
             if (creator.toLowerCase().equals("ukjent")) {
-                boolFilterPublisher.must(QueryBuilders.missingQuery("creator.name.raw"));
+                boolFilterPublisher.mustNot(QueryBuilders.existsQuery("creator.name.raw"));
             } else {
                 boolFilterPublisher.must(QueryBuilders.termQuery("creator.name.raw", creator));
             }

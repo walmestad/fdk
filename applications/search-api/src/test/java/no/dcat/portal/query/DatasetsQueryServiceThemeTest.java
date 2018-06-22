@@ -8,7 +8,6 @@ import org.elasticsearch.client.Client;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
-import org.elasticsearch.search.internal.InternalSearchHit;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -76,7 +75,7 @@ public class DatasetsQueryServiceThemeTest {
 //        when(action.actionGet()).thenReturn(response);
 //
 //        SearchRequestBuilder builder = mock(SearchRequestBuilder.class);
-//        when(builder.setQuery((QueryBuilder)any())).thenReturn(builder);
+//        when(builder.setQuery(any(QueryBuilder.class))).thenReturn(builder);
 //        when(builder.execute()).thenReturn(action);
 //        when(builder.setTypes(TYPE)).thenReturn(builder);
 //        when(client.prepareSearch(INDEX)).thenReturn(builder);

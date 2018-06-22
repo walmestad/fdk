@@ -6,6 +6,7 @@ import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -60,7 +61,7 @@ public class TermsQueryServiceTest {
         when(searchRequestBuilder.setQuery(queryBuilder)).thenReturn(searchRequestBuilder);
         when(searchRequestBuilder.setFrom(0)).thenReturn(searchRequestBuilder);
         when(searchRequestBuilder.setSize(20)).thenReturn(searchRequestBuilder);
-        when(searchRequestBuilder.addAggregation(any())).thenReturn(searchRequestBuilder);
+        when(searchRequestBuilder.addAggregation(any(AggregationBuilder.class))).thenReturn(searchRequestBuilder);
 
         ListenableActionFuture listenableActionFuture = mock(ListenableActionFuture.class);
         when(searchRequestBuilder.execute()).thenReturn(listenableActionFuture);

@@ -8,7 +8,6 @@ import org.elasticsearch.client.Client;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
-import org.elasticsearch.search.internal.InternalSearchHit;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -88,8 +87,8 @@ public class DatasetsQueryServiceDetailTest {
         String id = "29";
 
         SearchHit[] hits = null;
-        SearchHit hit = mock(InternalSearchHit.class);
-        SearchHit hit2 = mock(InternalSearchHit.class);
+        SearchHit hit = mock(SearchHit.class);
+        SearchHit hit2 = mock(SearchHit.class);
 
 
         SearchHits searchHits = mock(SearchHits.class);
@@ -109,7 +108,7 @@ public class DatasetsQueryServiceDetailTest {
         when(action.actionGet()).thenReturn(response);
 
         SearchRequestBuilder builder = mock(SearchRequestBuilder.class);
-        when(builder.setQuery((QueryBuilder)any())).thenReturn(builder);
+        when(builder.setQuery(any())).thenReturn(builder);
         when(builder.execute()).thenReturn(action);
 
         when(client.prepareSearch("dcat")).thenReturn(builder);

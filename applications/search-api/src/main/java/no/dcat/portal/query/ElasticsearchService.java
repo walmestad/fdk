@@ -4,6 +4,7 @@ import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
+import org.elasticsearch.transport.client.PreBuiltTransportClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -64,8 +65,7 @@ public class ElasticsearchService {
             Settings settings = Settings.builder()
                     .put("cluster.name", clusterName).build();
 
-            client = TransportClient.builder().settings(settings).build()
-                    .addTransportAddress(address);
+            client = new PreBuiltTransportClient(settings).addTransportAddress(address);
 
             logger.debug("Client returns! " + address.toString());
         } catch (UnknownHostException e) {
