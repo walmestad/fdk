@@ -30,11 +30,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.web.client.RestTemplate;
 
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
@@ -187,7 +183,7 @@ public class CatalogControllerIT {
     public void updateCatalogRunsOK() throws Exception {
         listCatalogToCreateCatalogs();
 
-        Catalog catalog = catalogRepository.findOne("910244132");
+        Catalog catalog = catalogRepository.findById("910244132").get();
 
         // change title
         Map<String, String> title2 = new HashMap<>();
@@ -211,7 +207,7 @@ public class CatalogControllerIT {
     public void updateCatalogWithPutRunsOK() throws Exception {
         listCatalogToCreateCatalogs();
 
-        Catalog catalog = catalogRepository.findOne("910244132");
+        Catalog catalog = catalogRepository.findById("910244132").get();
 
         // change title
         Map<String, String> title2 = new HashMap<>();

@@ -19,6 +19,7 @@ import org.springframework.http.HttpEntity;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
@@ -48,7 +49,7 @@ public class DatasetControllerTest {
         String catalogId = "1234";
         Catalog catalog = new Catalog();
         catalog.setId(catalogId);
-        when(mockCatalogRepository.findOne(anyString())).thenReturn(catalog);
+        when(mockCatalogRepository.findById(anyString())).thenReturn(Optional.of(catalog));
 
 
         datasetController = new DatasetController(mockDatasetRepository, mockCatalogRepository);

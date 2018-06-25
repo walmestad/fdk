@@ -53,7 +53,7 @@ public class DatasetWithElasticSearchIT {
 
         datasetRepository.save(dataset);
 
-        Dataset actual = datasetRepository.findOne("1");
+        Dataset actual = datasetRepository.findById("1").get();
         assertThat(actual, is(dataset));
 
         datasetRepository.delete(dataset);

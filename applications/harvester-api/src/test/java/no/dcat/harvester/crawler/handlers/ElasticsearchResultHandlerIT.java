@@ -20,7 +20,6 @@ import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.node.Node;
-import org.elasticsearch.node.NodeBuilder;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -60,15 +59,12 @@ public class ElasticsearchResultHandlerIT {
 	public void setUp() throws Exception {
 
 		dataDir = new File(DATA_DIR);
-		 Settings settings = Settings.settingsBuilder()
+		 Settings settings = Settings.builder()
 				.put("http.enabled", "false")
 				.put("path.home", dataDir.toString())
 				.build();
 
-		node = NodeBuilder.nodeBuilder()
-				.local(true)
-				.settings(settings)
-				.build();
+		node = new Node(settings);
 
 		node.start();
 		client = node.client();

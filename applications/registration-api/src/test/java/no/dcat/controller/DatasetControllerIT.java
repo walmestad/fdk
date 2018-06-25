@@ -429,7 +429,7 @@ public class DatasetControllerIT {
 
         datasetRepository.save(expected);
 
-        Dataset actual = datasetRepository.findOne(id);
+        Dataset actual = datasetRepository.findById(id).get();
 
         Assert.assertThat(actual, Matchers.is(expected));
         Assert.assertThat(actual.getReferences(), Matchers.is(expected.getReferences()));
@@ -448,7 +448,7 @@ public class DatasetControllerIT {
 
         datasetRepository.save(expected);
 
-        Dataset actual = datasetRepository.findOne(expected.getId());
+        Dataset actual = datasetRepository.findById(expected.getId()).get();
 
         Assert.assertThat(actual, Matchers.is(expected));
 
