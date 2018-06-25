@@ -60,6 +60,7 @@ public class HarvestQueryTest {
 
         dataDir = new File(DATA_DIR);
         Settings settings = Settings.builder()
+                .put("transport.type", "local")
                 .put("http.enabled", "false")
                 .put("path.home", dataDir.toString())
                 .build();
