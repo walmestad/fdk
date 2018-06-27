@@ -29,7 +29,7 @@ public class Dataset extends no.dcat.shared.Dataset {
     private String catalogId;
 
     //Meta information about editiong of the dataset description
-    @Field
+    @Field(type = FieldType.Date, store = true)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd'T'HH:mm:ss.SSSZZ")
     private Date _lastModified;
 
