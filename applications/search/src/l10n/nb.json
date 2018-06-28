@@ -68,6 +68,7 @@
     "nosearch.summary":"Søk blant",
     "nosearch.descriptions":"datasettbeskrivelser",
     "datasetTab": "Datasett",
+    "apiTab": "Api",
     "termTab": "Begrep",
     "nosearch.concepts":"begreper"
   },
@@ -207,7 +208,10 @@
       "authorityCode": {
         "public": "Offentlig",
         "restricted": "Begrenset offentlighet",
-        "nonPublic": "Unntatt offentlighet"
+        "nonPublic": "Unntatt offentlighet",
+        "publicDetailsLabel": "Datasettet er offentlig",
+        "restrictedDetailsLabel": "Datasettet har begrenset offentlighet",
+        "nonPublicDetailsLabel": "Datasettet er unntatt offentlighet"
       }
     },
     "sample": "Eksempeldata"
@@ -254,7 +258,8 @@
     "withoutDistributions": "Offentlige datasett uten distribusjoner",
     "searchPublisher": "Velg virksomhet",
     "searchPublisherPlaceholder": "Søk på virksomhetsnavn...",
-    "typeToSearch": "Skriv for å søke"
+    "typeToSearch": "Skriv for å søke",
+    "openData":"Åpne data"
   },
   "registration": {
     "title": "Kom i gang med registrering av datasett"

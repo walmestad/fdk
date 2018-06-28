@@ -68,6 +68,7 @@
     "nosearch.summary":"Søk blant",
     "nosearch.descriptions":"datasettbeskrivelser",
     "datasetTab": "Datasett",
+    "apiTab": "Api",
     "termTab": "Omgrep",
     "nosearch.concepts":"omgrep"
   },
@@ -207,7 +208,10 @@
       "authorityCode": {
         "public": "Offentleg",
         "restricted": "Avgrensa offentlegheit",
-        "nonPublic": "Unntatt offentlegheit"
+        "nonPublic": "Unntatt offentlegheit",
+        "publicDetailsLabel": "Datasettet er offentleg",
+        "restrictedDetailsLabel": "Datasettet har avgrensa offentlegheit",
+        "nonPublicDetailsLabel": "Datasettet er unntatt offentlegheit"
       }
     },
     "sample": "Eksempeldata"
@@ -254,7 +258,8 @@
     "withoutDistributions": "Offentlege datasett utan distribusjoner",
     "searchPublisher": "Velg virksomhet",
     "searchPublisherPlaceholder": "Søk på virksomhetsnavn...",
-    "typeToSearch": "Skriv for å søke"
+    "typeToSearch": "Skriv for å søke",
+    "openData":"Åpne data"
   },
   "registration": {
     "title": "Hvordan komme i gang med registrering av datasett"

@@ -6,13 +6,14 @@ import { Route, Switch, Link } from 'react-router-dom';
 import localization from '../lib/localization';
 import { addOrReplaceParam } from '../lib/addOrReplaceUrlParam';
 import { getLanguageFromUrl } from '../lib/translateText';
-import {SearchPage} from '../pages/search-page/search-page.container.jsx';
-import {DetailsPage} from '../pages/details-page/details-page.container';
-import {AboutPage} from '../pages/about-page/about-page.component';
-import {ArticlePage} from '../pages/article-page/article-page.component';
-import {ReportsPage} from '../pages/reports-page/reports-page.container';
-import {Breadcrumbs} from './breadcrumbs/breadcrumbs.component';
-import '../assets/css/main.scss';
+import { SearchPage } from '../pages/search-page/search-page.container';
+import { DetailsPage } from '../pages/details-page/details-page.container';
+import { AboutPage } from '../pages/about-page/about-page.component';
+import { ArticlePage } from '../pages/article-page/article-page.component';
+import { ReportsPage } from '../pages/reports-page/reports-page.container';
+import { Breadcrumbs } from './breadcrumbs/breadcrumbs.component';
+
+import './styles';
 
 const getLangUrl = langCode => {
   const href = window.location.search;
@@ -204,12 +205,21 @@ export default class App extends React.Component {
             />
           </div>
         </div>
-
         <div className="app-routes">
           <Switch>
             <Route
               exact
               path="/"
+              render={props => (
+                <SearchPage
+                  selectedLanguageCode={this.state.selectedLanguageCode}
+                  {...props}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/api"
               render={props => (
                 <SearchPage
                   selectedLanguageCode={this.state.selectedLanguageCode}
@@ -230,11 +240,7 @@ export default class App extends React.Component {
             <Route exact path="/datasets/:id" component={DetailsPage} />
             <Route exact path="/reports" component={ReportsPage} />
             <Route exact path="/about" component={AboutPage} />
-            <Route
-              exact
-              path="/about-registration"
-              component={ArticlePage}
-            />
+            <Route exact path="/about-registration" component={ArticlePage} />
           </Switch>
         </div>
 

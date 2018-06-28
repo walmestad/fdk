@@ -14,19 +14,6 @@ module.exports = {
   },
   module: {
     rules: [
-      /*  {
-       enforce: 'pre',
-       test: /\.(js|jsx)$/,
-       include: [
-       path.resolve(__dirname, 'start.js'),
-       path.resolve('src')
-       ],
-       exclude: /node_modules/,
-       options: {
-       configFile: path.resolve('./.eslintrc.json')
-       },
-       loader: 'eslint-loader'
-       }, */
       {
         test: /\.jsx?$/,
         exclude: /(node_modules)/,
@@ -68,13 +55,17 @@ module.exports = {
     modules: [__dirname, 'node_modules']
   },
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+        REDUX_LOG: JSON.stringify(process.env.REDUX_LOG)
+      }
+    }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
     new ExtractTextPlugin('styles.css'),
     new CopyWebpackPlugin(
-      [
-        { from: './src/static/img/*', to: './img' , flatten: true}
-      ],
+      [{ from: './src/static/img/*', to: './img', flatten: true }],
       {
         copyUnmodified: true
       }

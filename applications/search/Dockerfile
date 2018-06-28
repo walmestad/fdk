@@ -1,7 +1,7 @@
 FROM node:8-alpine
 
+RUN apk add --no-cache git
 # to run localhost docker
-
 RUN npm init -y
 RUN npm install ejs express method-override body-parser compression --loglevel error
 RUN npm install pm2 -g --loglevel error
@@ -21,7 +21,8 @@ RUN npm run build
 
 #RUN npm test
 
-#ENV NODE_ENV production; just for local test purpose, variable set by OpenShift
+# use for local test purpose, variable set by OpenShift
+# ENV NODE_ENV production
 
 EXPOSE 3000
 

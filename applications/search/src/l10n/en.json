@@ -68,6 +68,7 @@
     "nosearch.summary":"Søk blant",
     "nosearch.descriptions":"datasettbeskrivelser",
     "datasetTab": "Dataset",
+    "apiTab": "Api",
     "termTab": "Concepts",
     "nosearch.concepts":"begreper"
   },
@@ -207,7 +208,10 @@
       "authorityCode": {
         "public": "Public",
         "restricted": "Restricted",
-        "nonPublic": "Non public"
+        "nonPublic": "Non public",
+        "publicDetailsLabel": "Dataset is public",
+        "restrictedDetailsLabel": "Dataset is restricted",
+        "nonPublicDetailsLabel": "Dataset is non public"
       }
     },
     "sample": "Sample data"
@@ -254,7 +258,8 @@
     "withoutDistributions": "Public datasets without distributions",
     "searchPublisher": "Choose publisher",
     "searchPublisherPlaceholder": "Search publisher...",
-    "typeToSearch": "Type to search"
+    "typeToSearch": "Type to search",
+    "openData":"Open data"
   },
   "registration": {
     "title": "Registration (only in Norwegian)"

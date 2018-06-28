@@ -15,10 +15,10 @@ import {
   fetchPublishersIfNeeded,
   fetchDistributionTypeIfNeeded
 } from '../../redux/actions/index';
-import {ResultsDataset} from './results-dataset/results-dataset.component';
-import {ResultsConcepts} from './results-concepts/results-concepts.component';
-import {SearchBox} from './search-box/search-box.component';
-import {ResultsTabs} from './results-tabs/results-tabs.component';
+import { ResultsDataset } from './results-dataset/results-dataset.component';
+import { ResultsConcepts } from './results-concepts/results-concepts.component';
+import { SearchBox } from './search-box/search-box.component';
+import { ResultsTabs } from './results-tabs/results-tabs.component';
 import { removeValue, addValue } from '../../lib/stringUtils';
 import {
   addOrReplaceParamWithoutURL,
@@ -101,25 +101,20 @@ export class PureSearchPage extends React.Component {
   componentWillReceiveProps(nextProps) {
     const { selectedLanguageCode } = nextProps;
     if (nextProps.location.search !== this.props.location.search) {
-      const q = getParamFromString(nextProps.location.search, 'q');
-      let hasSingleWord = false;
-      if (q) {
-        hasSingleWord = !q.includes(' ') && !q.includes('*'); // no spaces and no asterix search
-      }
-      if (hasSingleWord) {
-        const modifiedQ = addOrReplaceParamWithoutURL(
-          nextProps.location.search,
-          'q',
-          `${q} ${encodeURIComponent(q)}*`
-        );
-        this.props.fetchDatasetsIfNeeded(`/datasets${modifiedQ}`);
-        this.props.fetchTermsIfNeeded(`/terms${modifiedQ}`);
-      } else {
-        this.props.fetchDatasetsIfNeeded(
-          `/datasets${nextProps.location.search}`
-        );
-        this.props.fetchTermsIfNeeded(`/terms${nextProps.location.search}`);
-      }
+      const original = nextProps.location.search;
+      const q = getParamFromString(original, 'q');
+      const hasSingleWord = q && !q.includes(' ') && !q.includes('*'); // no spaces and no asterix search
+
+      const query = hasSingleWord
+        ? addOrReplaceParamWithoutURL(
+            original,
+            'q',
+            `${q} ${encodeURIComponent(q)}*`
+          )
+        : original;
+
+      this.props.fetchDatasetsIfNeeded(`/datasets${query}`);
+      this.props.fetchTermsIfNeeded(`/terms${query}`);
     }
     if (selectedLanguageCode !== this.props.selectedLanguageCode) {
       if (selectedLanguageCode === 'nb') {
@@ -557,6 +552,7 @@ export class PureSearchPage extends React.Component {
                 />
               )}
             />
+            <Route exact path="/api" render={() => <div>Beta</div>} />
             <Route
               exact
               path="/concepts/:lang?"
@@ -651,4 +647,6 @@ const mapDispatchToProps = dispatch => ({
   fetchDistributionTypeIfNeeded: () => dispatch(fetchDistributionTypeIfNeeded())
 });
 
-export const SearchPage = connect(mapStateToProps, mapDispatchToProps)(PureSearchPage);
+export const SearchPage = connect(mapStateToProps, mapDispatchToProps)(
+  PureSearchPage
+);
