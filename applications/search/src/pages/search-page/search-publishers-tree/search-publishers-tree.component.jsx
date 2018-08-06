@@ -3,10 +3,13 @@ import PropTypes from 'prop-types';
 import TreeView from 'react-treeview';
 import 'react-treeview/react-treeview.css';
 import cx from 'classnames';
-import { Collapse } from 'react-bootstrap';
+import { Collapse } from 'reactstrap';
+import _get from 'lodash/get';
+import _capitalize from 'lodash/capitalize';
 
 import { FilterOption } from '../filter-option/filter-option.component';
 import localization from '../../../lib/localization';
+import { getTranslateText } from '../../../lib/translateText';
 import './search-publishers-tree.scss';
 
 export class SearchPublishersTree extends React.Component {
@@ -33,9 +36,6 @@ export class SearchPublishersTree extends React.Component {
   }
 
   onChange(value) {
-    this.setState({
-      value
-    });
     if (!value) {
       this.props.onSearch(null, '');
     } else {
@@ -68,19 +68,16 @@ export class SearchPublishersTree extends React.Component {
           'tree-item_chosen': node.key === orgPath
         });
 
-        let name = node.key;
-        if (publishers) {
-          const currentPublisher = publishers[name];
-          if (currentPublisher) {
-            name = currentPublisher.name; // .substring(0, 25);
-          }
-        }
+        const name =
+          getTranslateText(_get(publishers, [node.key, 'prefLabel'])) ||
+          _capitalize(_get(publishers, [node.key, 'name'], node.key));
+
         const label = (
           <FilterOption
             key={`${node.key}|${i}`}
             itemKey={0.5}
             value={node.key}
-            label={name}
+            labelRaw={name}
             count={node.doc_count}
             onClick={onFilterPublisherHierarchy}
             active={active}
@@ -109,7 +106,7 @@ export class SearchPublishersTree extends React.Component {
             key={`${node.key}|${i}`}
             itemKey={0.5}
             value={node.key}
-            label={name}
+            labelRaw={name}
             count={node.doc_count}
             onClick={onFilterPublisherHierarchy}
             active={active}
@@ -215,7 +212,7 @@ export class SearchPublishersTree extends React.Component {
             <span>{title}</span>
           </button>
         </div>
-        <Collapse in={openFilter}>
+        <Collapse isOpen={openFilter}>
           <div className="fdk-panel__content">
             <div className="fdk-items-list">{this._renderTree()}</div>
           </div>

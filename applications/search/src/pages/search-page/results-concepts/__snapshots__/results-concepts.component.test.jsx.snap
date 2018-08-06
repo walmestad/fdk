@@ -12,14 +12,14 @@ exports[`should render ResultsConcepts correctly with minimum of props 1`] = `
       className="row mt-1 mb-1-em fdk-button-row"
     >
       <div
-        className="col-md-4"
+        className="col-lg-4"
       >
         <button
-          className="fdk-button fdk-button-default-no-hover fade-in-500 hidden"
+          className="btn btn-primary fdk-button fade-in-500 d-none"
           onClick={null}
           type="button"
         >
-          Fjern alle filtre
+          Clear
         </button>
       </div>
     </div>
@@ -27,10 +27,10 @@ exports[`should render ResultsConcepts correctly with minimum of props 1`] = `
       className="row"
     >
       <div
-        className="search-filters col-sm-4 col-md-4 flex-move-first-item-to-bottom"
+        className="search-filters col-lg-4"
       >
         <div
-          className="visible-sm visible-md visible-lg"
+          className="d-none d-lg-block"
         >
           <span
             aria-hidden="false"
@@ -41,11 +41,11 @@ exports[`should render ResultsConcepts correctly with minimum of props 1`] = `
         </div>
       </div>
       <div
-        className="col-sm-8"
+        className="col-lg-8"
         id="concepts"
       />
       <div
-        className="col-xs-12 col-md-8 col-md-offset-4 text-center"
+        className="col-lg-8 offset-lg-4 d-flex justify-content-center"
       >
         <span
           aria-hidden="false"
@@ -93,14 +93,14 @@ exports[`should render ResultsConcepts correctly with props 1`] = `
       className="row mt-1 mb-1-em fdk-button-row"
     >
       <div
-        className="col-md-4"
+        className="col-lg-4"
       >
         <button
-          className="fdk-button fdk-button-default-no-hover fade-in-500 hidden"
+          className="btn btn-primary fdk-button fade-in-500 d-none"
           onClick={[MockFunction]}
           type="button"
         >
-          Fjern alle filtre
+          Clear
         </button>
       </div>
     </div>
@@ -108,10 +108,10 @@ exports[`should render ResultsConcepts correctly with props 1`] = `
       className="row"
     >
       <div
-        className="search-filters col-sm-4 col-md-4 flex-move-first-item-to-bottom"
+        className="search-filters col-lg-4"
       >
         <div
-          className="visible-sm visible-md visible-lg"
+          className="d-none d-lg-block"
         >
           <span
             aria-hidden="false"
@@ -121,45 +121,39 @@ exports[`should render ResultsConcepts correctly with props 1`] = `
           </span>
           <div>
             <Modal
-              animation={true}
               autoFocus={true}
               backdrop={true}
-              bsClass="modal"
-              dialogComponentClass={[Function]}
-              enforceFocus={true}
-              keyboard={true}
-              manager={
-                ModalManager {
-                  "add": [Function],
-                  "containers": Array [],
-                  "data": Array [],
-                  "handleContainerOverflow": true,
-                  "hideSiblingNodes": true,
-                  "isTopModal": [Function],
-                  "modals": Array [],
-                  "remove": [Function],
+              backdropTransition={
+                Object {
+                  "mountOnEnter": true,
+                  "timeout": 150,
                 }
               }
-              onHide={[MockFunction]}
-              renderBackdrop={[Function]}
-              restoreFocus={true}
-              show={false}
+              centered={false}
+              fade={true}
+              isOpen={false}
+              keyboard={true}
+              modalTransition={
+                Object {
+                  "timeout": 300,
+                }
+              }
+              onClosed={[Function]}
+              onOpened={[Function]}
+              role="dialog"
+              toggle={[MockFunction]}
+              zIndex={1050}
             >
               <ModalHeader
-                bsClass="modal-header"
-                closeButton={true}
-                closeLabel="Close"
+                closeAriaLabel="Close"
+                tag="h5"
+                toggle={[MockFunction]}
+                wrapTag="div"
               >
-                <ModalTitle
-                  bsClass="modal-title"
-                  componentClass="h4"
-                >
-                  Filter
-                </ModalTitle>
+                Filter
               </ModalHeader>
               <ModalBody
-                bsClass="modal-body"
-                componentClass="div"
+                tag="div"
               >
                 <div
                   className="search-filters"
@@ -171,22 +165,18 @@ exports[`should render ResultsConcepts correctly with props 1`] = `
                     onSearch={null}
                     orgPath={null}
                     publishers={null}
-                    title="Virksomhet"
+                    title="Organization"
                   />
                 </div>
               </ModalBody>
               <ModalFooter
-                bsClass="modal-footer"
-                componentClass="div"
+                tag="div"
               >
                 <Button
-                  active={false}
-                  block={false}
-                  bsClass="btn"
-                  bsStyle="default"
                   className="fdk-button-default fdk-button"
-                  disabled={false}
+                  color="secondary"
                   onClick={[MockFunction]}
+                  tag="button"
                 >
                   Close
                 </Button>
@@ -199,7 +189,7 @@ exports[`should render ResultsConcepts correctly with props 1`] = `
               onSearch={null}
               orgPath={null}
               publishers={null}
-              title="Virksomhet"
+              title="Organization"
             />
           </div>
         </div>
@@ -207,7 +197,7 @@ exports[`should render ResultsConcepts correctly with props 1`] = `
           <h3
             className="mb-2"
           >
-            Sammenlign begrep
+            Compare concepts
           </h3>
           <CompareTerms
             creator="Brønnøysundregistrene"
@@ -218,12 +208,10 @@ exports[`should render ResultsConcepts correctly with props 1`] = `
                 "no": "enhet",
               }
             }
-            selectedLanguageCode={null}
             termIndex={0}
           />
           <CompareTermModal
             handleDeleteTerm={[Function]}
-            selectedLanguageCode={null}
             terms={
               Array [
                 Object {
@@ -287,7 +275,7 @@ exports[`should render ResultsConcepts correctly with props 1`] = `
         </div>
       </div>
       <div
-        className="col-sm-8"
+        className="col-lg-8"
         id="concepts"
       >
         <ConceptsHitItem
@@ -357,7 +345,6 @@ exports[`should render ResultsConcepts correctly with props 1`] = `
               "_type": "subject",
             }
           }
-          selectedLanguageCode={null}
           terms={
             Array [
               Object {
@@ -537,7 +524,6 @@ exports[`should render ResultsConcepts correctly with props 1`] = `
               "_type": "subject",
             }
           }
-          selectedLanguageCode={null}
           terms={
             Array [
               Object {
@@ -600,7 +586,7 @@ exports[`should render ResultsConcepts correctly with props 1`] = `
         />
       </div>
       <div
-        className="col-xs-12 col-md-8 col-md-offset-4 text-center"
+        className="col-lg-8 offset-lg-4 d-flex justify-content-center"
       >
         <span
           aria-hidden="false"

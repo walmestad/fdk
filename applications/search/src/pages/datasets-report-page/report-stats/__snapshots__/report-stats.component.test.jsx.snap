@@ -1,0 +1,346 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render ReportStats correctly 1`] = `
+<div
+  className="container"
+>
+  <div
+    className="row"
+  >
+    <div
+      className="col-12 fdk-container-stats"
+    >
+      <h2>
+        Showing numbers for 
+        <strong>
+          Test entity
+        </strong>
+      </h2>
+    </div>
+  </div>
+  <div
+    className="row"
+  >
+    <div
+      className="col-12 fdk-container-stats fdk-container-stats-total"
+    >
+      <h1>
+        <strong>
+          <Link
+            replace={false}
+            to="/"
+          >
+            547
+          </Link>
+        </strong>
+      </h1>
+      <h1>
+        datasets in total
+      </h1>
+    </div>
+  </div>
+  <div
+    className="row"
+  >
+    <div
+      className="col-12 fdk-container-stats fdk-container-stats-accesslevel-title"
+    >
+      <h2>
+        Accesslevel
+      </h2>
+      <div
+        className="row"
+      >
+        <Link
+          className="col-lg-3 fdk-container-stats-accesslevel fdk-container-stats-vr fdk-padding-no"
+          replace={false}
+          title="Datasets that are public"
+          to="/?accessrights=PUBLIC"
+        >
+          <p>
+            <strong>
+              <i
+                className="fa fdk-fa-left fa-unlock fdk-color-offentlig"
+              />
+              463
+            </strong>
+          </p>
+          <p>
+            Datasets that are public
+          </p>
+        </Link>
+        <Link
+          className="col-lg-3 fdk-container-stats-accesslevel fdk-container-stats-vr fdk-padding-no"
+          replace={false}
+          title="Datasets with restricted access"
+          to="/?accessrights=RESTRICTED"
+        >
+          <p>
+            <strong>
+               
+              <i
+                className="fa fdk-fa-left fa-unlock-alt fdk-color-begrenset"
+              />
+              52
+            </strong>
+          </p>
+          <p>
+            Datasets with restricted access
+          </p>
+        </Link>
+        <Link
+          className="col-lg-3 fdk-container-stats-accesslevel fdk-container-stats-vr fdk-padding-no"
+          replace={false}
+          to="/?accessrights=NON_PUBLIC"
+        >
+          <p>
+            <strong>
+              <i
+                className="fa fdk-fa-left fa-lock fdk-color-unntatt"
+              />
+              0
+            </strong>
+          </p>
+          <p>
+            Datasets that are not public
+          </p>
+        </Link>
+        <Link
+          className="col-lg-3 fdk-container-stats-accesslevel fdk-padding-no"
+          replace={false}
+          to="/?accessrights=Ukjent"
+        >
+          <p>
+            <strong>
+              <i
+                className="fa fdk-fa-left fa-question fdk-color4"
+              />
+              32
+            </strong>
+          </p>
+          <p>
+            Datasets with unknown accesslevel
+          </p>
+        </Link>
+      </div>
+    </div>
+  </div>
+  <div
+    className="row"
+  >
+    <div
+      className="col-12 fdk-container-stats fdk-container-stats-concepts-title"
+    >
+      <h2>
+        Open data
+      </h2>
+      <div
+        className="fdk-container-stats-concepts"
+      >
+        <Link
+          className="fdk-container-stats-accesslevel"
+          replace={false}
+          to="/?opendata=true"
+        >
+          <p>
+            <strong>
+              0
+            </strong>
+          </p>
+        </Link>
+      </div>
+    </div>
+  </div>
+  <div
+    className="row mb-3"
+  >
+    <div
+      className="col-12 p-0"
+    >
+      <CardDeck
+        tag="div"
+      >
+        <Card
+          className="fdk-container-stats fdk-container-stats-changes"
+          style={
+            Object {
+              "borderColor": "transparent",
+            }
+          }
+          tag="div"
+        >
+          <CardBody
+            tag="div"
+          >
+            <h2>
+              Changes last 7 days
+            </h2>
+            <CardText
+              tag="p"
+            >
+              <strong>
+                <Link
+                  className="fdk-plain-label"
+                  replace={false}
+                  title="New datasets"
+                  to="/?firstHarvested=7"
+                >
+                  547
+                </Link>
+              </strong>
+              <div>
+                New datasets
+              </div>
+            </CardText>
+          </CardBody>
+        </Card>
+        <Card
+          className="fdk-container-stats fdk-container-stats-changes"
+          style={
+            Object {
+              "borderColor": "transparent",
+            }
+          }
+          tag="div"
+        >
+          <CardBody
+            tag="div"
+          >
+            <h2>
+              Changes last 30 days
+            </h2>
+            <CardText
+              tag="p"
+            >
+              <strong>
+                <Link
+                  className="fdk-plain-label"
+                  replace={false}
+                  to="/?firstHarvested=30"
+                >
+                  547
+                </Link>
+              </strong>
+              <div>
+                New datasets
+              </div>
+            </CardText>
+          </CardBody>
+        </Card>
+        <Card
+          className="fdk-container-stats fdk-container-stats-changes"
+          style={
+            Object {
+              "borderColor": "transparent",
+            }
+          }
+          tag="div"
+        >
+          <CardBody
+            tag="div"
+          >
+            <h2>
+              Changes last 365 days
+            </h2>
+            <CardText
+              tag="p"
+            >
+              <strong>
+                <Link
+                  className="fdk-plain-label"
+                  replace={false}
+                  title="New datasets"
+                  to="/?firstHarvested=365"
+                >
+                  547
+                </Link>
+              </strong>
+              <div>
+                New datasets
+              </div>
+            </CardText>
+          </CardBody>
+        </Card>
+      </CardDeck>
+    </div>
+  </div>
+  <div
+    className="row"
+  >
+    <div
+      className="col-12 fdk-container-stats fdk-container-stats-concepts-title"
+    >
+      <h2>
+        Use of concepts
+      </h2>
+      <div
+        className="row fdk-container-stats-concepts"
+      >
+        <div
+          className="col-lg-6 fdk-container-stats-vr"
+        >
+          <p>
+            <strong>
+              9
+            </strong>
+          </p>
+          <p>
+            Datasets that use concepts
+          </p>
+        </div>
+        <div
+          className="col-lg-6"
+        >
+          <p>
+            <strong>
+              538
+            </strong>
+          </p>
+          <p>
+            Datasets without concepts
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="row"
+  >
+    <div
+      className="col-12 fdk-container-stats fdk-container-stats-concepts-title"
+    >
+      <h2>
+        Distributions
+      </h2>
+      <div
+        className="row fdk-container-stats-concepts"
+      >
+        <div
+          className="col-lg-6 fdk-container-stats-vr"
+        >
+          <p>
+            <strong>
+              429
+            </strong>
+          </p>
+          <p>
+            Public datasets with distributions
+          </p>
+        </div>
+        <div
+          className="col-lg-6"
+        >
+          <p>
+            <strong>
+              34
+            </strong>
+          </p>
+          <p>
+            Public datasets without distributions
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

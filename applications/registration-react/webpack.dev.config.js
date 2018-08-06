@@ -1,12 +1,12 @@
 const path = require('path');
 const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
   context: path.join(__dirname),
-  entry: ['babel-polyfill', './src/index.jsx'],
+  entry: ['@babel/polyfill', './src/index.jsx'],
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',
@@ -34,10 +34,7 @@ module.exports = {
       },
       {
         test: /\.s?css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: ['css-loader', 'sass-loader']
-        })
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
       },
       {
         test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
@@ -68,9 +65,16 @@ module.exports = {
     modules: [__dirname, 'node_modules']
   },
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {
+        REGISTRATION_LANGUAGE: JSON.stringify(process.env.REGISTRATION_LANGUAGE)
+      }
+    }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
-    new ExtractTextPlugin('styles.css'),
+    new MiniCssExtractPlugin({
+      filename: 'styles.css'
+    }),
     new CopyWebpackPlugin(
       [
         { from: './src/assets/css/bootstrap*', to: './', flatten: true },

@@ -9,6 +9,7 @@ import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryFactory;
 import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
+import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.sparql.engine.http.QueryEngineHTTP;
 import org.slf4j.Logger;
@@ -33,6 +34,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
@@ -92,18 +96,10 @@ public class CatalogService {
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    /**
-     * Lists catalogs in a simple html format
-     *
-
-     * @return html list of catalogs
-     */
     @CrossOrigin
-    @ApiOperation(value = "Returns a HTML list of catalogs.", response = Catalog.class)
-    @RequestMapping(value = "/catalogs",
-            method = GET,
-            produces = "text/html")
-    public ResponseEntity<String> getCatalogs() {
+    @ApiOperation(value = "Returns a list of catalogs harvested.", response = Catalog.class)
+    @RequestMapping(value = "/catalogs", method = GET, produces = "application/json")
+    public List<Catalog> allCatalogs() {
         String queryString;
 
         // fail early
@@ -112,52 +108,106 @@ public class CatalogService {
             queryString = read(resource.getInputStream());
         } catch (IOException e) {
             logger.error("List catalogs failed {}", e.getMessage(), e);
-            return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new RuntimeException(e.getMessage());
         }
 
+        List<Catalog> result = new ArrayList<>();
         Query query = getQuery(queryString);
 
         try (QueryExecution qe = getQueryExecution(query)) {
             ResultSet resultset = qe.execSelect();
-            int count = 0;
-
-            StringBuilder builder = new StringBuilder();
-
-            builder.append("<html>");
-            builder.append("<head>");
-            builder.append("<link rel='stylesheet' href='/static/bootstrap.min.css' media='all'/>");
-            builder.append("<link rel='stylesheet' href='/static/styles.css' media='all'/>");
-            builder.append("</head>");
-            builder.append("<body>");
-            builder.append("<h1>Velg katalog for nedlasting</h1>");
-            builder.append("<p>Du kan velge mellom følgende formater: turtle, json-ld eller rdf/xml. Bruk accept header (text/turtle, application/ld+json, application/rdf+xml) i restkallet eller format parameter format=(ttl, json, rdf)</p>");
 
             while (resultset.hasNext()) {
-                count++;
                 QuerySolution qs = resultset.next();
-                String catalogName = qs.get("cname").asLiteral().getString();
+
+                Literal title = qs.get("cname").asLiteral();
+                String titleLanguage = title.getLanguage();
+                String titleString = title.getString();
+
                 String catalogUri = qs.get("catalog").asResource().getURI();
-                String publisherName = qs.get("pname").asLiteral().getString();
-                String publisherUri = qs.get("publisher").asResource().getURI();
 
-                builder.append("<div class=\"fdk-label-distribution fdk-label-distribution-offentlig\">\n");
-                builder.append("<i class=\"fa fa-download fdk-fa-left\"></i>\n");
-                builder.append("<a class='fdk-distribution-format' href='" + "/catalogs?id=" + catalogUri + "&format=ttl'>" + catalogName + "</a>\n");
-                builder.append(("</div>\n"));
+                Catalog catalog = new Catalog();
+                catalog.setUri(catalogUri);
+                catalog.setTitle(new HashMap<>());
+                catalog.getTitle().put(titleLanguage, titleString);
+
+                result.add(catalog);
             }
 
-            builder.append("</body>");
-            builder.append("</html>");
 
-            if (count > 0) {
-                return new ResponseEntity<>(builder.toString(), HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>("No catalogs found.", HttpStatus.NOT_FOUND);
-            }
         } catch (Exception e) {
-            logger.error("No catalogs found", e);
-            return new ResponseEntity<>("No catalogs found: " + e.getClass().getName(),
-                    HttpStatus.NOT_FOUND);
+            logger.error("Query to find catalogs failed: ", e);
+            throw new RuntimeException("Query to find catalogs failed: " + e.getMessage());
+        }
+
+        return result;
+    }
+
+
+    /**
+     * Lists catalogs in a simple html format
+     *
+     * @return html list of catalogs
+     */
+    @CrossOrigin
+    @ApiOperation(value = "Returns a HTML list of catalogs.", response = Catalog.class)
+    @RequestMapping(value = "/catalogs",
+            method = GET,
+            produces = "text/html")
+    public ResponseEntity<String> getCatalogs() {
+
+        List<Catalog> catalogs;
+
+        // fail early
+        try {
+            catalogs = allCatalogs();
+        } catch (Exception e) {
+            logger.error("List catalogs failed {}", e.getMessage(), e);
+            return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("<html>");
+        builder.append("<head>");
+        builder.append("<link rel='stylesheet' href='/static/bootstrap.min.css' media='all'/>");
+        builder.append("<link rel='stylesheet' href='/static/styles.css' media='all'/>");
+        builder.append("</head>");
+        builder.append("<body>");
+        builder.append("<h1>Velg katalog for nedlasting</h1>");
+        builder.append("<p>Du kan velge mellom følgende formater: turtle, json-ld eller rdf/xml. Bruk accept header (text/turtle, application/ld+json, application/rdf+xml) i restkallet eller format parameter format=(ttl, json, rdf)</p>");
+
+        int count = 0;
+        for (Catalog catalog : catalogs) {
+            if (catalog.getTitle() == null || catalog.getUri() == null) {
+                continue;
+            }
+            count++;
+            StringBuilder catalogName = new StringBuilder();
+            boolean moreThanOneName = false;
+            for (String language : catalog.getTitle().keySet()) {
+                if (moreThanOneName) {
+                    catalogName.append(" / ");
+                }
+                catalogName.append(catalog.getTitle().get(language));
+                moreThanOneName = true;
+            }
+
+            String catalogUri = catalog.getUri();
+
+            builder.append("<div class=\"fdk-label-distribution fdk-label-distribution-offentlig\">\n");
+            builder.append("<i class=\"fa fa-download fdk-fa-left\"></i>\n");
+            builder.append("<a class='fdk-distribution-format' href='" + "/catalogs?id=" + catalogUri + "&format=ttl'>").append(catalogName).append("</a>\n");
+            builder.append(("</div>\n"));
+        }
+
+        builder.append("</body>");
+        builder.append("</html>");
+
+        if (count > 0) {
+            return new ResponseEntity<>(builder.toString(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("No catalogs found.", HttpStatus.NOT_FOUND);
         }
 
     }
@@ -165,20 +215,20 @@ public class CatalogService {
     /**
      * API to find dataset based on id from .../dataset?id={id}
      *
-     * @param id           of dataset to find
+     * @param uri           of dataset to find
      * @param acceptHeader accepted format
      * @return Formatted response based on acceptHeader {@link SupportedFormat}
      */
     @CrossOrigin
-    @ApiOperation(value = "Returns a specific dataset in accordance with the DCAT-AP-NO standard in one out of the three supported RDF formats.",
+    @ApiOperation(value = "Returns a dataset description as it was imported into the RDF-database (before indexing in Elasticsearch). Follows DCAT-AP-NO standard in one out of the three supported RDF formats.",
             notes = "The three formats are: text/turtle, application/ld+json and application/rdf+xml", response = Dataset.class)
-    @RequestMapping(value = "/dataset",
+    @RequestMapping(value = "/catalogs/datasets",
             method = GET,
             consumes = MediaType.ALL_VALUE,
             produces = {"text/turtle", "application/ld+json", "application/rdf+xml"})
     public ResponseEntity<String> getDatasetDcat(
-            @ApiParam("The id of the dataset. The id is a uuid given by the harvester application.")
-            @RequestParam(value = "id") String id,
+            @ApiParam("The uri of the dataset. The uri is given in the DCAT description.")
+            @RequestParam(value = "uri") String uri,
 
             @ApiParam("The result's format. An alternative to Accept header: json for json-ld, ttl -for turtle, xml or rdf for rdf-xml")
             @RequestParam(value = "format", required = false) String format,
@@ -186,7 +236,7 @@ public class CatalogService {
             @ApiParam("The result's format. Alternative to format query string: text/turtle, application/ld+json, application/rdf+xml")
             @RequestHeader(value = "Accept", defaultValue = "*/*", required = false) String acceptHeader) {
 
-        ResponseEntity<String> responseBody = invokeFusekiQuery(id, format, acceptHeader, DATASET_QUERY_FILENAME);
+        ResponseEntity<String> responseBody = invokeFusekiQuery(uri, format, acceptHeader, DATASET_QUERY_FILENAME);
 
         if (responseBody != null) {
             return responseBody;

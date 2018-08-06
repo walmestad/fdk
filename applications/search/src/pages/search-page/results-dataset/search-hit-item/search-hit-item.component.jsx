@@ -3,23 +3,17 @@ import PropTypes from 'prop-types';
 import * as _ from 'lodash';
 import cx from 'classnames';
 import { Link } from 'react-router-dom';
+import _get from 'lodash/get';
+import _capitalize from 'lodash/capitalize';
 
 import { DistributionFormat } from '../../../../components/distribution-format/distribution-format.component';
 import localization from '../../../../lib/localization';
-import {
-  getTranslateText,
-  getLanguageFromUrl
-} from '../../../../lib/translateText';
-import { getDistributionTypeByUri } from '../../../../redux/reducers/index';
+import { getTranslateText } from '../../../../lib/translateText';
+import { getDistributionTypeByUri } from '../../../../redux/modules/distributionType';
 import { DatasetLabelNational } from '../../../../components/dataset-label-national/dataset-label-national.component';
 import './search-hit-item.scss';
 
-const renderFormats = (
-  source,
-  code,
-  distributionTypeItems,
-  selectedLanguageCode
-) => {
+const renderFormats = (source, code, distributionTypeItems) => {
   const { distribution } = source;
 
   const children = (distributions, code) => {
@@ -37,10 +31,7 @@ const renderFormats = (
             type
           );
           if (distributionType !== null && distributionType.length > 0) {
-            type = getTranslateText(
-              distributionType[0].prefLabel,
-              selectedLanguageCode
-            );
+            type = getTranslateText(distributionType[0].prefLabel);
           } else {
             type = null;
           }
@@ -67,26 +58,25 @@ const renderFormats = (
 
 const renderPublisher = source => {
   const { publisher } = source;
-  if (publisher && publisher.name) {
+  const publisherPrefLabel =
+    getTranslateText(_get(publisher, ['prefLabel'])) ||
+    _capitalize(_get(publisher, 'name', ''));
+
+  if (publisherPrefLabel) {
     return (
       <span>
         <span className="uu-invisible" aria-hidden="false">
           Datasettet
         </span>
         {localization.search_hit.owned}&nbsp;
-        <span className="fdk-strong-virksomhet">
-          {publisher && publisher.name
-            ? publisher.name.charAt(0) +
-              publisher.name.substring(1).toLowerCase()
-            : ''}
-        </span>
+        <span className="fdk-strong-virksomhet">{publisherPrefLabel}</span>
       </span>
     );
   }
   return null;
 };
 
-const renderThemes = (source, selectedLanguageCode) => {
+const renderThemes = source => {
   let themeNodes;
   const { theme } = source;
   if (theme) {
@@ -98,7 +88,7 @@ const renderThemes = (source, selectedLanguageCode) => {
         <span className="uu-invisible" aria-hidden="false">
           Datasettets tema.
         </span>
-        {getTranslateText(singleTheme.title, selectedLanguageCode)}
+        {getTranslateText(singleTheme.title)}
       </div>
     ));
   }
@@ -116,23 +106,20 @@ const renderSample = source => {
 };
 
 export const SearchHitItem = props => {
-  const { selectedLanguageCode, distributionTypeItems } = props;
-  const langCode = getLanguageFromUrl();
-  const langParam = langCode ? `?lang=${langCode}` : '';
+  const { distributionTypeItems } = props;
   const { _source } = props.result;
 
-  // Read fields from search-hit, use correct selectedLanguageCode field if specified.
   const hitId = encodeURIComponent(_source.id);
   let { title, description, objective } = _source;
   const { provenance } = _source;
   if (title) {
-    title = getTranslateText(_source.title, selectedLanguageCode);
+    title = getTranslateText(_source.title);
   }
   if (description) {
-    description = getTranslateText(_source.description, selectedLanguageCode);
+    description = getTranslateText(_source.description);
   }
   if (objective) {
-    objective = getTranslateText(_source.objective, selectedLanguageCode);
+    objective = getTranslateText(_source.objective);
   }
 
   if (description && description.length > 220) {
@@ -140,10 +127,9 @@ export const SearchHitItem = props => {
   } else if (description && description.length < 150 && objective) {
     const freeLength = 200 - description.length;
     const objectiveLength = objective.length;
-    description = `${description} ${objective.substr(
-      0,
-      200 - freeLength
-    )} ${objectiveLength > freeLength ? '...' : ''}`;
+    description = `${description} ${objective.substr(0, 200 - freeLength)} ${
+      objectiveLength > freeLength ? '...' : ''
+    }`;
   }
   const link = `/datasets/${hitId}`;
 
@@ -182,7 +168,7 @@ export const SearchHitItem = props => {
     <Link
       className="fdk-a-search-hit"
       title={`${localization.result.dataset}: ${title}`}
-      to={`${link}${langParam}`}
+      to={link}
     >
       <span className="uu-invisible" aria-hidden="false">
         Søketreff.
@@ -191,7 +177,7 @@ export const SearchHitItem = props => {
         <h2>{title}</h2>
         <div className="fdk-dataset-themes">
           {renderPublisher(_source)}
-          {renderThemes(_source, selectedLanguageCode)}
+          {renderThemes(_source)}
           {provenance &&
             provenance.code === 'NASJONAL' && <DatasetLabelNational />}
         </div>
@@ -203,12 +189,7 @@ export const SearchHitItem = props => {
         </p>
         <div className={distributionClass}>
           <strong>{accessRightsLabel}</strong>
-          {renderFormats(
-            _source,
-            authorityCode,
-            distributionTypeItems,
-            selectedLanguageCode
-          )}
+          {renderFormats(_source, authorityCode, distributionTypeItems)}
           {renderSample(_source)}
         </div>
       </div>
@@ -218,12 +199,10 @@ export const SearchHitItem = props => {
 
 SearchHitItem.defaultProps = {
   result: null,
-  distributionTypeItems: null,
-  selectedLanguageCode: 'nb'
+  distributionTypeItems: null
 };
 
 SearchHitItem.propTypes = {
   result: PropTypes.shape({}),
-  distributionTypeItems: PropTypes.array,
-  selectedLanguageCode: PropTypes.string
+  distributionTypeItems: PropTypes.array
 };

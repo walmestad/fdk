@@ -8,9 +8,10 @@ services:
     ports:
        - "3000:3000"
     volumes:
-      -   ./applications/search/src:/usr/src/app/src:rw
+      - ./applications/search/src:/usr/src/app/src:rw
     environment:
       - REDUX_LOG=${REDUX_LOG}
+      - NODE_ENV=${NODE_ENV}
 
   search-api:
     restart: always
@@ -74,6 +75,11 @@ services:
     environment:
       - cluster.name=fellesdatakatalog
 
+  elasticsearch-copy:
+    restart: always
+    volumes:
+    - ./data/escopy:/escopydata
+
   dev-management:
     restart: always
     ports:
@@ -92,10 +98,11 @@ services:
   nginx-registration-ssl:
     image: dcatno/nginx-registration-ssl:latest
     restart: always
-    depends_on:
-      - nginx-registration
     ports:
       - "8098:443"
+    depends_on:
+      - nginx-registration
+      - registration-react
 
   registration-api:
     restart: always
@@ -114,6 +121,7 @@ services:
      - registrationApi_ipStorePassword=${registrationApi_ipStorePassword}
 
   registration-react:
+    build: ./applications/registration-react
     restart: always
     command: npm start
     ports:
@@ -121,9 +129,8 @@ services:
     volumes:
      - ./applications/registration-react/src:/usr/src/app/src:rw
     environment:
-     - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
-     - QUERY_SERVICE_URL=/reference-data
-     - VALIDATOR_URL=http://localhost:8086
+     - REGISTRATION_LANGUAGE=${REGISTRATION_LANGUAGE}
+     - NODE_ENV=${NODE_ENV}
 
   registration-auth:
       restart: always
@@ -132,39 +139,12 @@ services:
       environment:
         - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
 
-  registration-validator:
-    restart: always
-    ports:
-      - "8086:8080"
-    environment:
-      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
-
   reference-data:
     restart: always
     ports:
       - "8100:8080"
     environment:
      - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
-
-
-#  logstash:
-#    image: "dcatno/logstash:${TAG}"
-#    entrypoint: /opt/logstash/bin/logstash -f /etc/logstash/conf.d/logstash.conf
-#    volumes:
-#      - ./logs:/usr/local/tomcat/logs:rw
-#    depends_on:
-#      - elasticsearch
-
-  kibana:
-    ports:
-      - "5601:5601"
-    environment:
-      - ELASTICSEARCH_URL=http://elasticsearch:9200
-    #volumes:
-    #      - ./data/kibana/config/:/opt/kibana/config/
-    depends_on:
-      - elasticsearch
-
 
   e2e:
     build: ./applications/e2e

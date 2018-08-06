@@ -1,3 +1,4 @@
+import 'whatwg-fetch';
 import React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -5,8 +6,8 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import ReactGA from 'react-ga';
 
 import { configureStore } from './redux/configureStore';
-import App from './app/app';
 import { ConnectedFeatureToggleProvider } from './components/connected-feature-toggle-provider';
+import { ConnectedApp } from './app/connected-app';
 
 if (window.location.hostname.indexOf('fellesdatakatalog.brreg.no') !== -1) {
   ReactGA.initialize('UA-110098477-1'); // prod
@@ -42,12 +43,10 @@ ReactDOM.render(
   <Provider store={store}>
     <ConnectedFeatureToggleProvider>
       <BrowserRouter>
-        <div className="d-flex flex-column site">
-          <div className="site-content d-flex flex-column">
-            <Route path="/" component={Analytics} />
-            <Route path="/" component={App} />
-          </div>
-        </div>
+        <React.Fragment>
+          <Route path="/" component={Analytics} />
+          <Route path="/" component={ConnectedApp} />
+        </React.Fragment>
       </BrowserRouter>
     </ConnectedFeatureToggleProvider>
   </Provider>,

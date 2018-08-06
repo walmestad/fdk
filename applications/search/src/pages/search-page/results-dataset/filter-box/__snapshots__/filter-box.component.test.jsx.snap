@@ -20,12 +20,20 @@ exports[`should render FilterBox correctly 1`] = `
     </button>
   </div>
   <Collapse
-    dimension="height"
-    getDimensionValue={[Function]}
-    in={true}
+    appear={false}
+    enter={true}
+    exit={true}
+    in={false}
+    isOpen={true}
     mountOnEnter={false}
-    timeout={300}
-    transitionAppear={false}
+    onEnter={[Function]}
+    onEntered={[Function]}
+    onEntering={[Function]}
+    onExit={[Function]}
+    onExited={[Function]}
+    onExiting={[Function]}
+    tag="div"
+    timeout={350}
     unmountOnExit={false}
   >
     <div
@@ -42,6 +50,7 @@ exports[`should render FilterBox correctly 1`] = `
             itemKey={0}
             key="0"
             label="GOVE"
+            labelRaw={null}
             onClick={[MockFunction]}
             themesItems={
               Object {
@@ -71,6 +80,7 @@ exports[`should render FilterBox correctly 1`] = `
             itemKey={0}
             key="0"
             label="EDUC"
+            labelRaw={null}
             onClick={[MockFunction]}
             themesItems={
               Object {
@@ -100,6 +110,7 @@ exports[`should render FilterBox correctly 1`] = `
             itemKey={0}
             key="0"
             label="HEAL"
+            labelRaw={null}
             onClick={[MockFunction]}
             themesItems={
               Object {
@@ -129,6 +140,7 @@ exports[`should render FilterBox correctly 1`] = `
             itemKey={0}
             key="0"
             label="Ukjent"
+            labelRaw={null}
             onClick={[MockFunction]}
             themesItems={
               Object {
@@ -158,6 +170,7 @@ exports[`should render FilterBox correctly 1`] = `
             itemKey={0}
             key="0"
             label="AGRI"
+            labelRaw={null}
             onClick={[MockFunction]}
             themesItems={
               Object {
@@ -182,12 +195,20 @@ exports[`should render FilterBox correctly 1`] = `
           />
           <div>
             <Collapse
-              dimension="height"
-              getDimensionValue={[Function]}
+              appear={false}
+              enter={true}
+              exit={true}
               in={false}
+              isOpen={false}
               mountOnEnter={false}
-              timeout={300}
-              transitionAppear={false}
+              onEnter={[Function]}
+              onEntered={[Function]}
+              onEntering={[Function]}
+              onExit={[Function]}
+              onExited={[Function]}
+              onExiting={[Function]}
+              tag="div"
+              timeout={350}
               unmountOnExit={false}
             >
               <div>
@@ -198,6 +219,7 @@ exports[`should render FilterBox correctly 1`] = `
                   itemKey={0}
                   key="0"
                   label="TEST"
+                  labelRaw={null}
                   onClick={[MockFunction]}
                   themesItems={
                     Object {
@@ -226,7 +248,7 @@ exports[`should render FilterBox correctly 1`] = `
               className="fdk-toggleList"
               onClick={[Function]}
             >
-              Vis flere
+              Show more
             </button>
           </div>
         </div>
@@ -256,12 +278,20 @@ exports[`should render FilterBox correctly with activeFilter 1`] = `
     </button>
   </div>
   <Collapse
-    dimension="height"
-    getDimensionValue={[Function]}
-    in={true}
+    appear={false}
+    enter={true}
+    exit={true}
+    in={false}
+    isOpen={true}
     mountOnEnter={false}
-    timeout={300}
-    transitionAppear={false}
+    onEnter={[Function]}
+    onEntered={[Function]}
+    onEntering={[Function]}
+    onExit={[Function]}
+    onExited={[Function]}
+    onExiting={[Function]}
+    tag="div"
+    timeout={350}
     unmountOnExit={false}
   >
     <div
@@ -278,6 +308,7 @@ exports[`should render FilterBox correctly with activeFilter 1`] = `
             itemKey={0}
             key="0"
             label="GOVE"
+            labelRaw={null}
             onClick={[MockFunction]}
             themesItems={
               Object {
@@ -307,6 +338,7 @@ exports[`should render FilterBox correctly with activeFilter 1`] = `
             itemKey={0}
             key="0"
             label="EDUC"
+            labelRaw={null}
             onClick={[MockFunction]}
             themesItems={
               Object {
@@ -336,6 +368,7 @@ exports[`should render FilterBox correctly with activeFilter 1`] = `
             itemKey={0}
             key="0"
             label="HEAL"
+            labelRaw={null}
             onClick={[MockFunction]}
             themesItems={
               Object {
@@ -365,6 +398,7 @@ exports[`should render FilterBox correctly with activeFilter 1`] = `
             itemKey={0}
             key="0"
             label="Ukjent"
+            labelRaw={null}
             onClick={[MockFunction]}
             themesItems={
               Object {
@@ -394,6 +428,7 @@ exports[`should render FilterBox correctly with activeFilter 1`] = `
             itemKey={0}
             key="0"
             label="AGRI"
+            labelRaw={null}
             onClick={[MockFunction]}
             themesItems={
               Object {
@@ -418,12 +453,20 @@ exports[`should render FilterBox correctly with activeFilter 1`] = `
           />
           <div>
             <Collapse
-              dimension="height"
-              getDimensionValue={[Function]}
+              appear={false}
+              enter={true}
+              exit={true}
               in={false}
+              isOpen={false}
               mountOnEnter={false}
-              timeout={300}
-              transitionAppear={false}
+              onEnter={[Function]}
+              onEntered={[Function]}
+              onEntering={[Function]}
+              onExit={[Function]}
+              onExited={[Function]}
+              onExiting={[Function]}
+              tag="div"
+              timeout={350}
               unmountOnExit={false}
             >
               <div>
@@ -434,6 +477,7 @@ exports[`should render FilterBox correctly with activeFilter 1`] = `
                   itemKey={0}
                   key="0"
                   label="TEST"
+                  labelRaw={null}
                   onClick={[MockFunction]}
                   themesItems={
                     Object {
@@ -462,7 +506,7 @@ exports[`should render FilterBox correctly with activeFilter 1`] = `
               className="fdk-toggleList"
               onClick={[Function]}
             >
-              Vis flere
+              Show more
             </button>
           </div>
         </div>
@@ -492,12 +536,20 @@ exports[`should render FilterBox correctly with activeFilter 2`] = `
     </button>
   </div>
   <Collapse
-    dimension="height"
-    getDimensionValue={[Function]}
-    in={true}
+    appear={false}
+    enter={true}
+    exit={true}
+    in={false}
+    isOpen={true}
     mountOnEnter={false}
-    timeout={300}
-    transitionAppear={false}
+    onEnter={[Function]}
+    onEntered={[Function]}
+    onEntering={[Function]}
+    onExit={[Function]}
+    onExited={[Function]}
+    onExiting={[Function]}
+    tag="div"
+    timeout={350}
     unmountOnExit={false}
   >
     <div

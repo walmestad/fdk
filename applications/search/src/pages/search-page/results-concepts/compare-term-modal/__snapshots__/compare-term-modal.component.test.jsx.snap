@@ -10,59 +10,50 @@ exports[`should render CompareTermModal correctly with one term 1`] = `
       className="fa fa-chevron-up fdk-color0"
     />
      
-    Vis sammenligning
+    Show comparison
   </button>
   <Modal
-    animation={true}
     autoFocus={true}
     backdrop={true}
-    bsClass="modal"
-    bsSize="large"
-    dialogClassName="fdk-modal"
-    dialogComponentClass={[Function]}
-    enforceFocus={true}
-    keyboard={true}
-    manager={
-      ModalManager {
-        "add": [Function],
-        "containers": Array [],
-        "data": Array [],
-        "handleContainerOverflow": true,
-        "hideSiblingNodes": true,
-        "isTopModal": [Function],
-        "modals": Array [],
-        "remove": [Function],
+    backdropTransition={
+      Object {
+        "mountOnEnter": true,
+        "timeout": 150,
       }
     }
-    onHide={[Function]}
-    renderBackdrop={[Function]}
-    restoreFocus={true}
-    show={false}
+    centered={false}
+    className="fdk-modal modal-lg"
+    fade={true}
+    isOpen={false}
+    keyboard={true}
+    modalTransition={
+      Object {
+        "timeout": 300,
+      }
+    }
+    onClosed={[Function]}
+    onOpened={[Function]}
+    role="dialog"
+    toggle={[Function]}
+    zIndex={1050}
   >
     <ModalHeader
-      bsClass="modal-header"
-      closeButton={false}
-      closeLabel="Close"
+      closeAriaLabel="Close"
+      tag="h5"
+      toggle={[Function]}
+      wrapTag="div"
     >
-      <ModalTitle
-        bsClass="modal-title"
-        componentClass="h4"
-        onClick={[Function]}
-      >
-        <i
-          className="fa fa-chevron-down fdk-fa-left fa-lg fdk-color0"
-        />
-         
-        Skjul sammenligning
-      </ModalTitle>
+      <i
+        className="fa fa-chevron-down fdk-fa-left fa-lg fdk-color0"
+      />
+       
+      Comparison
     </ModalHeader>
     <ModalBody
-      bsClass="modal-body"
-      componentClass="div"
+      tag="div"
     >
       <CompareTermModalContent
         cols="col-md-6"
-        selectedLanguageCode={null}
         terms={
           Array [
             Object {
@@ -138,7 +129,7 @@ exports[`should render CompareTermModal correctly with one term 1`] = `
               className="fa fa-times fdk-color0"
             />
              
-            Fjern begrep
+            Remove concept
           </button>
         </div>
       </div>
@@ -153,7 +144,7 @@ exports[`should render CompareTermModal correctly with one term 1`] = `
         className="fa fa-chevron-up fdk-color0"
       />
        
-      Du har lagt 1 begrep til sammenligning - klikk for å vise
+      You have added 1 concepts to comparison - click to show
     </button>
   </div>
 </div>
@@ -169,59 +160,50 @@ exports[`should render CompareTermModal correctly with props 1`] = `
       className="fa fa-chevron-up fdk-color0"
     />
      
-    Vis sammenligning
+    Show comparison
   </button>
   <Modal
-    animation={true}
     autoFocus={true}
     backdrop={true}
-    bsClass="modal"
-    bsSize="large"
-    dialogClassName="fdk-modal"
-    dialogComponentClass={[Function]}
-    enforceFocus={true}
-    keyboard={true}
-    manager={
-      ModalManager {
-        "add": [Function],
-        "containers": Array [],
-        "data": Array [],
-        "handleContainerOverflow": true,
-        "hideSiblingNodes": true,
-        "isTopModal": [Function],
-        "modals": Array [],
-        "remove": [Function],
+    backdropTransition={
+      Object {
+        "mountOnEnter": true,
+        "timeout": 150,
       }
     }
-    onHide={[Function]}
-    renderBackdrop={[Function]}
-    restoreFocus={true}
-    show={false}
+    centered={false}
+    className="fdk-modal modal-lg"
+    fade={true}
+    isOpen={false}
+    keyboard={true}
+    modalTransition={
+      Object {
+        "timeout": 300,
+      }
+    }
+    onClosed={[Function]}
+    onOpened={[Function]}
+    role="dialog"
+    toggle={[Function]}
+    zIndex={1050}
   >
     <ModalHeader
-      bsClass="modal-header"
-      closeButton={false}
-      closeLabel="Close"
+      closeAriaLabel="Close"
+      tag="h5"
+      toggle={[Function]}
+      wrapTag="div"
     >
-      <ModalTitle
-        bsClass="modal-title"
-        componentClass="h4"
-        onClick={[Function]}
-      >
-        <i
-          className="fa fa-chevron-down fdk-fa-left fa-lg fdk-color0"
-        />
-         
-        Skjul sammenligning
-      </ModalTitle>
+      <i
+        className="fa fa-chevron-down fdk-fa-left fa-lg fdk-color0"
+      />
+       
+      Comparison
     </ModalHeader>
     <ModalBody
-      bsClass="modal-body"
-      componentClass="div"
+      tag="div"
     >
       <CompareTermModalContent
         cols="col-md-6"
-        selectedLanguageCode={null}
         terms={
           Array [
             Object {
@@ -404,7 +386,7 @@ exports[`should render CompareTermModal correctly with props 1`] = `
               className="fa fa-times fdk-color0"
             />
              
-            Fjern begrep
+            Remove concept
           </button>
         </div>
         <div
@@ -419,7 +401,7 @@ exports[`should render CompareTermModal correctly with props 1`] = `
               className="fa fa-times fdk-color0"
             />
              
-            Fjern begrep
+            Remove concept
           </button>
         </div>
       </div>
@@ -434,7 +416,7 @@ exports[`should render CompareTermModal correctly with props 1`] = `
         className="fa fa-chevron-up fdk-color0"
       />
        
-      Du har lagt 2 begrep til sammenligning - klikk for å vise
+      You have added 2 concepts to comparison - click to show
     </button>
   </div>
 </div>

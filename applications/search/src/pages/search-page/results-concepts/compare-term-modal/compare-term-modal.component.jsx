@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, ModalHeader, ModalTitle, ModalBody } from 'react-bootstrap';
+import { Modal, ModalBody, ModalHeader } from 'reactstrap';
 import PropTypes from 'prop-types';
 
 import localization from '../../../../lib/localization';
@@ -105,24 +105,17 @@ export class CompareTermModal extends React.Component {
           {localization.compare.openCompare}
         </button>
         <Modal
-          show={this.state.showModal}
-          onHide={this.close}
-          bsSize="large"
-          dialogClassName="fdk-modal"
+          isOpen={this.state.showModal}
+          toggle={this.close}
+          className="fdk-modal modal-lg"
         >
-          <ModalHeader>
-            <ModalTitle onClick={this.close}>
-              <i className="fa fa-chevron-down fdk-fa-left fa-lg fdk-color0" />
-              &nbsp;
-              {localization.compare.hideCompare}
-            </ModalTitle>
+          <ModalHeader toggle={this.close}>
+            <i className="fa fa-chevron-down fdk-fa-left fa-lg fdk-color0" />
+            &nbsp;
+            {localization.compare.compare}
           </ModalHeader>
           <ModalBody>
-            <CompareTermModalContent
-              terms={this.props.terms}
-              selectedLanguageCode={this.props.selectedLanguageCode}
-              cols={cols}
-            />
+            <CompareTermModalContent terms={this.props.terms} cols={cols} />
             <div className="row">{removeTerms(this.props.terms)}</div>
           </ModalBody>
         </Modal>
@@ -135,12 +128,10 @@ export class CompareTermModal extends React.Component {
 }
 
 CompareTermModal.defaultProps = {
-  terms: null,
-  selectedLanguageCode: null
+  terms: null
 };
 
 CompareTermModal.propTypes = {
   terms: PropTypes.array,
-  handleDeleteTerm: PropTypes.func.isRequired,
-  selectedLanguageCode: PropTypes.string
+  handleDeleteTerm: PropTypes.func.isRequired
 };

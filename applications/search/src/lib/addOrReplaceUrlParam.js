@@ -9,7 +9,7 @@ export function removeParam(key, sourceURL) {
   if (queryString !== '') {
     paramsArray = queryString.split('&');
     for (let i = paramsArray.length - 1; i >= 0; i -= 1) {
-      param = paramsArray[i].split('=')[0];
+      [param] = paramsArray[i].split('=');
       if (param === key) {
         paramsArray.splice(i, 1);
       }
@@ -20,11 +20,11 @@ export function removeParam(key, sourceURL) {
 }
 
 /**
-* Add a URL parameter (or modify if already exists)
-* @param {url}   string  url
-* @param {param} string  the key to set
-* @param {value} string  value
-*/
+ * Add a URL parameter (or modify if already exists)
+ * @param {url}   string  url
+ * @param {param} string  the key to set
+ * @param {value} string  value
+ */
 export function addOrReplaceParam(url, param, value) {
   const encodedParam = encodeURIComponent(param);
   const r = `([&?]|&amp;)${encodedParam}\\b(?:=(?:[^&#]*))*`;
@@ -40,23 +40,6 @@ export function addOrReplaceParam(url, param, value) {
   }
   if (value === '') {
     return removeParam(encodedParam, url);
-  }
-  return a.href;
-}
-export function addOrReplaceParamWithoutEncoding(url, param, value) {
-  const r = `([&?]|&amp;)${param}\\b(?:=(?:[^&#]*))*`;
-  const a = document.createElement('a');
-  const regex = new RegExp(r);
-  const str = param + (value ? `=${encodeURIComponent(value)}` : '');
-  a.href = url;
-  const q = a.search.replace(regex, `$1${str}`);
-  if (q === a.search) {
-    a.search += (a.search ? '&' : '') + str;
-  } else {
-    a.search = q;
-  }
-  if (value === '') {
-    return removeParam(param, url);
   }
   return a.href;
 }
@@ -77,25 +60,23 @@ export function addOrReplaceParamWithoutURL(uri, key, value) {
 }
 
 /**
- * Returns language code from url parameter "lang", if exists.
+ * Returns param from url, if exists.
  * @returns {null}
  */
 export function getParamFromUrl(param) {
-  const queryObj = qs.parse(window.location.search.substr(1));
+  const queryObj = qs.parse(window.location.search, {
+    ignoreQueryPrefix: true
+  });
   if (queryObj && queryObj[param]) {
     return queryObj[param];
   }
   return null;
 }
 
-/**
- * Returns language code from url parameter "lang", if exists.
- * @returns {null}
- */
-export function getParamFromString(url, param) {
-  const queryObj = qs.parse(url.substr(1));
-  if (queryObj && queryObj[param]) {
-    return queryObj[param];
-  }
-  return null;
+export function getParamFromLocation(location, param) {
+  const queryObj = qs.parse(location && location.search, {
+    ignoreQueryPrefix: true
+  });
+
+  return queryObj && queryObj[param];
 }

@@ -1,23 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as _ from 'lodash';
+import _get from 'lodash/get';
+import _capitalize from 'lodash/capitalize';
 
 import localization from '../../../../lib/localization';
-import {
-  getTranslateText,
-  getLanguageFromUrl
-} from '../../../../lib/translateText';
+import { getTranslateText } from '../../../../lib/translateText';
 import './concepts-hit-item.scss';
 
 const renderPublisher = source => {
   const { creator } = source;
-  if (creator && creator.name) {
+
+  const publisherPrefLabel =
+    getTranslateText(_get(creator, ['prefLabel'])) ||
+    _capitalize(_get(creator, 'name', ''));
+
+  if (publisherPrefLabel) {
     return (
       <span className="inline-block fdk-strong-virksomhet">
         <span className="uu-invisible" aria-hidden="false">
           Utgiver.
         </span>
-        {creator.name}
+        {publisherPrefLabel}
       </span>
     );
   }
@@ -32,7 +36,6 @@ const renderThemes = source => {
       return (
         <span
           key={`dataset-description-inScheme-${index}`}
-          id={`dataset-description-inScheme-${index}`}
           className="fdk-label"
         >
           <span className="uu-invisible" aria-hidden="false">
@@ -69,32 +72,28 @@ const renderLaw = _source => {
   return null;
 };
 
-const renderNote = (source, selectedLanguageCode) => {
+const renderNote = source => {
   const { note } = source;
   if (note) {
-    return (
-      <p className="fdk-p-search-hit">
-        {getTranslateText(note, selectedLanguageCode)}
-      </p>
-    );
+    return <p className="fdk-p-search-hit">{getTranslateText(note)}</p>;
   }
   return null;
 };
 
-const renderAltLabel = (source, selectedLanguageCode) => {
+const renderAltLabel = source => {
   const { altLabel } = source;
   const children = items =>
     items.map((item, index) => {
       if (index > 0) {
         return (
           <span key={`concepts-altlabel-${index}`}>
-            {`, ${getTranslateText(item, selectedLanguageCode)}`}
+            {`, ${getTranslateText(item)}`}
           </span>
         );
       }
       return (
         <span key={`concepts-altlabel-${index}`}>
-          {`${getTranslateText(item, selectedLanguageCode)}`}
+          {`${getTranslateText(item)}`}
         </span>
       );
     });
@@ -112,13 +111,9 @@ const renderAltLabel = (source, selectedLanguageCode) => {
   return null;
 };
 
-const renderDocCount = (result, selectedLanguageCode) => {
+const renderDocCount = result => {
   const { _source } = result;
-  const lang = getLanguageFromUrl();
-  let langParam = '';
-  if (lang) {
-    langParam = `&lang=${lang}`;
-  }
+
   const subjectCountItem = _source.datasets ? _source.datasets.length : 0;
   if (subjectCountItem > 0 && _source.prefLabel) {
     return (
@@ -126,10 +121,7 @@ const renderDocCount = (result, selectedLanguageCode) => {
         <a
           className="fdk-hit-dataset-count"
           title="Link til datasett med begrep"
-          href={`/?subject=${getTranslateText(
-            _source.prefLabel,
-            selectedLanguageCode
-          )}${langParam}`}
+          href={`/?subject=${getTranslateText(_source.prefLabel)}`}
         >
           {localization.terms.docCount} {subjectCountItem}{' '}
           {localization.terms.docCountPart2}
@@ -141,7 +133,7 @@ const renderDocCount = (result, selectedLanguageCode) => {
 };
 
 export const ConceptsHitItem = props => {
-  const { onAddTerm, selectedLanguageCode } = props;
+  const { onAddTerm } = props;
   const { _source } = props.result;
   const { prefLabel, definition, uri } = _source;
   const hitElementId = `concepts-hit-${encodeURIComponent(uri)}`;
@@ -150,12 +142,12 @@ export const ConceptsHitItem = props => {
   let termDescription;
 
   if (prefLabel) {
-    termTitle = getTranslateText(prefLabel, selectedLanguageCode);
+    termTitle = getTranslateText(prefLabel);
     termTitle =
       termTitle.charAt(0).toUpperCase() + termTitle.substring(1).toLowerCase();
   }
   if (definition) {
-    termDescription = getTranslateText(definition, selectedLanguageCode);
+    termDescription = getTranslateText(definition);
   }
 
   let toBeCompared = false;
@@ -174,31 +166,33 @@ export const ConceptsHitItem = props => {
         Søketreff begrep.
       </span>
       <div
-        className={`fdk-container-search-hit ${toBeCompared
-          ? 'toBeCompared'
-          : ''}`}
+        className={`fdk-container-search-hit ${
+          toBeCompared ? 'toBeCompared' : ''
+        }`}
       >
         {!toBeCompared && (
           <button
-            className="fdk-button fdk-button-default pull-right mt-3 visible-md visible-lg"
+            className="btn btn-primary fdk-button float-right mt-3 d-none d-lg-inline"
             onClick={() => {
               onAddTerm(_source);
             }}
             type="button"
           >
-            <span aria-hidden="true">+</span> {localization.compare.addCompare}
+            <span aria-hidden="true">+</span>
+            {localization.compare.addCompare}
           </button>
         )}
 
         {!toBeCompared && (
           <button
-            className="fdk-button fdk-button-default fdk-btn-compare visible-xs visible-sm"
+            className="fdk-button fdk-button-default fdk-btn-compare d-block d-lg-none"
             onClick={() => {
               onAddTerm(_source);
             }}
             type="button"
           >
-            <span aria-hidden="true">+</span> {localization.compare.addCompare}
+            <span aria-hidden="true">+</span>
+            {localization.compare.addCompare}
           </button>
         )}
 
@@ -222,9 +216,9 @@ export const ConceptsHitItem = props => {
 
         <hr />
 
-        {renderNote(_source, selectedLanguageCode)}
+        {renderNote(_source)}
 
-        {renderAltLabel(_source, selectedLanguageCode)}
+        {renderAltLabel(_source)}
 
         {renderDocCount(props.result)}
       </div>
@@ -234,13 +228,11 @@ export const ConceptsHitItem = props => {
 
 ConceptsHitItem.defaultProps = {
   result: null,
-  terms: null,
-  selectedLanguageCode: 'nb'
+  terms: null
 };
 
 ConceptsHitItem.propTypes = {
   result: PropTypes.shape({}),
   terms: PropTypes.array,
-  onAddTerm: PropTypes.func.isRequired,
-  selectedLanguageCode: PropTypes.string
+  onAddTerm: PropTypes.func.isRequired
 };

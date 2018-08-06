@@ -12,16 +12,20 @@ RUN mkdir /.pm2 && chmod 777 /.pm2
 WORKDIR /usr/src/app
 
 COPY package.json /usr/src/app/package.json
+COPY package-lock.json /usr/src/app/package-lock.json
 
 # Install app dependencies
 RUN npm install --only=production --loglevel=warn
-COPY . /usr/src/app/
+
+COPY server /usr/src/app/server
+COPY start.js /usr/src/app/
+COPY .babelrc /usr/src/app/
+COPY webpack.* /usr/src/app/
+
+# most volatile directory latest, in order to reuse layers.
+COPY src /usr/src/app/src
 
 RUN npm run build
-
-#RUN npm test
-
-#ENV NODE_ENV production
 
 EXPOSE 4300
 
