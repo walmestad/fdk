@@ -30,7 +30,6 @@ public class DatasetWithElasticSearchIT {
     @Value("${spring.data.elasticsearch.clusterNodes}")
     private String clusterNodes;
 
-
     @Value("${spring.data.elasticsearch.clusterName}")
     private String clusterName;
 
@@ -43,9 +42,9 @@ public class DatasetWithElasticSearchIT {
     @Autowired
     private DatasetRepository datasetRepository;
 
+
     @Test
     public void elasticsearchCanStoreData_usingTemplate() throws Exception {
-
         Dataset dataset = new Dataset("1");
         Map<String,String> languangeDescription = new HashMap<>();
         languangeDescription.put("no","test");
@@ -80,6 +79,5 @@ public class DatasetWithElasticSearchIT {
         Page<Dataset> all = datasetRepository.findByCatalogId("cat1", new PageRequest(0, 20));
 
         assertThat(all.getTotalElements(), is(2L));
-
     }
 }

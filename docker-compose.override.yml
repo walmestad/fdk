@@ -19,7 +19,10 @@ services:
       - "8083:8080"
     environment:
      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
+#     - application.elasticsearchHost=es01-fdk-01-ut1.regsys-nprd.brreg.no
      - application.elasticsearchHost=elasticsearch
+#     - clusterNode=es01-fdk-01-ut1.regsys-nprd.brreg.no
+     - clusterNode=elasticsearch
      - application.elasticsearchPort=9300
 
   nginx-search:
@@ -43,9 +46,13 @@ services:
      - fuseki.dcatServiceUri=http://fuseki:8080/fuseki/dcat
      - fuseki.adminServiceUri=http://fuseki:8080/fuseki/admin
      - application.crawlerThreadPoolSize=2
-     - application.elasticSearchHost=elasticsearch
+#     - application.elasticSearchHost=es01-fdk-01-ut1.regsys-nprd.brreg.no
+     - application.elasticsearchHost=elasticsearch
+#     - clusterNode=es01-fdk-01-ut1.regsys-nprd.brreg.no
+     - clusterNode=elasticsearch
      - application.elasticSearchPort=9300
-     - application.elasticSearchCluster=elasticsearch
+     - application.elasticSearchCluster=es01-fdk-ut1
+     - clusterName=es01-fdk-ut1
     volumes:
      - ./logs:/usr/local/tomcat/logs:rw
 
@@ -74,6 +81,7 @@ services:
       - ./data/esdata:/usr/share/elasticsearch/data
     environment:
       - cluster.name=fellesdatakatalog
+      - xpack.security.enabled=false
 
   elasticsearch-copy:
     restart: always
@@ -86,9 +94,13 @@ services:
       - "8085:8080"
     environment:
      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
+#     - application.elasticsearchHost=es01-fdk-01-ut1.regsys-nprd.brreg.no
      - application.elasticsearchHost=elasticsearch
+#     - clusterNode=es01-fdk-01-ut1.regsys-nprd.brreg.no
+     - clusterNode=elasticsearch
      - application.elasticsearchPort=9300
-     - application.elasticsearchCluster=elasticsearch
+     - application.elasticsearchCluster=es01-fdk-ut1
+     - clusterName=es01-fdk-ut1
      - application.fusekiHost=http://fuseki:8080
      - application.harvesterHost=http://harvester-api:8080
 
@@ -110,7 +122,7 @@ services:
       - "8079:8080"
     environment:
      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
-     - registrationAPI_clusterName=elasticsearch
+     - registrationAPI_clusterName=es01-fdk-ut1
      - registrationApi_altinnServiceUrl=http://registration-auth:8080
      - registrationApi_apikey=${registrationApi_apikey}
      - registrationApi_clientSSLCertificateKeystoreLocation=conf/dummy-client-SSL-cert.p12
@@ -145,6 +157,22 @@ services:
       - "8100:8080"
     environment:
      - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
+
+
+#  logstash:
+#    image: "dcatno/logstash:${TAG}"
+#    entrypoint: /opt/logstash/bin/logstash -f /etc/logstash/conf.d/logstash.conf
+#    volumes:
+#      - ./logs:/usr/local/tomcat/logs:rw
+
+  kibana:
+    ports:
+      - "5601:5601"
+    environment:
+      - ELASTICSEARCH_URL=http://es01-fdk-01-ut1.regsys-nprd.brreg.no:9200
+    #volumes:
+    #      - ./data/kibana/config/:/opt/kibana/config/
+
 
   e2e:
     build: ./applications/e2e
