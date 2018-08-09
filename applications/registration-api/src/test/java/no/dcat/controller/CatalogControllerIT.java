@@ -1,12 +1,14 @@
 package no.dcat.controller;
 
 import com.google.gson.Gson;
+import no.dcat.datastore.ElasticDockerRule;
 import no.dcat.model.Catalog;
 import no.dcat.service.CatalogRepository;
 import no.dcat.shared.admin.DcatSourceDto;
 import no.dcat.shared.testcategories.IntegrationTest;
 import org.apache.commons.codec.binary.Base64;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
@@ -56,6 +58,9 @@ public class CatalogControllerIT {
 
     @Autowired
     private CatalogController catalogController;
+
+    @ClassRule
+    public static ElasticDockerRule elasticRule = new ElasticDockerRule();
 
     @Before
     public void before() {

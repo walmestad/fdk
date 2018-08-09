@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonElement;
+import no.dcat.datastore.ElasticDockerRule;
 import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
 import no.dcat.service.CatalogRepository;
@@ -17,6 +18,7 @@ import org.junit.Assert;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
@@ -70,10 +72,22 @@ public class DatasetControllerIT {
 
     private HttpHeaders headers = new HttpHeaders();
 
+    @ClassRule
+    public static ElasticDockerRule elasticRule = new ElasticDockerRule();
+
     @Before
     public void before() {
-        catalogRepository.deleteAll();
-        datasetRepository.deleteAll();
+        try {
+            catalogRepository.deleteAll();
+        } catch (Exception e) {
+            logger.debug("catalogRepository was probably empty");
+        }
+
+        try {
+            datasetRepository.deleteAll();
+        } catch (Exception e) {
+            logger.debug("datasetRepository was probably empty");
+        }
     }
 
     @Test

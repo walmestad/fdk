@@ -1,7 +1,9 @@
 package no.dcat.model;
 
+import no.dcat.datastore.ElasticDockerRule;
 import no.dcat.service.DatasetRepository;
 import no.dcat.shared.testcategories.IntegrationTest;
+import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
@@ -33,14 +35,17 @@ public class DatasetWithElasticSearchIT {
     @Value("${spring.data.elasticsearch.clusterName}")
     private String clusterName;
 
+    @Autowired
+    private DatasetRepository datasetRepository;
+
     @PostConstruct
     void validate(){
         assert clusterNodes != null;
         assert clusterName != null;
     }
 
-    @Autowired
-    private DatasetRepository datasetRepository;
+    @ClassRule
+    public static ElasticDockerRule elasticRule = new ElasticDockerRule();
 
 
     @Test
