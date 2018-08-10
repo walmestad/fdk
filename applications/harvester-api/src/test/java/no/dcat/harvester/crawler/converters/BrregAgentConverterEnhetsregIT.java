@@ -142,7 +142,7 @@ public class BrregAgentConverterEnhetsregIT {
         logger.info("name after {}",newName);
         logger.info("pref name  {}", prefName);
 
-        assertThat(newName, Is.is("STATISTISK SENTRALBYRÅ"));
+        assertThat(newName, Is.is("STATISTISK SENTRALBYR\u00C5"));
         assertThat(prefName, Is.is("SSB"));
     }
 

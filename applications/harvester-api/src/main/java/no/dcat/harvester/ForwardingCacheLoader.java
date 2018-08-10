@@ -36,9 +36,10 @@ public class ForwardingCacheLoader extends CacheLoader<URL, String> {
             url = new URL(location);
         }
 
-        InputStream inputStream = url.openStream();
-        String result = IOUtils.toString(inputStream);
-        inputStream.close();
+        String result;
+        try (InputStream inputStream = url.openStream()) {
+            result = IOUtils.toString(inputStream, "UTF-8");
+        }
 
         return result;
     }
