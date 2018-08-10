@@ -40,12 +40,6 @@
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
 
-
-        <!--dependency>
-            <groupId>no.dcat</groupId>
-            <artifactId>datastore</artifactId>
-        </dependency -->
-
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
@@ -130,6 +124,11 @@
         <dependency>
             <groupId>no.dcat</groupId>
             <artifactId>datastore</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>no.dcat</groupId>
+            <artifactId>datastore-test</artifactId>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
