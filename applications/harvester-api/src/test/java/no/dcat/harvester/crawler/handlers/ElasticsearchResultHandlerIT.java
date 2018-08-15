@@ -1,26 +1,18 @@
 package no.dcat.harvester.crawler.handlers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import no.dcat.datastore.ElasticDockerRule;
-import no.dcat.datastore.domain.dcat.builders.DcatReader;
-import no.dcat.harvester.crawler.CrawlerJob;
 import no.dcat.shared.Dataset;
 import no.dcat.datastore.Elasticsearch;
 import no.dcat.datastore.domain.DcatSource;
 import no.dcat.shared.testcategories.IntegrationTest;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.apache.jena.rdf.model.Model;
 import org.apache.jena.util.FileManager;
 import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.client.Client;
-import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.node.Node;
 import org.junit.*;
 import org.junit.experimental.categories.Category;
 import org.slf4j.Logger;
@@ -30,7 +22,6 @@ import org.springframework.core.io.Resource;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.List;
 
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
