@@ -133,7 +133,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
     }
 
     Elasticsearch createElasticsearch() {
-        logger.debug("Connect to Elasticsearch: " + this.hostename + ":" + this.port + " cluster: " + this.clustername);
+        logger.info("Connect to Elasticsearch: " + this.hostename + ":" + this.port + " cluster: " + this.clustername);
 
         return new Elasticsearch(hostename, port, clustername);
     }
