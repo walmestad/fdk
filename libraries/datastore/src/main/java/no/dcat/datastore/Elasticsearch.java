@@ -47,9 +47,9 @@ public class Elasticsearch implements AutoCloseable {
      * @param clusterName Name of cluster. Default is "elasticsearch"
      */
     public Elasticsearch(String host, int port, String clusterName) {
-        logger.debug("Attempt to connect to Elasticsearch client: " + host + ":" + port + " cluster: " + clusterName);
+        logger.info("Attempt to connect to Elasticsearch client: " + host + ":" + port + " cluster: " + clusterName);
         this.client = returnElasticsearchTransportClient(host, port, clusterName);
-        logger.debug("transportclient success ...? " + this.client);
+        logger.info("transportclient success ...? " + this.client);
     }
 
 
@@ -137,7 +137,7 @@ public class Elasticsearch implements AutoCloseable {
      * @return True if index exists
      */
     public boolean indexExists(String index) {
-        return client.admin().indices().prepareExists(index).execute().actionGet().isExists();
+        return client==null ? false : client.admin().indices().prepareExists(index).execute().actionGet().isExists();
     }
 
     /**
@@ -351,7 +351,9 @@ public class Elasticsearch implements AutoCloseable {
      * Close connection to Elasticsearch cluster
      */
     public void close() {
-        client.close();
+        if (client != null) {
+            client.close();
+        }
     }
 
     /**
