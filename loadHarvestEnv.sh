@@ -46,11 +46,11 @@ function startLoad {
                         "type": "date"
                     },
                     "catalogUri": {
-                        "type": "string",
+                        "type": "keyword",
                         "index": "not_analyzed"
                     },
                     "harvestUrl": {
-                        "type": "string",
+                        "type": "keyword",
                         "index": "not_analyzed"
                     },
                     "publisher": {
@@ -70,11 +70,11 @@ function startLoad {
                         "type": "date"
                     },
                     "datasetId": {
-                        "type": "string",
+                        "type": "keyword",
                         "index": "not_analyzed"
                     },
                     "datasetUri": {
-                        "type": "string",
+                        "type": "keyword",
                         "index": "not_analyzed"
                     }
                 }
@@ -82,11 +82,11 @@ function startLoad {
             "lookup": {
                 "properties": {
                     "datasetId": {
-                        "type": "string",
+                        "type": "keyword",
                         "index": "not_analyzed"
                     },
                     "harvestUri": {
-                        "type": "string",
+                        "type": "keyword",
                         "index": "not_analyzed"
                     }
                 }

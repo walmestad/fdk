@@ -58,7 +58,7 @@ function startLoad {
             "analyzer": "norwegian",
             "fields": {
               "raw": {
-                "type": "string",
+                "type": "keyword",
                 "index": "not_analyzed"
               }
             }
@@ -115,7 +115,7 @@ function startLoad {
         "analyzer": "norwegian",
         "fields": {
           "raw": {
-            "type": "string",
+            "type": "keyword",
             "index": "not_analyzed"
           }
         }
@@ -135,7 +135,7 @@ function startLoad {
             "analyzer": "norwegian",
             "fields": {
               "raw": {
-                "type": "string",
+                "type": "keyword",
                 "index": "not_analyzed"
               }
             }

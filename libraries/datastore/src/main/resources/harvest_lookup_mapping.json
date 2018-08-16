@@ -2,11 +2,11 @@
   "lookup": {
     "properties": {
       "datasetId": {
-        "type": "string",
+        "type": "keyword",
         "index": "not_analyzed"
       },
       "harvestUri": {
-        "type": "string",
+        "type": "keyword",
         "index": "not_analyzed"
       }
     }

@@ -6,11 +6,11 @@
         "format": "yyyy-MM-dd'T'HH:mm:ssZ"
       },
       "datasetId": {
-        "type": "string",
+        "type": "keyword",
         "index": "not_analyzed"
       },
       "datasetUri": {
-        "type": "string",
+        "type": "keyword",
         "index": "not_analyzed"
       }
     }

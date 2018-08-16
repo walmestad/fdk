@@ -36,7 +36,7 @@
             "analyzer": "norwegian",
             "fields": {
               "raw": {
-                "type": "string",
+                "type": "keyword",
                 "index": "not_analyzed"
               }
             }
@@ -93,7 +93,7 @@
         "analyzer": "norwegian",
         "fields": {
           "raw": {
-            "type": "string",
+            "type": "keyword",
             "index": "not_analyzed"
           }
         }
@@ -113,7 +113,7 @@
             "analyzer": "norwegian",
             "fields": {
               "raw": {
-                "type": "string",
+                "type": "keyword",
                 "index": "not_analyzed"
               }
             }
