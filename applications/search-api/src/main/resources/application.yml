@@ -7,18 +7,19 @@ logging:
 application:
   elasticsearchHost: elasticsearch
   elasticsearchPort: 9300
-  clusterName: elasticsearch
+  clusterName: ${FDK_ES_CLUSTERNAME:elasticsearch}
   fusekiService: http://fuseki:8080/fuseki
 server:
   port: 8080
 management:
-  port: 8181
+  server:
+    port: 8181
 
 ---
 spring:
   profiles: prod
 application:
-  clusterName: fellesdatakatalog
+  clusterName: ${FDK_ES_CLUSTERNAME:elasticsearch}
 
 ---
 #Utv-miljø lokalt på egen PC
@@ -27,7 +28,7 @@ spring:
 application:
   elasticsearchHost: localhost
   elasticsearchPort: 9300
-  clusterName: elasticsearch
+  clusterName: ${FDK_ES_CLUSTERNAME:elasticsearch}
   fusekiService: http://localhost:3030/fuseki
 logging:
   level.: ERROR
@@ -36,4 +37,5 @@ logging:
 server:
   port: 8083
 management:
-  port: 8993
+  server:
+    port: 8993

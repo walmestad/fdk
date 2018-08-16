@@ -2,10 +2,10 @@ logging:
   level.: ERROR
   level.no.brreg: ERROR
   level.no.difi: INFO
-  level.no.dcat: INFO
-  level.org.springframework: ERROR
-  level.org.springframework.web: ERROR
-  level.org.elasticsearch: WARN
+  level.no.dcat: DEBUG
+  level.org.springframework: DEBUG
+  level.org.springframework.web: DEBUG
+  level.org.elasticsearch: DEBUG
 server:
   port: 8080
 management:
@@ -17,7 +17,7 @@ application:
   crawlerThreadPoolSize: 2
   elasticSearchHost: elasticsearch
   elasticSearchPort: 9300
-  elasticSearchCluster: elasticsearch
+  elasticSearchCluster: ${FDK_ES_CLUSTERNAME:elasticsearch}
   themesHostname: http://reference-data:8080
 fuseki:
   dcatServiceUri: http://fuseki:8080/fuseki/dcat
@@ -29,7 +29,7 @@ spring:
   mail:
     host: smtprelay.brreg.no
 application:
-  elasticSearchCluster: fellesdatakatalog
+  elasticSearchCluster: ${FDK_ES_CLUSTERNAME:elasticsearch}
   notificationMailSenderAddress: ${emailSenderAddress}
 
 ---
@@ -57,7 +57,7 @@ application:
   crawlerThreadPoolSize: 2
   elasticSearchHost: localhost
   elasticSearchPort: 9300
-  elasticSearchCluster: elasticsearch
+  elasticSearchCluster: ${FDK_ES_CLUSTERNAME:elasticsearch}
   themesHostname: http://localhost:8100
   notificationMailSenderAddress: fdksystembjg@gmail.com
 server:
