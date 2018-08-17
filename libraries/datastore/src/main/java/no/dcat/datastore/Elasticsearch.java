@@ -137,7 +137,7 @@ public class Elasticsearch implements AutoCloseable {
      * @return True if index exists
      */
     public boolean indexExists(String index) {
-        return client==null ? false : client.admin().indices().prepareExists(index).execute().actionGet().isExists();
+        return client.admin().indices().prepareExists(index).execute().actionGet().isExists();
     }
 
     /**
@@ -351,9 +351,7 @@ public class Elasticsearch implements AutoCloseable {
      * Close connection to Elasticsearch cluster
      */
     public void close() {
-        if (client != null) {
-            client.close();
-        }
+        client.close();
     }
 
     /**
