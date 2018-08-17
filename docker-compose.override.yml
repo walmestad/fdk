@@ -51,8 +51,8 @@ services:
 #     - clusterNode=es01-fdk-01-ut1.regsys-nprd.brreg.no
      - clusterNode=elasticsearch
      - application.elasticSearchPort=9300
-     - application.elasticSearchCluster=${FDK_ES_CLUSTERNAME:elasticsearch}
-     - clusterName=${FDK_ES_CLUSTERNAME:elasticsearch}
+     - application.elasticSearchCluster=elasticsearch
+     - clusterName=elasticsearch
     volumes:
      - ./logs:/usr/local/tomcat/logs:rw
 
@@ -80,7 +80,7 @@ services:
     volumes:
       - ./data/esdata:/usr/share/elasticsearch/data
     environment:
-      - cluster.name=${FDK_ES_CLUSTERNAME:elasticsearch}
+      - cluster.name=elasticsearch
       - xpack.security.enabled=false
 
   elasticsearch-copy:
@@ -99,8 +99,8 @@ services:
 #     - clusterNode=es01-fdk-01-ut1.regsys-nprd.brreg.no
      - clusterNode=elasticsearch
      - application.elasticsearchPort=9300
-     - application.elasticsearchCluster=${FDK_ES_CLUSTERNAME:elasticsearch}
-     - clusterName=${FDK_ES_CLUSTERNAME:elasticsearch}
+     - application.elasticsearchCluster=elasticsearch
+     - clusterName=elasticsearch
      - application.fusekiHost=http://fuseki:8080
      - application.harvesterHost=http://harvester-api:8080
 
@@ -122,7 +122,7 @@ services:
       - "8079:8080"
     environment:
      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
-     - registrationAPI_clusterName=${FDK_ES_CLUSTERNAME:elasticsearch}
+     - registrationAPI_clusterName=elasticsearch
      - registrationApi_altinnServiceUrl=http://registration-auth:8080
      - registrationApi_apikey=${registrationApi_apikey}
      - registrationApi_clientSSLCertificateKeystoreLocation=conf/dummy-client-SSL-cert.p12
