@@ -97,7 +97,7 @@ public class BasicAuthConfig extends WebSecurityConfigurerAdapter {
             } finally {
                 authorities.add(new SimpleGrantedAuthority(ROLE_USER));
             }
-            return new User(personnummer, "password01", authorities);
+            return User.withDefaultPasswordEncoder().username(personnummer).password("password01").authorities(authorities).build();
         };
     }
 
