@@ -2,10 +2,10 @@ logging:
   level.: ERROR
   level.no.brreg: ERROR
   level.no.difi: INFO
-  level.no.dcat: DEBUG
-  level.org.springframework: DEBUG
-  level.org.springframework.web: DEBUG
-  level.org.elasticsearch: DEBUG
+  level.no.dcat: INFO
+  level.org.springframework: ERROR
+  level.org.springframework.web: ERROR
+  level.org.elasticsearch: WARN
 server:
   port: 8080
 management:

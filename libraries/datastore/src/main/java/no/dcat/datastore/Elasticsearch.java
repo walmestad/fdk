@@ -47,9 +47,9 @@ public class Elasticsearch implements AutoCloseable {
      * @param clusterName Name of cluster. Default is "elasticsearch"
      */
     public Elasticsearch(String host, int port, String clusterName) {
-        logger.info("Attempt to connect to Elasticsearch client: " + host + ":" + port + " cluster: " + clusterName);
+        logger.debug("Attempt to connect to Elasticsearch client: " + host + ":" + port + " cluster: " + clusterName);
         this.client = returnElasticsearchTransportClient(host, port, clusterName);
-        logger.info("transportclient success ...? " + this.client);
+        logger.debug("transportclient success ...? " + this.client);
     }
 
 
