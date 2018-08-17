@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React from 'react';
 import qs from 'qs';
 import { Route, Switch } from 'react-router-dom';
@@ -12,6 +13,8 @@ import { ResultsTabs } from './results-tabs/results-tabs.component';
 import { removeValue, addValue } from '../../lib/stringUtils';
 
 import './search-page.scss';
+import { extractPublisherCounts } from '../../api/get-datasets';
+import { extractPublisherTermsCounts } from '../../api/get-terms';
 
 const ReactGA = require('react-ga');
 
@@ -53,19 +56,9 @@ export class SearchPage extends React.Component {
     this.close = this.close.bind(this);
     this.open = this.open.bind(this);
 
-    this.props.fetchDatasetsIfNeeded(`/datasets${search}`);
-    this.props.fetchTermsIfNeeded(`/terms${search}`);
     this.props.fetchThemesIfNeeded();
     this.props.fetchPublishersIfNeeded();
     this.props.fetchDistributionTypeIfNeeded();
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.location.search !== this.props.location.search) {
-      const { search } = this.props.location;
-      this.props.fetchDatasetsIfNeeded(`/datasets${search}`);
-      this.props.fetchTermsIfNeeded(`/terms${search}`);
-    }
   }
 
   handleClearSearch() {
@@ -73,8 +66,12 @@ export class SearchPage extends React.Component {
       {
         searchQuery: {}
       },
-      () => this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
+      this.handleSearchSubmit
     );
+  }
+
+  isFilterNotEmpty() {
+    return _.some(_.values(this.state.searchQuery));
   }
 
   handleSearchSubmit() {
@@ -395,11 +392,7 @@ export class SearchPage extends React.Component {
   render() {
     const {
       datasetItems,
-      publisherCountItems,
-      isFetchingDatasets,
       termItems,
-      publisherCountTermItems,
-      isFetchingTerms,
       themesItems,
       publisherItems,
       distributionTypeItems
@@ -420,11 +413,9 @@ export class SearchPage extends React.Component {
                   ? datasetItems.hits.total
                   : null
               }
-              isFetchingDatasets={isFetchingDatasets}
               countTerms={
                 termItems && termItems.hits ? termItems.hits.total : 0
               }
-              isFetchingTerms={isFetchingTerms}
               open={this.open}
             />
             <ResultsTabs
@@ -462,18 +453,10 @@ export class SearchPage extends React.Component {
                   searchQuery={this.state.searchQuery}
                   themesItems={themesItems}
                   showFilterModal={this.state.showFilterModal}
-                  showClearFilterButton={
-                    !!(
-                      this.state.searchQuery.theme ||
-                      this.state.searchQuery.accessrights ||
-                      this.state.searchQuery.provenance ||
-                      this.state.searchQuery.spatial ||
-                      this.state.searchQuery.orgPath
-                    )
-                  }
+                  showClearFilterButton={this.isFilterNotEmpty()}
                   closeFilterModal={this.close}
                   hitsPerPage={50}
-                  publisherArray={publisherCountItems}
+                  publisherArray={extractPublisherCounts(datasetItems)}
                   publishers={publisherItems}
                   distributionTypeItems={distributionTypeItems}
                   {...props}
@@ -497,7 +480,7 @@ export class SearchPage extends React.Component {
                   showFilterModal={this.state.showFilterModal}
                   closeFilterModal={this.close}
                   showClearFilterButton={!!this.state.searchQuery.orgPath}
-                  publisherArray={publisherCountTermItems}
+                  publisherArray={extractPublisherTermsCounts(termItems)}
                   publishers={publisherItems}
                   {...props}
                 />

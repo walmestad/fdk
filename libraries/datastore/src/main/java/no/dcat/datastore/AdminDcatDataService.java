@@ -18,6 +18,8 @@ public class AdminDcatDataService {
 
 	private final AdminDataStore adminDataStore;
 	private final DcatDataStore dcatDataStore;
+	private Elasticsearch elasticsearch;
+
 
 	private final Logger logger = LoggerFactory.getLogger(AdminDcatDataService.class);
 
@@ -70,7 +72,7 @@ public class AdminDcatDataService {
 		adminDataStore.fuseki.sparqlUpdate(query, map);
 
 		dcatDataStore.deleteDataCatalogue(dcatSource);
-
+		
 		if (adminDataStore.fuseki.ask("ask { ?dcatSourceUri foaf:accountName ?dcatSourceUri}", map)) { 
 			logger.error("[crawler_admin] [fail] DCAT source was not deleted from Fuseki: {}", dcatSource.toString());
 		} else {

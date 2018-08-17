@@ -22,17 +22,30 @@ if (window.location.hostname.indexOf('fellesdatakatalog.brreg.no') !== -1) {
   ReactGA.set({ anonymizeIp: true });
 }
 
+window.addEventListener('unhandledrejection', event => {
+  console.warn(`WARNING: Unhandled promise rejection. Reason: ${event.reason}`);
+});
+
 /**
  * @return {null}
  */
 function Analytics(props) {
+  const PAGEVIEW_TIMEOUT = 200;
   if (
     window.location.hostname.indexOf('fellesdatakatalog.brreg.no') !== -1 ||
     window.location.hostname.indexOf('fellesdatakatalog.tt1.brreg.no') !== -1 ||
     window.location.hostname.indexOf('localhost') !== -1
   ) {
     ReactGA.set({ page: props.location.pathname + props.location.search });
-    ReactGA.pageview(props.location.pathname + props.location.search);
+    window.setTimeout(
+      () =>
+        ReactGA.pageview(
+          props.location.pathname + props.location.search,
+          undefined,
+          document.title
+        ),
+      PAGEVIEW_TIMEOUT
+    );
   }
   return null;
 }

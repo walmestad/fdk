@@ -12,34 +12,9 @@ import { DatasetContactInfo } from './dataset-contact-info/dataset-contact-info.
 import localization from '../../lib/localization';
 import { getTranslateText } from '../../lib/translateText';
 
-export class DatasetDetailsPage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.loadDatasetFromServer = this.loadDatasetFromServer.bind(this);
-  }
-
-  componentDidMount() {
-    const { match } = this.props;
-    if (match) {
-      window.scrollTo(0, 0);
-      this.loadDatasetFromServer(match);
-    }
-  }
-
-  componentWillUnmount() {
-    this.props.resetDatasetDetails();
-  }
-
-  // @params: the function has no param but the query need dataset id from prop
-  // loads all the info for this dataset
-  loadDatasetFromServer(match) {
-    const url = `/datasets/${match.params.id}`;
-    this.props.fetchDatasetDetailsIfNeeded(url);
-    this.props.fetchDistributionTypeIfNeeded();
-  }
-
-  _renderDatasetDescription() {
-    const { datasetItem } = this.props;
+export function DatasetDetailsPage(props) {
+  function _renderDatasetDescription() {
+    const { datasetItem } = props;
     return (
       <DatasetDescription
         title={getTranslateText(datasetItem.title)}
@@ -56,9 +31,9 @@ export class DatasetDetailsPage extends React.Component {
     );
   }
 
-  _renderDistribution() {
-    const { distribution, accessRights } = this.props.datasetItem;
-    const { openLicenseItems, distributionTypeItems } = this.props;
+  function _renderDistribution() {
+    const { distribution, accessRights } = props.datasetItem;
+    const { openLicenseItems, distributionTypeItems } = props;
     if (!distribution) {
       return null;
     }
@@ -80,8 +55,8 @@ export class DatasetDetailsPage extends React.Component {
     ));
   }
 
-  _renderSample() {
-    const { sample } = this.props.datasetItem;
+  function _renderSample() {
+    const { sample } = props.datasetItem;
     if (!sample) {
       return null;
     }
@@ -97,8 +72,8 @@ export class DatasetDetailsPage extends React.Component {
     ));
   }
 
-  _renderKeyInfo() {
-    const { datasetItem } = this.props;
+  function _renderKeyInfo() {
+    const { datasetItem } = props;
     return (
       <DatasetKeyInfo
         accessRights={datasetItem.accessRights}
@@ -112,7 +87,7 @@ export class DatasetDetailsPage extends React.Component {
     );
   }
 
-  _renderDatasetInfo() {
+  function _renderDatasetInfo() {
     const {
       issued,
       accrualPeriodicity,
@@ -124,7 +99,7 @@ export class DatasetDetailsPage extends React.Component {
       language,
       isPartOf,
       references
-    } = this.props.datasetItem;
+    } = props.datasetItem;
 
     return (
       <DatasetInfo
@@ -146,13 +121,13 @@ export class DatasetDetailsPage extends React.Component {
     );
   }
 
-  _renderQuality() {
+  function _renderQuality() {
     const {
       hasRelevanceAnnotation,
       hasCompletenessAnnotation,
       hasAccuracyAnnotation,
       hasAvailabilityAnnotation
-    } = this.props.datasetItem;
+    } = props.datasetItem;
     if (
       hasRelevanceAnnotation ||
       hasCompletenessAnnotation ||
@@ -179,8 +154,8 @@ export class DatasetDetailsPage extends React.Component {
     return null;
   }
 
-  _renderLandingPageAndContactInfo() {
-    const { contactPoint, landingPage } = this.props.datasetItem;
+  function _renderLandingPageAndContactInfo() {
+    const { contactPoint, landingPage } = props.datasetItem;
     if (!(contactPoint || landingPage)) {
       return null;
     }
@@ -202,53 +177,55 @@ export class DatasetDetailsPage extends React.Component {
       ));
 
     return (
-      <section className="fdk-margin-top-triple">
+      <section className="mt-5">
         {landingPage && landingPages(landingPage)}
         {contactPoint && contactPoints(contactPoint)}
       </section>
     );
   }
 
-  _renderBegrep() {
-    const { keyword, subject } = this.props.datasetItem;
+  function _renderBegrep() {
+    const { keyword, subject } = props.datasetItem;
     if (keyword || subject) {
       return <DatasetBegrep keyword={keyword} subject={subject} />;
     }
     return null;
   }
 
-  render() {
-    const { datasetItem } = this.props;
-    if (datasetItem) {
-      return (
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-8 offset-lg-2" id="content" role="main">
-              <article>
-                {this._renderDatasetDescription()}
-                {this._renderKeyInfo()}
-                {this._renderDistribution()}
-                {this._renderSample()}
-                {this._renderDatasetInfo()}
-                {this._renderQuality()}
-                {this._renderBegrep()}
-                {this._renderLandingPageAndContactInfo()}
-              </article>
-            </div>
-          </div>
-        </div>
-      );
-    }
+  props.fetchDistributionTypeIfNeeded();
+
+  const { datasetItem } = props;
+  if (!datasetItem) {
     return null;
   }
+  return (
+    <div className="container">
+      <div className="row">
+        <div className="col-lg-8 offset-lg-2" id="content" role="main">
+          <article>
+            {_renderDatasetDescription()}
+            {_renderKeyInfo()}
+            {_renderDistribution()}
+            {_renderSample()}
+            {_renderDatasetInfo()}
+            {_renderQuality()}
+            {_renderBegrep()}
+            {_renderLandingPageAndContactInfo()}
+          </article>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 DatasetDetailsPage.defaultProps = {
   datasetItem: null,
-  distributionTypeItems: null
+  distributionTypeItems: null,
+  fetchDistributionTypeIfNeeded: () => {}
 };
 
 DatasetDetailsPage.propTypes = {
   datasetItem: PropTypes.object,
-  distributionTypeItems: PropTypes.array
+  distributionTypeItems: PropTypes.array,
+  fetchDistributionTypeIfNeeded: PropTypes.func
 };

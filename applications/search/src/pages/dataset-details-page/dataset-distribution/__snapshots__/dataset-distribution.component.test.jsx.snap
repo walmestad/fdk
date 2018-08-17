@@ -4,9 +4,7 @@ exports[`should render DatasetDistribution correctly 1`] = `
 <section
   className="fdk-container-detail"
 >
-  <h4
-    className="fdk-margin-bottom"
-  >
+  <h4>
     AAMarkagrensen Oslo Kommune og nærliggende kommuner
   </h4>
   <p
@@ -16,7 +14,7 @@ exports[`should render DatasetDistribution correctly 1`] = `
   </p>
   <div>
     <h5
-      className="fdk-margin-top-double"
+      className="mt-5"
     >
       AccessURL
     </h5>
@@ -59,7 +57,7 @@ exports[`should render DatasetDistribution correctly 1`] = `
   </div>
   <div>
     <h5
-      className="fdk-margin-top-double"
+      className="mt-5"
     >
       License
     </h5>
@@ -78,7 +76,7 @@ exports[`should render DatasetDistribution correctly 1`] = `
   </div>
   <div>
     <h5
-      className="fdk-margin-top-double"
+      className="mt-5"
     >
       Conforms to
     </h5>
@@ -98,7 +96,7 @@ exports[`should render DatasetDistribution correctly 1`] = `
   </div>
   <div>
     <h5
-      className="fdk-margin-top-double"
+      className="mt-5"
     >
       More information about this distribution
     </h5>
@@ -113,9 +111,7 @@ exports[`should render DatasetDistribution correctly 2`] = `
 <section
   className="fdk-container-detail"
 >
-  <h4
-    className="fdk-margin-bottom"
-  >
+  <h4>
     AAMarkagrensen Oslo Kommune og nærliggende kommuner
   </h4>
   <p
@@ -125,7 +121,7 @@ exports[`should render DatasetDistribution correctly 2`] = `
   </p>
   <div>
     <h5
-      className="fdk-margin-top-double"
+      className="mt-5"
     >
       Type
     </h5>
@@ -137,7 +133,7 @@ exports[`should render DatasetDistribution correctly 2`] = `
   </div>
   <div>
     <h5
-      className="fdk-space-above"
+      className="mt-4"
     >
       Format
     </h5>
@@ -156,7 +152,7 @@ exports[`should render DatasetDistribution correctly 2`] = `
   </div>
   <div>
     <h5
-      className="fdk-margin-top-double"
+      className="mt-5"
     >
       License
     </h5>
@@ -175,7 +171,7 @@ exports[`should render DatasetDistribution correctly 2`] = `
   </div>
   <div>
     <h5
-      className="fdk-margin-top-double"
+      className="mt-5"
     >
       Conforms to
     </h5>
@@ -195,7 +191,7 @@ exports[`should render DatasetDistribution correctly 2`] = `
   </div>
   <div>
     <h5
-      className="fdk-margin-top-double"
+      className="mt-5"
     >
       More information about this distribution
     </h5>
@@ -210,8 +206,6 @@ exports[`should render DatasetDistribution correctly with no props 1`] = `
 <section
   className="fdk-container-detail"
 >
-  <h4
-    className="fdk-margin-bottom"
-  />
+  <h4 />
 </section>
 `;

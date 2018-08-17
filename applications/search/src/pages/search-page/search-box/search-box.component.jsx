@@ -12,9 +12,7 @@ export const SearchBox = props => {
     onSearchChange,
     searchQuery,
     countDatasets,
-    isFetchingDatasets,
     countTerms,
-    isFetchingTerms,
     open
   } = props;
   let refSearchBox; // eslint-disable-line no-unused-vars
@@ -70,9 +68,7 @@ export const SearchBox = props => {
       <div className="col-md-12 text-center">
         <CustomHitsStats
           countDatasets={countDatasets}
-          isFetchingDatasets={isFetchingDatasets}
           countTerms={countTerms}
-          isFetchingTerms={isFetchingTerms}
           filteringOrTextSearchPerformed={
             !!(
               getParamFromUrl('q') ||
@@ -90,9 +86,7 @@ export const SearchBox = props => {
 SearchBox.defaultProps = {
   searchQuery: null,
   countDatasets: null,
-  isFetchingDatasets: false,
-  countTerms: null,
-  isFetchingTerms: false
+  countTerms: null
 };
 
 SearchBox.propTypes = {
@@ -100,8 +94,6 @@ SearchBox.propTypes = {
   onSearchChange: PropTypes.func.isRequired,
   searchQuery: PropTypes.string,
   countDatasets: PropTypes.number,
-  isFetchingDatasets: PropTypes.bool,
   countTerms: PropTypes.number,
-  isFetchingTerms: PropTypes.bool,
   open: PropTypes.func.isRequired
 };

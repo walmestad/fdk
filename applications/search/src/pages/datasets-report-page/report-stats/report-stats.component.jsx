@@ -1,105 +1,18 @@
-import * as _ from 'lodash';
+import _ from 'lodash';
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import _capitalize from 'lodash/capitalize';
 import { CardDeck, Card, CardText, CardBody } from 'reactstrap';
 
 import localization from '../../../lib/localization';
 import { getParamFromLocation } from '../../../lib/addOrReplaceUrlParam';
 import './report-stats.scss';
+import { getTranslateText } from '../../../lib/translateText';
 
 export const ReportStats = props => {
-  const { aggregateDataset, entityName } = props;
-  // const { entityName } = props;
-  // const aggregateDataset = require('../../../../api-mocks/aggregateDataset_opendata.json')
-  const stats = {
-    total: aggregateDataset.hits ? aggregateDataset.hits.total : 0,
-    public:
-      aggregateDataset.aggregations &&
-      aggregateDataset.aggregations.accessRightsCount.buckets.find(
-        bucket => bucket.key.toUpperCase() === 'PUBLIC'
-      )
-        ? aggregateDataset.aggregations.accessRightsCount.buckets.find(
-            bucket => bucket.key.toUpperCase() === 'PUBLIC'
-          ).doc_count
-        : 0,
-    restricted:
-      aggregateDataset.aggregations &&
-      aggregateDataset.aggregations.accessRightsCount.buckets.find(
-        bucket => bucket.key.toUpperCase() === 'RESTRICTED'
-      )
-        ? aggregateDataset.aggregations.accessRightsCount.buckets.find(
-            bucket => bucket.key.toUpperCase() === 'RESTRICTED'
-          ).doc_count
-        : 0,
-    nonPublic:
-      aggregateDataset.aggregations &&
-      aggregateDataset.aggregations.accessRightsCount.buckets.find(
-        bucket => bucket.key.toUpperCase() === 'NON_PUBLIC'
-      )
-        ? aggregateDataset.aggregations.accessRightsCount.buckets.find(
-            bucket => bucket.key.toUpperCase() === 'NON_PUBLIC'
-          ).doc_count
-        : 0,
-    unknown:
-      aggregateDataset.aggregations &&
-      aggregateDataset.aggregations.accessRightsCount.buckets.find(
-        bucket => bucket.key.toUpperCase() === 'UKJENT'
-      )
-        ? aggregateDataset.aggregations.accessRightsCount.buckets.find(
-            bucket => bucket.key.toUpperCase() === 'UKJENT'
-          ).doc_count
-        : 0,
-    opendata: _.get(aggregateDataset, 'aggregations.opendata.doc_count', 0),
-    newLastWeek:
-      aggregateDataset.aggregations &&
-      aggregateDataset.aggregations.firstHarvested.buckets &&
-      aggregateDataset.aggregations.firstHarvested.buckets.last7days
-        ? aggregateDataset.aggregations.firstHarvested.buckets.last7days
-            .doc_count
-        : 0,
+  props.fetchCatalogsIfNeeded();
 
-    newLastMonth:
-      aggregateDataset.aggregations &&
-      aggregateDataset.aggregations.firstHarvested.buckets &&
-      aggregateDataset.aggregations.firstHarvested.buckets.last30days
-        ? aggregateDataset.aggregations.firstHarvested.buckets.last30days
-            .doc_count
-        : 0,
-
-    newLastYear:
-      aggregateDataset.aggregations &&
-      aggregateDataset.aggregations.firstHarvested.buckets &&
-      aggregateDataset.aggregations.firstHarvested.buckets.last365days
-        ? aggregateDataset.aggregations.firstHarvested.buckets.last365days
-            .doc_count
-        : 0,
-
-    withoutConcepts:
-      aggregateDataset.aggregations &&
-      aggregateDataset.aggregations.subjectsCount &&
-      aggregateDataset.aggregations.subjectCount.doc_count
-        ? aggregateDataset.aggregations.subjectCount.doc_count
-        : 0,
-    distributions:
-      aggregateDataset.aggregations &&
-      aggregateDataset.aggregations.distCount &&
-      aggregateDataset.aggregations.distCount.doc_count
-        ? aggregateDataset.aggregations.distCount.doc_count
-        : 0,
-    distOnPublicAccessCount:
-      aggregateDataset.aggregations &&
-      aggregateDataset.aggregations.distOnPublicAccessCount &&
-      aggregateDataset.aggregations.distOnPublicAccessCount.doc_count
-        ? aggregateDataset.aggregations.distOnPublicAccessCount.doc_count
-        : 0,
-    subjectCount:
-      aggregateDataset.aggregations &&
-      aggregateDataset.aggregations.subjectCount &&
-      aggregateDataset.aggregations.subjectCount.doc_count
-        ? aggregateDataset.aggregations.subjectCount.doc_count
-        : 0
-  };
+  const { stats, entityName } = props;
 
   const orgPath = getParamFromLocation(window.location, 'orgPath');
   const encodedOrgPath = orgPath ? encodeURIComponent(orgPath) : null;
@@ -115,7 +28,7 @@ export const ReportStats = props => {
       entityName === 'PRIVAT' ||
       entityName === 'ANNET'
         ? localization.facet.publishers[entityName]
-        : _capitalize(entityName);
+        : _.capitalize(entityName);
   } else {
     name = localization.report.allEntities;
   }
@@ -152,7 +65,7 @@ export const ReportStats = props => {
         <div className="row">
           <Link
             title={localization.report.public}
-            className="col-lg-3 fdk-container-stats-accesslevel fdk-container-stats-vr fdk-padding-no"
+            className="col-lg-3 fdk-container-stats-accesslevel fdk-container-stats-vr p-0"
             to={`/?accessrights=PUBLIC${orgPathParam}`}
           >
             <p>
@@ -165,7 +78,7 @@ export const ReportStats = props => {
           </Link>
           <Link
             title={localization.report.restricted}
-            className="col-lg-3 fdk-container-stats-accesslevel fdk-container-stats-vr fdk-padding-no"
+            className="col-lg-3 fdk-container-stats-accesslevel fdk-container-stats-vr p-0"
             to={`/?accessrights=RESTRICTED${orgPathParam}`}
           >
             <p>
@@ -178,7 +91,7 @@ export const ReportStats = props => {
             <p>{localization.report.restricted}</p>
           </Link>
           <Link
-            className="col-lg-3 fdk-container-stats-accesslevel fdk-container-stats-vr fdk-padding-no"
+            className="col-lg-3 fdk-container-stats-accesslevel fdk-container-stats-vr p-0"
             to={`/?accessrights=NON_PUBLIC${orgPathParam}`}
           >
             <p>
@@ -190,7 +103,7 @@ export const ReportStats = props => {
             <p>{localization.report.nonPublic}</p>
           </Link>
           <Link
-            className="col-lg-3 fdk-container-stats-accesslevel fdk-padding-no"
+            className="col-lg-3 fdk-container-stats-accesslevel p-0"
             to={`/?accessrights=Ukjent${orgPathParam}`}
           >
             <p>
@@ -244,8 +157,8 @@ export const ReportStats = props => {
                     {stats.newLastWeek}
                   </Link>
                 </strong>
-                <div>{localization.report.newDatasets}</div>
               </CardText>
+              <CardText>{localization.report.newDatasets}</CardText>
             </CardBody>
           </Card>
           <Card
@@ -264,8 +177,8 @@ export const ReportStats = props => {
                     {stats.newLastMonth}
                   </Link>
                 </strong>
-                <div>{localization.report.newDatasets}</div>
               </CardText>
+              <CardText>{localization.report.newDatasets}</CardText>
             </CardBody>
           </Card>
           <Card
@@ -284,8 +197,8 @@ export const ReportStats = props => {
                     {stats.newLastYear}
                   </Link>
                 </strong>
-                <div>{localization.report.newDatasets}</div>
               </CardText>
+              <CardText>{localization.report.newDatasets}</CardText>
             </CardBody>
           </Card>
         </CardDeck>
@@ -337,6 +250,34 @@ export const ReportStats = props => {
     </div>
   );
 
+  const catalogs = (
+    <div className="row">
+      <div className="col-12 fdk-container-stats fdk-container-stats-concepts-title">
+        <h2>{localization.report.catalogs}</h2>
+        {stats.catalogCounts.map(catalogRecord => (
+          <div className="row" key={catalogRecord.key}>
+            <div className="col-10">
+              {getTranslateText(
+                _.get(props.catalogs, [catalogRecord.key, 'title'])
+              )}
+            </div>
+            <div className="col-2 text-right">
+              <strong>
+                <Link
+                  title={localization.report.newDatasets}
+                  className="fdk-plain-label"
+                  to={`/?catalog=${catalogRecord.key}${orgPathParam}`}
+                >
+                  {catalogRecord.doc_count}
+                </Link>
+              </strong>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
   return (
     <div className="container">
       {title}
@@ -346,6 +287,16 @@ export const ReportStats = props => {
       {changes}
       {concepts}
       {distributions}
+      {catalogs}
     </div>
   );
+};
+
+ReportStats.defaultProps = {
+  fetchCatalogsIfNeeded: _.noop
+};
+
+ReportStats.propTypes = {
+  fetchCatalogsIfNeeded: PropTypes.func,
+  stats: PropTypes.object.isRequired
 };

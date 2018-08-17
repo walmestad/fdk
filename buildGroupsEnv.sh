@@ -12,12 +12,12 @@ i=$((i+1))
 BUILD_APPS[$i]="registration-react"
 BUILD_CMD[$i]="( cd applications/registration-react && ./travisBuild.sh )"
 
-maven_apps="fuseki harvester harvester-api nginx-search nginx-registration reference-data registration-api registration-auth search-api elasticsearch-copy"
+maven_apps="fuseki harvester harvester-api nginx-search nginx-registration reference-data registration-api registration-auth api-cat search-api elasticsearch-copy"
 
 for maven_app in $maven_apps; do
     i=$((i+1))
     BUILD_APPS[$i]=$maven_app
-    BUILD_CMD[$i]="mvn install -B -T 2C -pl applications/$maven_app -am && bash <(curl -s https://codecov.io/bash)"
+    BUILD_CMD[$i]="mvn clean install -B -T 2C -pl applications/$maven_app -am && bash <(curl -s https://codecov.io/bash)"
 done
 
 export BUILD_APPS

@@ -28,9 +28,7 @@ export class DatasetDistribution extends React.Component {
       }
       return (
         <div>
-          <h5 className="fdk-margin-top-double">
-            {localization.dataset.distribution.type}
-          </h5>
+          <h5 className="mt-5">{localization.dataset.distribution.type}</h5>
           <p className="fdk-ingress">{type}</p>
         </div>
       );
@@ -63,9 +61,7 @@ export class DatasetDistribution extends React.Component {
     if (format && format[0] !== null) {
       return (
         <div>
-          <h5 className="fdk-space-above">
-            {localization.dataset.distribution.format}
-          </h5>
+          <h5 className="mt-4">{localization.dataset.distribution.format}</h5>
           {children(format, code)}
         </div>
       );
@@ -90,7 +86,7 @@ export class DatasetDistribution extends React.Component {
     if (accessUrl) {
       return (
         <div>
-          <h5 className="fdk-margin-top-double">
+          <h5 className="mt-5">
             {localization.dataset.distribution.accessUrl}
           </h5>
           <p className="fdk-ingress">{children(accessUrl)}</p>
@@ -105,9 +101,7 @@ export class DatasetDistribution extends React.Component {
     if (license && license.uri) {
       return (
         <div>
-          <h5 className="fdk-margin-top-double">
-            {localization.dataset.distribution.license}
-          </h5>
+          <h5 className="mt-5">{localization.dataset.distribution.license}</h5>
           <p className="fdk-ingress">
             {license &&
               license.uri &&
@@ -148,7 +142,7 @@ export class DatasetDistribution extends React.Component {
     if (conformsTo) {
       return (
         <div>
-          <h5 className="fdk-margin-top-double">
+          <h5 className="mt-5">
             {localization.dataset.distribution.conformsTo}
           </h5>
           <p className="fdk-ingress">{children(conformsTo)}</p>
@@ -175,9 +169,7 @@ export class DatasetDistribution extends React.Component {
     if (page) {
       return (
         <div>
-          <h5 className="fdk-margin-top-double">
-            {localization.dataset.distribution.page}
-          </h5>
+          <h5 className="mt-5">{localization.dataset.distribution.page}</h5>
           <p className="fdk-ingress">{children(page)}</p>
         </div>
       );
@@ -195,7 +187,7 @@ export class DatasetDistribution extends React.Component {
     });
     return (
       <section className={distributionClass}>
-        <h4 className="fdk-margin-bottom">{title}</h4>
+        <h4>{title}</h4>
         {this.props.description && (
           <p className="fdk-ingress">{this.props.description}</p>
         )}

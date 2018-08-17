@@ -13,11 +13,7 @@ export const ArticlePage = () => {
       <DocumentMeta {...meta} />
       <div className="row">
         <div className="col-lg-10 offset-lg-1">
-          <h1 className="fdk-margin-bottom">
-            {localization.registration.title}
-          </h1>
-          <div className="fdk-margin-bottom" />
-
+          <h1 className="title">{localization.registration.title}</h1>
           <div className="fdk-subtitle">
             <span>
               Jeg &oslash;nsker tilgang til registreringsl&oslash;sningen for

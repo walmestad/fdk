@@ -1,32 +1,10 @@
 import { connect } from 'react-redux';
-import { SearchPage } from './search-page';
 import { fetchDistributionTypeIfNeededAction } from '../../redux/modules/distributionType';
 import { fetchPublishersIfNeededAction } from '../../redux/modules/publishers';
-import { fetchTermsIfNeededAction } from '../../redux/modules/terms';
-import { fetchDatasetsIfNeededAction } from '../../redux/modules/datasets';
 import { fetchThemesIfNeededAction } from '../../redux/modules/themes';
+import { ResolvedSearchPage } from './resolved-search-page';
 
-const mapStateToProps = ({
-  datasets,
-  terms,
-  themes,
-  publishers,
-  distributionTypes
-}) => {
-  const {
-    datasetItems,
-    publisherCountItems,
-    isFetchingDatasets
-  } = datasets || {
-    datasetItems: null,
-    publisherCountItems: null
-  };
-
-  const { termItems, publisherCountTermItems, isFetchingTerms } = terms || {
-    termItems: null,
-    publisherCountTermItems: null
-  };
-
+const mapStateToProps = ({ themes, publishers, distributionTypes }) => {
   const { themesItems, isFetchingThemes } = themes || {
     themesItems: null
   };
@@ -40,12 +18,6 @@ const mapStateToProps = ({
   };
 
   return {
-    datasetItems,
-    publisherCountItems,
-    isFetchingDatasets,
-    termItems,
-    publisherCountTermItems,
-    isFetchingTerms,
     themesItems,
     isFetchingThemes,
     publisherItems,
@@ -55,8 +27,6 @@ const mapStateToProps = ({
 };
 
 const mapDispatchToProps = dispatch => ({
-  fetchDatasetsIfNeeded: url => dispatch(fetchDatasetsIfNeededAction(url)),
-  fetchTermsIfNeeded: url => dispatch(fetchTermsIfNeededAction(url)),
   fetchThemesIfNeeded: () => dispatch(fetchThemesIfNeededAction()),
   fetchPublishersIfNeeded: () => dispatch(fetchPublishersIfNeededAction()),
   fetchDistributionTypeIfNeeded: () =>
@@ -66,4 +36,4 @@ const mapDispatchToProps = dispatch => ({
 export const ConnectedSearchPage = connect(
   mapStateToProps,
   mapDispatchToProps
-)(SearchPage);
+)(ResolvedSearchPage);

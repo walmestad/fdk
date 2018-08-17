@@ -4,6 +4,7 @@ set -e
 # Deployment pipeline (environment order)
 # UT1 -> ST2 -> TT1 -> ST1 ->PPE
 #     -> PP2 -> PPE
+#     -> UT2
 # UT1: Development environment. Build server continually deploys to this environment
 # ST2: Internal test server with local (mocked) authorisation
 # TT1: Externally accessible test server with local (mocked) authorisation
@@ -39,7 +40,7 @@ if [ "${GIT_STATUS}" != "Your branch is up-to-date with 'origin/develop'." ] ; t
   exit;
 fi
 
-components="fuseki harvester harvester-api nginx-registration nginx-search reference-data registration-react registration-api registration-auth search search-api"
+components="fuseki harvester harvester-api nginx-registration nginx-search reference-data registration-react registration-api registration-auth search api-cat search-api"
 
 
 # remove all local tags
@@ -139,6 +140,21 @@ elif [ "$environment" == "st2" ] ; then
   fi
 
   gitTag ${component} ut1 st2
+
+
+#temporary environment for testing elasticsearch 5.x
+elif [ "$environment" == "ut2" ] ; then
+
+  if [ "$component" == "all" ] ; then
+    for i in $components
+    do
+      dockerTag ${i} ut1 ut2
+    done
+  else
+    dockerTag ${component} ut1 ut2
+  fi
+
+  gitTag ${component} ut1 ut2
 
 
 elif [ "$environment" == "tt1" ] ; then
