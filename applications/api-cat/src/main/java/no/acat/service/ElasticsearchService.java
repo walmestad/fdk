@@ -1,13 +1,17 @@
-package no.acat.query;
+package no.acat.service;
 
 import no.dcat.datastore.Elasticsearch;
+import org.apache.commons.io.IOUtils;
 import org.elasticsearch.client.Client;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.io.IOException;
 
 @Service
 public class ElasticsearchService {
@@ -20,11 +24,12 @@ public class ElasticsearchService {
     private String clusterName;
 
     @PostConstruct
-    void validate(){
+    void validate() {
         assert clusterNodes != null;
         assert clusterName != null;
 
         initializeElasticsearchTransportClient();
+        createIndexIfNotExists();
     }
 
 
@@ -45,6 +50,29 @@ public class ElasticsearchService {
             }
 
             elasticsearch = new Elasticsearch(clusterNodes, clusterName);
+        }
+    }
+
+    public boolean indexExists(String index) {
+        return getClient().admin().indices().prepareExists(index).execute().actionGet().isExists();
+    }
+
+    public void createIndexIfNotExists() {
+        final String indexName = "acat";
+        if (indexExists(indexName)) {
+            logger.info("Index exists: " + indexName);
+            return;
+        }
+        logger.info("Creating index: " + indexName);
+
+        try {
+            Resource apispecMappingResource = new ClassPathResource("apispec.mapping.json");
+            String apispecMapping = IOUtils.toString(apispecMappingResource.getInputStream(), "UTF-8");
+            getClient().admin().indices().prepareCreate(indexName)
+                        .addMapping("apispec", apispecMapping)
+                        .execute().actionGet();
+        } catch (IOException e) {
+            logger.error("Unable to connect to Elasticsearch: {}", e.toString(), e);
         }
     }
 

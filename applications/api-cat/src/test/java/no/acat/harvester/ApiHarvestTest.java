@@ -1,7 +1,7 @@
 package no.acat.harvester;
 
 import no.acat.model.ApiDocument;
-import no.acat.query.ElasticsearchService;
+import no.acat.service.ElasticsearchService;
 import no.dcat.shared.testcategories.UnitTest;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -30,7 +30,7 @@ public class ApiHarvestTest {
 
         List<ApiDocument> response = spyHarvester.harvestAll();
 
-        assertThat(response.size(), is(3));
+        assertThat(response.size(), is(2));
 
     }
 }
