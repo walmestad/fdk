@@ -20,8 +20,7 @@ services:
       - "9087:8181"
     environment:
       - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
-      - application.elasticsearchHost=elasticsearch
-      - application.elasticsearchPort=9300
+      - application.elasticsearchHosts=elasticsearch:9300
 
   search-api:
     restart: always
@@ -30,11 +29,10 @@ services:
       - "9083:8181"
     environment:
      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
-#     - application.elasticsearchHost=es01-fdk-01-ut1.regsys-nprd.brreg.no
-     - application.elasticsearchHost=elasticsearch
-#     - clusterNode=es01-fdk-01-ut1.regsys-nprd.brreg.no
+#     - application.elasticsearchHosts=es01-fdk-01-ut1.regsys-nprd.brreg.no:9300
+     - application.elasticsearchHosts=elasticsearch:9300
+    #     - clusterNode=es01-fdk-01-ut1.regsys-nprd.brreg.no
      - clusterNode=elasticsearch
-     - application.elasticsearchPort=9300
 
   nginx-search:
     restart: always
@@ -58,11 +56,10 @@ services:
      - fuseki.dcatServiceUri=http://fuseki:8080/fuseki/dcat
      - fuseki.adminServiceUri=http://fuseki:8080/fuseki/admin
      - application.crawlerThreadPoolSize=2
-#     - application.elasticSearchHost=es01-fdk-01-ut1.regsys-nprd.brreg.no
-     - application.elasticsearchHost=elasticsearch
-#     - clusterNode=es01-fdk-01-ut1.regsys-nprd.brreg.no
+#     - application.elasticSearchHosts=es01-fdk-01-ut1.regsys-nprd.brreg.no:9300
+     - application.elasticsearchHosts=elasticsearch:9300
+    #     - clusterNode=es01-fdk-01-ut1.regsys-nprd.brreg.no
      - clusterNode=elasticsearch
-     - application.elasticSearchPort=9300
      - application.elasticSearchCluster=elasticsearch
      - clusterName=elasticsearch
     volumes:
@@ -104,11 +101,10 @@ services:
       - "8085:8080"
     environment:
      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
-#     - application.elasticsearchHost=es01-fdk-01-ut1.regsys-nprd.brreg.no
-     - application.elasticsearchHost=elasticsearch
-#     - clusterNode=es01-fdk-01-ut1.regsys-nprd.brreg.no
+#     - application.elasticsearchHosts=es01-fdk-01-ut1.regsys-nprd.brreg.no:9300
+     - application.elasticsearchHosts=elasticsearch:9300
+    #     - clusterNode=es01-fdk-01-ut1.regsys-nprd.brreg.no
      - clusterNode=elasticsearch
-     - application.elasticsearchPort=9300
      - application.elasticsearchCluster=elasticsearch
      - clusterName=elasticsearch
      - application.fusekiHost=http://fuseki:8080

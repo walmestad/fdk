@@ -98,7 +98,7 @@ public class LoadRealDatasetsAndCheckLocationTest {
         mockStatic(RetrieveCodes.class);
         when(RetrieveCodes.getAllCodes(anyString())).thenReturn(extractLocationCodes(resource, getCodes()));
 
-        ElasticSearchResultHandler esHandler = new ElasticSearchResultHandler("localhost", 9300, "elasticsearch", "http://localhost:8100", "user", "password");
+        ElasticSearchResultHandler esHandler = new ElasticSearchResultHandler("localhost:9300", "elasticsearch", "http://localhost:8100", "user", "password");
         AdminDataStore adminDataStore = mock(AdminDataStore.class);
         ElasticSearchResultHandler spyHandler = spy(esHandler);
         doNothing().when(spyHandler, "updateDatasets", any(), any(), any(), any(), any(), any(), any());

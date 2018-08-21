@@ -11,8 +11,7 @@ public class ApplicationSettings {
 	
 	private int crawlerThreadPoolSize;
 	
-	private String elasticSearchHost;
-	private int elasticSearchPort;
+	private String elasticSearchHosts;
 	private String elasticSearchCluster;
 	private String referenceDataUrl;
 
@@ -37,20 +36,12 @@ public class ApplicationSettings {
 		this.httpPassword = httpPassword;
 	}
 
-	public String getElasticSearchHost() {
-		return elasticSearchHost;
+	public String getElasticSearchHosts() {
+		return elasticSearchHosts;
 	}
 
-	public void setElasticSearchHost(String elasticSearchHost) {
-		this.elasticSearchHost = elasticSearchHost;
-	}
-
-	public int getElasticSearchPort() {
-		return elasticSearchPort;
-	}
-
-	public void setElasticSearchPort(int elasticSearchPort) {
-		this.elasticSearchPort = elasticSearchPort;
+	public void setElasticSearchHosts(String elasticSearchHosts) {
+		this.elasticSearchHosts = elasticSearchHosts;
 	}
 
 	public void setElasticSearchCluster(String elasticSearchCluster) {this.elasticSearchCluster = elasticSearchCluster; }

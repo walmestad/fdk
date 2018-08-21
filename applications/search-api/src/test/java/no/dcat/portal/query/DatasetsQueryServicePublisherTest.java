@@ -36,7 +36,7 @@ public class DatasetsQueryServicePublisherTest {
         sqs = new PublisherQueryService();
         client = mock(Client.class);
         populateMock();
-        sqs.client = client;
+        sqs.setClient(client);
     }
 
     /**

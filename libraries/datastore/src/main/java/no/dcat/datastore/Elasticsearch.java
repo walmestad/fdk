@@ -25,6 +25,8 @@ import java.io.InputStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -39,16 +41,21 @@ public class Elasticsearch implements AutoCloseable {
 
     private Client client;
 
+
+    public static class ElasticsearchNode {
+        public String host;
+        public int port;
+    }
+
     /**
      * Creates connection to a particular elasticsearch cluster
      *
-     * @param host        IP address or hostname where cluster can be reached
-     * @param port        Port number for connection to cluster. Usually 9300
+     * @param hosts       Comma-separated list og <IP address or hostname>:port where cluster can be reached
      * @param clusterName Name of cluster. Default is "elasticsearch"
      */
-    public Elasticsearch(String host, int port, String clusterName) {
-        logger.debug("Attempt to connect to Elasticsearch client: " + host + ":" + port + " cluster: " + clusterName);
-        this.client = returnElasticsearchTransportClient(host, port, clusterName);
+    public Elasticsearch(String hosts, String clusterName) {
+        logger.debug("Attempt to connect to Elasticsearch clients: " + hosts + " cluster: " + clusterName);
+        this.client = returnElasticsearchTransportClient(hosts, clusterName);
         logger.debug("transportclient success ...? " + this.client);
     }
 
@@ -63,38 +70,61 @@ public class Elasticsearch implements AutoCloseable {
     }
 
 
+    public static List<ElasticsearchNode> parseHostsString(final String hosts) {
+        List<ElasticsearchNode> nodes = new ArrayList<>();
+        for (String nodeString : hosts.split(",")) {
+            if (nodeString.trim().isEmpty()) {
+                continue;
+            }
+
+            String[] parts = nodeString.split(":");
+            if (parts.length==0 || parts[0].trim().isEmpty()) {
+                continue;
+            }
+
+            ElasticsearchNode node = new ElasticsearchNode();
+            node.host = parts[0].trim();
+            node.port = (parts.length <= 1) ? 9300 : Integer.parseInt(parts[1].trim());
+
+            nodes.add(node);
+        }
+
+        return nodes;
+    }
+
     /**
      * Creates elasticsearch transport client and returns it to caller
      *
-     * @param host        IP address or hostname where cluster can be reached
-     * @param port        Port number for connection to cluster. Usually 9300
+     * @param hosts       Comma-separated list og <IP address or hostname>:port where cluster can be reached
      * @param clusterName Name of cluster. Default is "elasticsearch"
      * @return elasticsearch transport client bound to hostname, port and cluster specified in input parameters
      */
-    public Client returnElasticsearchTransportClient(String host, int port, String clusterName) {
-        Client client = null;
+    public Client returnElasticsearchTransportClient(String hosts, String clusterName) {
+        PreBuiltTransportClient client = null;
         try {
-            logger.debug("Connect to elasticsearch: " + host + " : " + port + " cluster: " + clusterName);
+            logger.debug("Connect to elasticsearch clients: " + hosts + " cluster: " + clusterName);
+            List<ElasticsearchNode> nodes = parseHostsString(hosts);
 
-            InetAddress inetaddress = InetAddress.getByName(host);
-            logger.debug("ES inetddress: " + inetaddress.toString());
-            InetSocketTransportAddress address = new InetSocketTransportAddress(inetaddress, port);
-            logger.debug("ES address: " + address.toString());
             Settings settings = Settings.builder()
                     .put(CLUSTER_NAME, clusterName)
                     .build();
 
-            client = new PreBuiltTransportClient(settings).addTransportAddress(address);
+            client = new PreBuiltTransportClient(settings); //.addTransportAddress(address);
 
-            logger.debug("Client returns! " + address.toString());
+            for (ElasticsearchNode node : nodes) {
+                InetAddress inetaddress = InetAddress.getByName(node.host);
+                logger.debug("ES inetddress: " + inetaddress.toString());
+                InetSocketTransportAddress address = new InetSocketTransportAddress(inetaddress, node.port);
+                logger.debug("ES address: " + address.toString());
 
+                client.addTransportAddress(address);
+            }
         } catch (UnknownHostException e) {
             logger.error(e.toString());
         }
 
         logger.debug("transportclient: " + client);
         return client;
-
     }
 
     /**

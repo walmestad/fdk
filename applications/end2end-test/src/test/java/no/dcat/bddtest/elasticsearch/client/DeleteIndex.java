@@ -13,17 +13,15 @@ import org.slf4j.LoggerFactory;
 public class DeleteIndex {
     private final Logger logger = LoggerFactory.getLogger(DeleteIndex.class);
 
-    private final String hostname;
+    private final String hosts;
     private final String clustername = "elasticsearch";
-    private final int port;
 
-    public DeleteIndex(String hostname, int port) {
-        this.hostname = hostname;
-        this.port = port;
+    public DeleteIndex(String hosts) {
+        this.hosts = hosts;
     }
 
     public void deleteIndex(String index) {
-        try (Elasticsearch elasticsearch = new Elasticsearch(hostname, port, clustername)) {
+        try (Elasticsearch elasticsearch = new Elasticsearch(hosts, clustername)) {
             logger.info("Deleting indexing {}", index);
             deleteIndexInElasticsearch(elasticsearch, index);
         } catch (Exception e) {

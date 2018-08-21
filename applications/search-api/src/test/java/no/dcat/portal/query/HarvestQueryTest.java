@@ -46,7 +46,7 @@ public class HarvestQueryTest {
 
     @Before
     public void setUp() throws Exception {
-        elasticsearch = new Elasticsearch("localhost",9399,"elasticsearch");
+        elasticsearch = new Elasticsearch("localhost:9399","elasticsearch");
         elasticsearch.createIndex("harvest");
         totalChangesCatalog1 = generateData(200, 1);
         totalChangesCatalog2 = generateData(100, 2);

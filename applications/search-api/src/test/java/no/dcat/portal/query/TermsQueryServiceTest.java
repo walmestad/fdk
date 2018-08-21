@@ -32,8 +32,7 @@ public class TermsQueryServiceTest {
 
         client = mock(Client.class);
 
-        service.client = client;
-        service.setElasticsearchHost("http://dummy.no");
+        service.setClient(client);
 
         searchResponse = mock(SearchResponse.class);
         when(searchResponse.toString()).thenReturn(dataset);

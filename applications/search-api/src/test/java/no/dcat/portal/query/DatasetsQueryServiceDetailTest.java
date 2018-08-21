@@ -36,7 +36,7 @@ public class DatasetsQueryServiceDetailTest {
         sqs = new DatasetsQueryService();
         client = mock(Client.class);
         populateMock();
-        sqs.client = client;
+        sqs.setClient(client);
     }
 
     /**

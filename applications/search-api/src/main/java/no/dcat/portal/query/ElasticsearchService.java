@@ -1,10 +1,7 @@
 package no.dcat.portal.query;
 
+import no.dcat.datastore.Elasticsearch;
 import org.elasticsearch.client.Client;
-import org.elasticsearch.client.transport.TransportClient;
-import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.common.transport.InetSocketTransportAddress;
-import org.elasticsearch.transport.client.PreBuiltTransportClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,82 +9,48 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import javax.annotation.PostConstruct;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
+
 
 public class ElasticsearchService {
     private static Logger logger = LoggerFactory.getLogger(ElasticsearchService.class);
 
-    @Value("${application.elasticsearchHost}")
-    private String elasticsearchHost;
-
-    public void setElasticsearchHost(String host) {
-        elasticsearchHost = host;
-    }
-
-    @Value("${application.elasticsearchPort}")
-    private int elasticsearchPort;
+    @Value("${application.elasticsearchHosts}")
+    private String elasticsearchHosts;
 
     @Value("${application.clusterName}")
     private String clusterName;
 
     @PostConstruct
     void validate(){
-        assert elasticsearchHost != null;
-        assert elasticsearchPort > 0;
+        assert elasticsearchHosts != null;
         assert clusterName != null;
     }
 
-    public void setClusterName(String cn) {
-        clusterName = cn;
-    }
-    public void setPort(int port) { elasticsearchPort = port; }
 
-
-    Client client;
+    private Elasticsearch elasticsearch;
 
     public Client getClient() {
-        return client;
-    };
-    void setClient( Client client) {
-        this.client = client;
+        if (elasticsearch == null) {
+            initializeElasticsearchTransportClient();
+        }
+        return elasticsearch==null ? null : elasticsearch.getClient();
     }
 
-
-    public final Client createElasticsearchTransportClient(final String host, final int port) {
-        client = null;
-
-        try {
-            InetAddress inetaddress = InetAddress.getByName(host);
-            InetSocketTransportAddress address = new InetSocketTransportAddress(inetaddress, port);
-
-            //TODO: Gjør cluster name til en property
-            Settings settings = Settings.builder()
-                    .put("cluster.name", clusterName).build();
-
-            client = new PreBuiltTransportClient(settings).addTransportAddress(address);
-
-            logger.debug("Client returns! " + address.toString());
-        } catch (UnknownHostException e) {
-            // TODO: throw exception.
-            logger.error(e.toString(), e);
-        }
-
-        logger.debug("Transport client to elasticsearch created: " + client);
-        return client;
+    void setClient(Client client) {
+        elasticsearch = new Elasticsearch(client);
     }
 
     public ResponseEntity<String> initializeElasticsearchTransportClient() {
         String jsonError = "{\"error\": \"Query service is not properly initialized. Unable to connect to database (ElasticSearch)\"}";
 
-        logger.debug("elasticsearch: " + elasticsearchHost + ":" + elasticsearchPort);
-        if (client == null) {
-            if (elasticsearchHost == null) {
-                logger.error("Configuration property application.elasticsearchHost is not initialized. Unable to connect to Elasticsearch");
-                return new ResponseEntity<String>(jsonError, HttpStatus.INTERNAL_SERVER_ERROR);
+        logger.debug("elasticsearch: " + elasticsearchHosts);
+        if (elasticsearch == null) {
+            if (elasticsearchHosts == null) {
+                logger.error("Configuration property application.elasticsearchHosts is not initialized. Unable to connect to Elasticsearch");
+                return new ResponseEntity<>(jsonError, HttpStatus.INTERNAL_SERVER_ERROR);
             }
 
-            createElasticsearchTransportClient(elasticsearchHost, elasticsearchPort);
+            elasticsearch = new Elasticsearch(elasticsearchHosts, clusterName);
         }
         return null;
     }

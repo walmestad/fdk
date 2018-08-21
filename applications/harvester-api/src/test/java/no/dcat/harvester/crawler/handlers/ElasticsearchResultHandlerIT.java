@@ -44,7 +44,7 @@ public class ElasticsearchResultHandlerIT {
 
 	@Before
 	public void setUp() throws Exception {
-		elasticsearch = new Elasticsearch("localhost",9399,"elasticsearch");
+		elasticsearch = new Elasticsearch("localhost:9399","elasticsearch");
 	}
 
 	@Test
@@ -150,7 +150,7 @@ public class ElasticsearchResultHandlerIT {
     }
 
     private void harvestSource(DcatSource dcatSource) {
-        ElasticSearchResultHandler handler = new ElasticSearchResultHandler("", 0, "elasticsearch","http://localhost:8100", "user", "password");
+        ElasticSearchResultHandler handler = new ElasticSearchResultHandler("", "elasticsearch","http://localhost:8100", "user", "password");
         handler.indexWithElasticsearch(dcatSource, FileManager.get().loadModel(dcatSource.getUrl()), new Elasticsearch(elasticsearch.getClient()),null);
 
         //prevent race condition where elasticsearch is still indexing!!!
