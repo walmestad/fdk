@@ -13,7 +13,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
-import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 @Category(UnitTest.class)
@@ -28,7 +27,7 @@ public class AcatQueryControllerTest {
         AcatQueryController spyController = spy(controller);
 
         SearchResponse searchResponse = mock(SearchResponse.class);
-        doReturn(searchResponse).when(spyController).doQuery(anyString(), anyString(),anyObject(),anyInt(), anyInt());
+        doReturn(searchResponse).when(spyController).doQuery(anyString(), anyString(),any(),anyInt(), anyInt());
         SearchHits searchHits = mock(SearchHits.class);
         when(searchResponse.getHits()).thenReturn(searchHits);
         when(searchHits.getTotalHits()).thenReturn(1L);

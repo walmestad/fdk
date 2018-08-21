@@ -18,7 +18,7 @@ spring:
     use-hal-as-default-json-media-type: false
   data:
     elasticsearch:
-      clusterNodes: elasticsearch:9300
+      clusterNodes: ${FDK_ES_CLUSTERNODES:elasticsearch:9300}
       clusterName: ${FDK_ES_CLUSTERNAME:elasticsearch}
 saml:
   sso:
@@ -54,7 +54,7 @@ spring:
   profiles: prod
   data:
     elasticsearch:
-      clusterNodes: elasticsearch:9300
+      clusterNodes: ${FDK_ES_CLUSTERNODES:elasticsearch:9300}
       clusterName: ${FDK_ES_CLUSTERNAME:elasticsearch}
 logging:
   level.: ERROR
@@ -85,7 +85,7 @@ spring:
   profiles: st1
   data:
     elasticsearch:
-      clusterNodes: elasticsearch:9300
+      clusterNodes: ${FDK_ES_CLUSTERNODES:elasticsearch:9300}
       clusterName: ${FDK_ES_CLUSTERNAME:elasticsearch}
 logging:
   level.: ERROR
@@ -111,7 +111,7 @@ spring:
   profiles: prod-localauth
   data:
     elasticsearch:
-      clusterNodes: elasticsearch:9300
+      clusterNodes: ${FDK_ES_CLUSTERNODES:elasticsearch:9300}
       clusterName: ${FDK_ES_CLUSTERNAME:elasticsearch}
 logging:
   level.: ERROR
@@ -138,6 +138,7 @@ spring:
   data:
     elasticsearch:
       clusterNodes: localhost:9399
+      clusterName: elasticsearch
 server:
   port: ${registrationApi_serverPort:8099}
   ssl:
@@ -154,7 +155,7 @@ spring:
   data:
     elasticsearch:
       clusterNodes: localhost:9399
-      clusterName: ${FDK_ES_CLUSTERNAME:elasticsearch}
+      clusterName: elasticsearch
       properties:
         http:
           enabled: true
@@ -173,7 +174,7 @@ spring:
   profiles: docker
   data:
     elasticsearch:
-      clusterNodes: elasticsearch:9300
+      clusterNodes: ${FDK_ES_CLUSTERNODES:elasticsearch:9300}
       clusterName: ${FDK_ES_CLUSTERNAME:elasticsearch}
 logging:
   level.no.dcat: DEBUG

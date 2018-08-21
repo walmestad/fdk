@@ -20,7 +20,8 @@ services:
       - "9087:8181"
     environment:
       - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
-      - application.elasticsearchHosts=elasticsearch:9300
+      - elastic.clusterNodes=elasticsearch:9300
+      - elastic.clusterName=elasticsearch
 
   search-api:
     restart: always
@@ -29,10 +30,8 @@ services:
       - "9083:8181"
     environment:
      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
-#     - application.elasticsearchHosts=es01-fdk-01-ut1.regsys-nprd.brreg.no:9300
-     - application.elasticsearchHosts=elasticsearch:9300
-    #     - clusterNode=es01-fdk-01-ut1.regsys-nprd.brreg.no
-     - clusterNode=elasticsearch
+     - elastic.clusterNodes=elasticsearch:9300
+     - elastic.clusterName=elasticsearch
 
   nginx-search:
     restart: always
@@ -53,15 +52,11 @@ services:
      - "9081:8181"
     environment:
      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx1024M -Dspring.profiles.active=docker
+     - crawler.threadPoolSize=2
+     - elastic.clusterNodes=elasticsearch:9300
+     - elastic.clusterName=elasticsearch
      - fuseki.dcatServiceUri=http://fuseki:8080/fuseki/dcat
      - fuseki.adminServiceUri=http://fuseki:8080/fuseki/admin
-     - application.crawlerThreadPoolSize=2
-#     - application.elasticSearchHosts=es01-fdk-01-ut1.regsys-nprd.brreg.no:9300
-     - application.elasticsearchHosts=elasticsearch:9300
-    #     - clusterNode=es01-fdk-01-ut1.regsys-nprd.brreg.no
-     - clusterNode=elasticsearch
-     - application.elasticSearchCluster=elasticsearch
-     - clusterName=elasticsearch
     volumes:
      - ./logs:/usr/local/tomcat/logs:rw
 
@@ -101,14 +96,10 @@ services:
       - "8085:8080"
     environment:
      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
-#     - application.elasticsearchHosts=es01-fdk-01-ut1.regsys-nprd.brreg.no:9300
-     - application.elasticsearchHosts=elasticsearch:9300
-    #     - clusterNode=es01-fdk-01-ut1.regsys-nprd.brreg.no
-     - clusterNode=elasticsearch
-     - application.elasticsearchCluster=elasticsearch
-     - clusterName=elasticsearch
      - application.fusekiHost=http://fuseki:8080
      - application.harvesterHost=http://harvester-api:8080
+     - elastic.clusterNodes=elasticsearch:9300
+     - elastic.clusterNames=elasticsearch
 
   nginx-registration:
     restart: always

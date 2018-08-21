@@ -148,11 +148,9 @@ public abstract class CommonPage extends SpringIntegrationTestConfigE2E {
     }
 
 
-    void refreshElasticsearch(String hosts, String clustername){
-        try (Elasticsearch elasticsearch = new Elasticsearch(hosts, clustername)) {
-
+    void refreshElasticsearch(String clusterNodes, String clusterName){
+        try (Elasticsearch elasticsearch = new Elasticsearch(clusterNodes, clusterName)) {
             elasticsearch.getClient().admin().indices().prepareRefresh().get();
-
         }
     }
 

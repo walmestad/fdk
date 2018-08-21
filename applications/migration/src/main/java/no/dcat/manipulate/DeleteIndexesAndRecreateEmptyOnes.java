@@ -19,16 +19,16 @@ public class DeleteIndexesAndRecreateEmptyOnes {
             logger.warn("Need two arguments to identify elasticsearch: \"host1:port,host2:port\" clusterName\n\t example: \"localhost:9300\" elasticsearch");
         }
 
-        String hosts = args[0];
+        String clusterNodes = args[0];
         String clusterName = args[1];
 
-       deleteAndInitIndexes(hosts, clusterName);
+       deleteAndInitIndexes(clusterNodes, clusterName);
     }
 
-    public static void deleteAndInitIndexes(String hosts, String clusterName) {
+    public static void deleteAndInitIndexes(String clusterNodes, String clusterName) {
         //final String elasticUrl = "http://localhost:9200/"; //"http://elasticsearch-fellesdatakatalog-ppe.ose-pc.brreg.no"; //"http://elasticsearch-fellesdatakatalog-st2.ose-npc.brreg.no";
 
-        Elasticsearch elasticsearch = new Elasticsearch(hosts, clusterName);
+        Elasticsearch elasticsearch = new Elasticsearch(clusterNodes, clusterName);
 
         if (elasticsearch.isElasticsearchRunning()) {
 
@@ -49,7 +49,7 @@ public class DeleteIndexesAndRecreateEmptyOnes {
                 elasticsearch.createIndex("harvest");
             }
         } else {
-            logger.error("Elasticsearch is not running! {}", hosts);
+            logger.error("Elasticsearch is not running! {}", clusterNodes);
         }
 
     }
