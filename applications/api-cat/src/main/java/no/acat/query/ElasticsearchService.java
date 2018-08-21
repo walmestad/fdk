@@ -13,15 +13,15 @@ import javax.annotation.PostConstruct;
 public class ElasticsearchService {
     private static Logger logger = LoggerFactory.getLogger(ElasticsearchService.class);
 
-    @Value("${application.elasticsearchHosts}")
-    private String elasticsearchHosts;
+    @Value("${elastic.clusterNodes}")
+    private String clusterNodes;
 
-    @Value("${application.clusterName}")
+    @Value("${elastic.clusterName}")
     private String clusterName;
 
     @PostConstruct
     void validate(){
-        assert elasticsearchHosts != null;
+        assert clusterNodes != null;
         assert clusterName != null;
 
         initializeElasticsearchTransportClient();
@@ -38,13 +38,13 @@ public class ElasticsearchService {
     }
 
     private void initializeElasticsearchTransportClient() {
-        logger.debug("elasticsearch: " + elasticsearchHosts);
+        logger.debug("elasticsearch: " + clusterNodes);
         if (elasticsearch == null) {
-            if (elasticsearchHosts == null) {
-                logger.error("Configuration property application.elasticsearchHost is not initialized. Unable to connect to Elasticsearch");
+            if (clusterNodes == null) {
+                logger.error("Configuration property elastic.clusterNodes is not initialized. Unable to connect to Elasticsearch");
             }
 
-            elasticsearch = new Elasticsearch(elasticsearchHosts, clusterName);
+            elasticsearch = new Elasticsearch(clusterNodes, clusterName);
         }
     }
 

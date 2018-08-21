@@ -50,12 +50,12 @@ public class Elasticsearch implements AutoCloseable {
     /**
      * Creates connection to a particular elasticsearch cluster
      *
-     * @param hosts       Comma-separated list og <IP address or hostname>:port where cluster can be reached
+     * @param clusterNodes Comma-separated list og <IP address or hostname>:port where cluster can be reached
      * @param clusterName Name of cluster. Default is "elasticsearch"
      */
-    public Elasticsearch(String hosts, String clusterName) {
-        logger.debug("Attempt to connect to Elasticsearch clients: " + hosts + " cluster: " + clusterName);
-        this.client = returnElasticsearchTransportClient(hosts, clusterName);
+    public Elasticsearch(String clusterNodes, String clusterName) {
+        logger.debug("Attempt to connect to Elasticsearch clients: " + clusterNodes + " cluster: " + clusterName);
+        this.client = returnElasticsearchTransportClient(clusterNodes, clusterName);
         logger.debug("transportclient success ...? " + this.client);
     }
 
@@ -95,15 +95,15 @@ public class Elasticsearch implements AutoCloseable {
     /**
      * Creates elasticsearch transport client and returns it to caller
      *
-     * @param hosts       Comma-separated list og <IP address or hostname>:port where cluster can be reached
+     * @param clusterNodes Comma-separated list og <IP address or hostname>:port where cluster can be reached
      * @param clusterName Name of cluster. Default is "elasticsearch"
      * @return elasticsearch transport client bound to hostname, port and cluster specified in input parameters
      */
-    public Client returnElasticsearchTransportClient(String hosts, String clusterName) {
+    public Client returnElasticsearchTransportClient(String clusterNodes, String clusterName) {
         PreBuiltTransportClient client = null;
         try {
-            logger.debug("Connect to elasticsearch clients: " + hosts + " cluster: " + clusterName);
-            List<ElasticsearchNode> nodes = parseHostsString(hosts);
+            logger.debug("Connect to elasticsearch clients: " + clusterNodes + " cluster: " + clusterName);
+            List<ElasticsearchNode> nodes = parseHostsString(clusterNodes);
 
             Settings settings = Settings.builder()
                     .put(CLUSTER_NAME, clusterName)

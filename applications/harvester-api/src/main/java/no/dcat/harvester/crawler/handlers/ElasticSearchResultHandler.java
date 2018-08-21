@@ -89,8 +89,8 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
     private boolean enableHarvestLog = true;
     private boolean enableChangeHandling = true;
 
-    String hosts;
-    String clustername;
+    String clusterNodes;
+    String clusterName;
     private final String referenceDataUrl;
     String httpUsername;
     String httpPassword;
@@ -104,35 +104,35 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
      * Creates a new elasticsearch code result handler connected to
      * a particular elasticsearch instance.
      *
-     * @param hosts                  Comma-separated list og <IP address or hostname>:port (usually 9300) where cluster can be reached
-     * @param clustername            Name of elasticsearch cluster
-     * @param referenceDataUrl         hostname for reference-data service whitch provides themes service
+     * @param clusterNodes           Comma-separated list og <IP address or hostname>:port (usually 9300) where cluster can be reached
+     * @param clusterName            Name of elasticsearch cluster
+     * @param referenceDataUrl       hostname for reference-data service whitch provides themes service
      * @param httpUsername           username used for posting data to reference-data service
      * @param httpPassword           password used for posting data to reference-data service
      * @param notifactionEmailSender email address used as from: address in emails with validation results
      */
-    public ElasticSearchResultHandler(String hosts, String clustername, String referenceDataUrl, String httpUsername, String httpPassword,
+    public ElasticSearchResultHandler(String clusterNodes, String clusterName, String referenceDataUrl, String httpUsername, String httpPassword,
                                       String notifactionEmailSender, EmailNotificationService emailNotificationService) {
-        this.hosts = hosts;
-        this.clustername = clustername;
+        this.clusterNodes = clusterNodes;
+        this.clusterName = clusterName;
         this.referenceDataUrl = referenceDataUrl;
         this.httpUsername = httpUsername;
         this.httpPassword = httpPassword;
         this.notificationEmailSender = notifactionEmailSender;
         this.notificationService = emailNotificationService;
 
-        logger.debug("ES clustername: " + this.clustername);
+        logger.debug("ES clusterName: " + this.clusterName);
     }
 
 
-    public ElasticSearchResultHandler(String hosts, String clustername, String referenceDataUrl, String httpUsername, String httpPassword) {
-        this(hosts, clustername, referenceDataUrl, httpUsername, httpPassword, DEFAULT_EMAIL_SENDER, null);
+    public ElasticSearchResultHandler(String clusterNodes, String clusterName, String referenceDataUrl, String httpUsername, String httpPassword) {
+        this(clusterNodes, clusterName, referenceDataUrl, httpUsername, httpPassword, DEFAULT_EMAIL_SENDER, null);
     }
 
     Elasticsearch createElasticsearch() {
-        logger.debug("Connect to Elasticsearch: " + this.hosts + " cluster: " + this.clustername);
+        logger.debug("Connect to Elasticsearch: " + this.clusterNodes + " cluster: " + this.clusterName);
 
-        return new Elasticsearch(hosts, clustername);
+        return new Elasticsearch(clusterNodes, clusterName);
     }
 
     /**

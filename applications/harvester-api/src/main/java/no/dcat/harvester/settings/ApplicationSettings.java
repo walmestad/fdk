@@ -9,10 +9,6 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix="application")
 public class ApplicationSettings {
 	
-	private int crawlerThreadPoolSize;
-	
-	private String elasticSearchHosts;
-	private String elasticSearchCluster;
 	private String referenceDataUrl;
 
 	private String httpUsername;
@@ -34,26 +30,6 @@ public class ApplicationSettings {
 
 	public void setHttpPassword(String httpPassword) {
 		this.httpPassword = httpPassword;
-	}
-
-	public String getElasticSearchHosts() {
-		return elasticSearchHosts;
-	}
-
-	public void setElasticSearchHosts(String elasticSearchHosts) {
-		this.elasticSearchHosts = elasticSearchHosts;
-	}
-
-	public void setElasticSearchCluster(String elasticSearchCluster) {this.elasticSearchCluster = elasticSearchCluster; }
-
-	public String getElasticSearchCluster() { return elasticSearchCluster; }
-
-	public int getCrawlerThreadPoolSize() {
-		return crawlerThreadPoolSize;
-	}
-
-	public void setCrawlerThreadPoolSize(int crawlerThreadPoolSize) {
-		this.crawlerThreadPoolSize = crawlerThreadPoolSize;
 	}
 
 	public String getReferenceDataUrl() {
