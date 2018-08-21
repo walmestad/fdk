@@ -19,6 +19,7 @@ management:
 spring:
   profiles: prod
 application:
+  elasticsearchHost: ${FDK_ES_HOSTNAME:elasticsearch}
   clusterName: ${FDK_ES_CLUSTERNAME:elasticsearch}
 
 ---
