@@ -40,7 +40,7 @@ public class UrlEncodedIdWorksTest {
         sqs = new DatasetsQueryService();
         client = mock(Client.class);
         populateMock();
-        sqs.client = client;
+        sqs.setClient(client);
     }
 
     @Test

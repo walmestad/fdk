@@ -89,8 +89,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
     private boolean enableHarvestLog = true;
     private boolean enableChangeHandling = true;
 
-    String hostename;
-    int port;
+    String hosts;
     String clustername;
     private final String referenceDataUrl;
     String httpUsername;
@@ -105,18 +104,16 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
      * Creates a new elasticsearch code result handler connected to
      * a particular elasticsearch instance.
      *
-     * @param hostname               host name where elasticsearch cluster is found
-     * @param port                   port for connection to elasticserach cluster. Usually 9300
+     * @param hosts                  Comma-separated list og <IP address or hostname>:port (usually 9300) where cluster can be reached
      * @param clustername            Name of elasticsearch cluster
      * @param referenceDataUrl         hostname for reference-data service whitch provides themes service
      * @param httpUsername           username used for posting data to reference-data service
      * @param httpPassword           password used for posting data to reference-data service
      * @param notifactionEmailSender email address used as from: address in emails with validation results
      */
-    public ElasticSearchResultHandler(String hostname, int port, String clustername, String referenceDataUrl, String httpUsername, String httpPassword,
+    public ElasticSearchResultHandler(String hosts, String clustername, String referenceDataUrl, String httpUsername, String httpPassword,
                                       String notifactionEmailSender, EmailNotificationService emailNotificationService) {
-        this.hostename = hostname;
-        this.port = port;
+        this.hosts = hosts;
         this.clustername = clustername;
         this.referenceDataUrl = referenceDataUrl;
         this.httpUsername = httpUsername;
@@ -128,14 +125,14 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
     }
 
 
-    public ElasticSearchResultHandler(String hostname, int port, String clustername, String referenceDataUrl, String httpUsername, String httpPassword) {
-        this(hostname, port, clustername, referenceDataUrl, httpUsername, httpPassword, DEFAULT_EMAIL_SENDER, null);
+    public ElasticSearchResultHandler(String hosts, String clustername, String referenceDataUrl, String httpUsername, String httpPassword) {
+        this(hosts, clustername, referenceDataUrl, httpUsername, httpPassword, DEFAULT_EMAIL_SENDER, null);
     }
 
     Elasticsearch createElasticsearch() {
-        logger.debug("Connect to Elasticsearch: " + this.hostename + ":" + this.port + " cluster: " + this.clustername);
+        logger.debug("Connect to Elasticsearch: " + this.hosts + " cluster: " + this.clustername);
 
-        return new Elasticsearch(hostename, port, clustername);
+        return new Elasticsearch(hosts, clustername);
     }
 
     /**

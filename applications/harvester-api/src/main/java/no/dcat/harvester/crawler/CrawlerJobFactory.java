@@ -57,18 +57,16 @@ public class CrawlerJobFactory {
 	
 	public CrawlerJob createCrawlerJob(DcatSource dcatSource) {
 
-		logger.debug("application.elasticSearchHost: " + applicationSettings.getElasticSearchHost());
-		logger.debug("application.elasticSearchPort: " + applicationSettings.getElasticSearchPort());
+		logger.debug("application.elasticSearchHosts: " + applicationSettings.getElasticSearchHosts());
 		logger.debug("application.elasticSearchCluster: " + applicationSettings.getElasticSearchCluster());
 		logger.debug("application.referenceDataUrl: " + applicationSettings.getReferenceDataUrl());
 		logger.debug("application.httpUsername: " + applicationSettings.getHttpUsername());
 		logger.debug("application.httpPassword: " + applicationSettings.getHttpPassword());
 		logger.debug("application.notificationMailSenderAddress" + applicationSettings.getNotificationMailSenderAddress());
 
-		publisherHandler = new ElasticSearchResultPubHandler(applicationSettings.getElasticSearchHost(),applicationSettings.getElasticSearchPort(), applicationSettings.getElasticSearchCluster());
+		publisherHandler = new ElasticSearchResultPubHandler(applicationSettings.getElasticSearchHosts(), applicationSettings.getElasticSearchCluster());
 		elasticSearchResultHandler = new ElasticSearchResultHandler(
-				applicationSettings.getElasticSearchHost(),
-				applicationSettings.getElasticSearchPort(),
+				applicationSettings.getElasticSearchHosts(),
 				applicationSettings.getElasticSearchCluster(),
 				applicationSettings.getReferenceDataUrl(),
 				applicationSettings.getHttpUsername(),

@@ -62,6 +62,10 @@
             <artifactId>shared</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>no.dcat</groupId>
+            <artifactId>datastore</artifactId>
+        </dependency>
 
 
     </dependencies>

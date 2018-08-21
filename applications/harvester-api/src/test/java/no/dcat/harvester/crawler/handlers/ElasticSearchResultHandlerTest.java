@@ -261,7 +261,7 @@ public class ElasticSearchResultHandlerTest {
 
     @Before
     public void setup() {
-        resultHandler = new ElasticSearchResultHandler(null, 0, null, null, null, null);
+        resultHandler = new ElasticSearchResultHandler(null, null, null, null, null);
         validationMessages = new Gson().fromJson(msgs, new TypeToken<List<String>>() {
         }.getType());
     }
