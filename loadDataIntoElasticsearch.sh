@@ -19,6 +19,11 @@ function startLoad {
         targetElasticUrl=http://localhost:9200
     fi
 
+    if [ "$environment" == "st1" ]
+    then
+        targetElasticUrl=http://es01-fdk-02-st1.regsys-nprd.brreg.no:9200
+    fi
+
     echo "Source files to load            : ${source}"
     echo "Target elasticsearch environment: ${targetElasticUrl}"
 
