@@ -30,7 +30,7 @@
 	</modules>
 
 	<properties>
-		<springframework.version>2.0.2.RELEASE</springframework.version>
+		<springframework.version>2.0.4.RELEASE</springframework.version>
         <fdk.version>1.0.0</fdk.version>
 		<java.encoding>UTF-8</java.encoding>
 		<java.version>1.8</java.version>
