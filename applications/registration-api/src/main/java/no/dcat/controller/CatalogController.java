@@ -60,6 +60,10 @@ public class CatalogController {
     @Value("${saml.sso.context-provider.lb.include-server-port-in-request-url}")
     private boolean includeServerPortInUrl;
 
+    @Value("${application.openDataEnhet}")
+    private String openDataEnhetsregisteret;
+
+
     @Autowired
     public CatalogController(CatalogRepository catalogRepository, SpringSecurityContextBean springSecurityContextBean, EntityNameService entityNameService, HarvesterService harvesterService) {
         this.catalogRepository = catalogRepository;
@@ -135,7 +139,7 @@ public class CatalogController {
     Publisher getPublisher(Catalog catalog) {
 
         RestTemplate restTemplate = new RestTemplate();
-        String uri = "https://data.brreg.no/enhetsregisteret/enhet/" + catalog.getId() ;
+        String uri = openDataEnhetsregisteret + catalog.getId() ;
         Enhet enhet;
         try {
             enhet = restTemplate.getForObject(uri + ".json", Enhet.class);

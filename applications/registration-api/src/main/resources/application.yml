@@ -12,6 +12,7 @@ application:
   harvesterUsername: ${registrationApi_harvesterUsername:test_admin}
   harvesterPassword: ${registrationApi_harvesterPassword:password}
   harvesterUrl: http://harvester:8080
+  openDataEnhet: ${FDK_ENHETSREGISTERET_URL:https://data.brreg.no/enhetsregisteret/api/enheter/}
 
 spring:
   hateoas:
@@ -70,7 +71,7 @@ application:
   authentication:
     includedOrgforms: ADOS,FKF,FYLK,IKS,KF,KIRK,KOMM,ORGL,SF,STAT,SÆR
     includedOrgnr: 974760673
-  openDataEnhet: https://data.brreg.no/enhetsregisteret/enhet/
+  openDataEnhet: ${FDK_ENHETSREGISTERET_URL:https://data.brreg.no/enhetsregisteret/api/enheter/}
 management:
   server:
     port: 8181

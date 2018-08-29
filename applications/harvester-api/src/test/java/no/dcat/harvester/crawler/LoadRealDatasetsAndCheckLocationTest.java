@@ -103,7 +103,7 @@ public class LoadRealDatasetsAndCheckLocationTest {
         ElasticSearchResultHandler spyHandler = spy(esHandler);
         doNothing().when(spyHandler, "updateDatasets", any(), any(), any(), any(), any(), any(), any());
 
-        CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, null, spyHandler);
+        CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, spyHandler);
         CrawlerJob spyJob = spy(job);
         doReturn(true).when(spyJob).locationUriResponds(anyString());
 

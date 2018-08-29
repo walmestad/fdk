@@ -1,6 +1,5 @@
 package no.dcat.harvester.crawler;
 
-
 import no.dcat.datastore.AdminDataStore;
 import no.dcat.datastore.DcatDataStore;
 import no.dcat.datastore.domain.DcatSource;
@@ -48,7 +47,7 @@ public class CrawlerJobTest {
         AdminDataStore adminDataStore = mock(AdminDataStore.class);
         ElasticSearchResultHandler elasticHandler = mock(ElasticSearchResultHandler.class);
 
-        CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null,null, elasticHandler);
+        CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, elasticHandler);
         job.testMode();
 
         String actual = job.lastPath("/p1/p2");
@@ -72,7 +71,7 @@ public class CrawlerJobTest {
         AdminDataStore adminDataStore = mock(AdminDataStore.class);
         ElasticSearchResultHandler elasticHandler = mock(ElasticSearchResultHandler.class);
 
-        CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null,null, elasticHandler);
+        CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, elasticHandler);
         job.testMode();
 
         String actual = job.formatValidationMessage(error);
@@ -114,7 +113,7 @@ public class CrawlerJobTest {
 
         AdminDataStore adminDataStore = mock(AdminDataStore.class);
 
-        CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, null, handler);
+        CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, handler);
 
         job.testMode();
         job.run();
@@ -135,7 +134,7 @@ public class CrawlerJobTest {
 
         AdminDataStore adminDataStore = mock(AdminDataStore.class);
 
-        CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, null, handler);
+        CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, handler);
 
         CrawlerJob spyJob = spy(job);
         doReturn(job.loadModelAndValidate(resource.getURL())).when(spyJob).prepareModelForValidation();
@@ -145,7 +144,7 @@ public class CrawlerJobTest {
         List<String> report =  spyJob.getValidationResult();
 
         logger.debug("validation report: {}", report);
-        assertThat(report.size(), is(41));
+        assertThat(report.size(), is(42));
     }
 
 
@@ -162,7 +161,7 @@ public class CrawlerJobTest {
 
         AdminDataStore adminDataStore = mock(AdminDataStore.class);
 
-        CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, null, handler);
+        CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, handler);
 
         job.testMode();
         job.run();
@@ -196,7 +195,7 @@ public class CrawlerJobTest {
 
         handler.process(dcatSource, ModelFactory.createDefaultModel(), null);
 
-        CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, null, handler);
+        CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, handler);
         job.testMode();
         job.run();
     }
@@ -214,7 +213,7 @@ public class CrawlerJobTest {
 
         handler.process(dcatSource, ModelFactory.createDefaultModel(), null);
 
-        CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, HarvesterApplication.getBrregCache(), null, handler);
+        CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, handler);
         job.testMode();
         job.run();
 
@@ -244,7 +243,7 @@ public class CrawlerJobTest {
 
         FusekiResultHandler handler = mock(FusekiResultHandler.class);
 
-        CrawlerJob job = new CrawlerJob(null, null, null, null, handler);
+        CrawlerJob job = new CrawlerJob(null, null, null, handler);
         job.verifyModelByParsing(FileManager.get().loadModel(resource.getFile().getCanonicalPath()));
         job.run();
 
@@ -257,7 +256,7 @@ public class CrawlerJobTest {
 
         FusekiResultHandler handler = mock(FusekiResultHandler.class);
 
-        CrawlerJob job = new CrawlerJob(null, null, null, null, handler);
+        CrawlerJob job = new CrawlerJob(null, null, null, handler);
 
         job.verifyModelByParsing(FileManager.get().loadModel(resource.getFile().getCanonicalPath()));
 

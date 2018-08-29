@@ -16,6 +16,9 @@ public class ApplicationSettings {
 
 	private String notificationMailSenderAddress;
 
+	private String openDataEnhet;
+
+
 	public String getHttpUsername() {
 		return httpUsername;
 	}
@@ -40,7 +43,19 @@ public class ApplicationSettings {
 		this.referenceDataUrl = referenceDataUrl;
 	}
 
-	public String getNotificationMailSenderAddress() {return notificationMailSenderAddress; }
+	public String getNotificationMailSenderAddress() {
+		return notificationMailSenderAddress;
+	}
 
-	public void setNotificationMailSenderAddress(String mailSenderAddress) {this.notificationMailSenderAddress = mailSenderAddress; }
+	public void setNotificationMailSenderAddress(String mailSenderAddress) {
+		this.notificationMailSenderAddress = mailSenderAddress;
+	}
+
+	public String getOpenDataEnhet() {
+		return openDataEnhet;
+	}
+
+	public void setOpenDataEnhet(String openDataEnhet) {
+		this.openDataEnhet = openDataEnhet;
+	}
 }

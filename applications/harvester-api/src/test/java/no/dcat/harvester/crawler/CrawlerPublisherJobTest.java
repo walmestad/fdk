@@ -33,7 +33,7 @@ public class CrawlerPublisherJobTest {
         URL url = getClass().getClassLoader().getResource("datasett-mini.ttl");
         DcatSource dcatSource = new DcatSource("http//dcat.no/test", "Test", url.toString(), "admin_user", "123456789");
 
-        CrawlerPublisherJob j = new CrawlerPublisherJob(dcatSource, null, HarvesterApplication.getBrregCache(), handler);
+        CrawlerPublisherJob j = new CrawlerPublisherJob(dcatSource, null, handler);
 
         j.run();
 

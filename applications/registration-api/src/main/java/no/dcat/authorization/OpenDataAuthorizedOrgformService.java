@@ -31,7 +31,7 @@ public class OpenDataAuthorizedOrgformService implements AuthorizedOrgformServic
 
     @Override
     public boolean isIncluded(Entity entry) {
-        ResponseEntity<OpenDataEnhet> response = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        ResponseEntity<OpenDataEnhet> response;
         try {
             response = restTemplate.getForEntity(openDataEnhetsregisteret + entry.getOrganizationNumber(), OpenDataEnhet.class);
             return response.getStatusCode().is2xxSuccessful() && isAuthorisedOrganisation(response.getBody());

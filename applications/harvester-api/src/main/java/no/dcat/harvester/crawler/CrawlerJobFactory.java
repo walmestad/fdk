@@ -1,6 +1,5 @@
 package no.dcat.harvester.crawler;
 
-import com.google.common.cache.LoadingCache;
 import no.dcat.harvester.crawler.handlers.ElasticSearchResultHandler;
 import no.dcat.harvester.crawler.handlers.ElasticSearchResultPubHandler;
 import no.dcat.harvester.crawler.handlers.FusekiResultHandler;
@@ -19,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.net.URL;
 
 @Component
 public class CrawlerJobFactory {
@@ -32,9 +30,6 @@ public class CrawlerJobFactory {
 
 	@Autowired
 	private ElasticSettings elasticSettings;
-
-	@Autowired
-	private LoadingCache<URL, String> brregCache;
 
 	@Autowired
 	private SubjectCrawler subjectCrawler;
@@ -78,7 +73,7 @@ public class CrawlerJobFactory {
 				applicationSettings.getNotificationMailSenderAddress(),
 				emailNotificationService);
 
-		return new CrawlerJob(dcatSource, adminDataStore, brregCache, subjectCrawler, fusekiResultHandler, elasticSearchResultHandler, publisherHandler);
+		return new CrawlerJob(dcatSource, adminDataStore, subjectCrawler, fusekiResultHandler, elasticSearchResultHandler, publisherHandler);
 	}
 
 }

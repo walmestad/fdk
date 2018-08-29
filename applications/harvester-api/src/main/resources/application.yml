@@ -57,6 +57,8 @@ fuseki:
 application:
   referenceDataUrl: http://localhost:8100
   notificationMailSenderAddress: fdksystembjg@gmail.com
+  openDataEnhet: https://data.brreg.no/enhetsregisteret/api/enheter/
+
 elastic:
   clusterNodes: localhost:9300
   clusterName: elasticsearch
