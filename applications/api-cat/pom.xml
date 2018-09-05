@@ -18,7 +18,6 @@
     </parent>
 
     <properties>
-        <springframework.version>2.0.4.RELEASE</springframework.version>
         <java.encoding>UTF-8</java.encoding>
         <java.version>1.8</java.version>
         <docker.image.prefix>dcatno</docker.image.prefix>
@@ -65,7 +64,7 @@
          <dependency>
             <groupId>no.dcat</groupId>
             <artifactId>datastore</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
+            <version>1.0.2-SNAPSHOT</version>
         </dependency>
 
         <dependency>
