@@ -19,6 +19,7 @@ import org.elasticsearch.search.aggregations.Aggregation;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.Aggregations;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
+import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -413,32 +414,39 @@ public class SearchControllerTest {
         ApiSearchController controller = new ApiSearchController(elasticsearchService, Utils.jsonMapper());
         ApiSearchController spyController = spy(controller);
         QueryResponse queryResponse = mock(QueryResponse.class);
-        Aggregations aggregations = mock(Aggregations.class);
+
+        List<Aggregation> list = new ArrayList<>();
+        Aggregations aggregations = new Aggregations(list);
+
         SearchResponse searchResponse = mock(SearchResponse.class);
 
+        when(searchResponse.getAggregations()).thenReturn(aggregations);
 
-        when(searchResponse.getAggregations()).thenReturn(aggregations) ;
-        //when(aggregations.getAsMap()).thenReturn(mockMap.forEach()) ;
+        //Map<String, Aggregation> mockMap = mock(Map.class);
+        //when(aggregations.getAsMap()).thenReturn(mockMap);
 
         spyController.convertAggregations(queryResponse, searchResponse);
 
+        verify(spyController, times(1)).convertAggregations(queryResponse, searchResponse);
+
     }
 
+   /* @Test
+    public void checkConvertFromElasticResponse()  {
+        ElasticsearchService elasticsearchService = mock(ElasticsearchService.class);
+        ApiSearchController controller = new ApiSearchController(elasticsearchService, Utils.jsonMapper());
+        ApiSearchController spyController = spy(controller);
+        ApiSearchController mockController = mock(ApiSearchController.class);
+        QueryResponse queryResponse = mock(QueryResponse.class);
+        SearchResponse searchResponse = mock(SearchResponse.class);
 
-    /*void convertAggregations(QueryResponse queryResponse, SearchResponse elasticResponse) {
-        queryResponse.setAggregations(new HashMap<>());
-        Map<String, Aggregation> elasticAggregationsMap = elasticResponse.getAggregations().getAsMap();
+        doNothing().when(mockController).convertHits(queryResponse, searchResponse);
+        doNothing().when(mockController).convertAggregations(queryResponse, searchResponse);
 
-        elasticAggregationsMap.forEach((aggregationName, aggregation) -> {
-            no.acat.model.queryresponse.Aggregation outputAggregation = new no.acat.model.queryresponse.Aggregation() {{
-                buckets = new ArrayList<>();
-            }};
+        when(spyController.convertFromElasticResponse(searchResponse)).thenReturn(queryResponse);
 
-            ((Terms) aggregation).getBuckets().forEach((bucket) -> {
-                outputAggregation.getBuckets().add(AggregationBucket.of(bucket.getKeyAsString(), bucket.getDocCount()));
-            });
-            queryResponse.getAggregations().put(aggregationName, outputAggregation);
-        });
     }*/
+
+
 
 }
