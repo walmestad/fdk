@@ -2,6 +2,8 @@ package no.dcat.controller;
 
 
 import no.dcat.model.Dataset;
+import no.dcat.model.exceptions.CatalogNotFoundException;
+import no.dcat.model.exceptions.DatasetNotFoundException;
 import no.dcat.shared.SkosCode;
 import no.dcat.datastore.domain.dcat.builders.DcatReader;
 import no.dcat.shared.testcategories.UnitTest;
@@ -14,6 +16,9 @@ import org.mockito.Mockito;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -27,7 +32,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.*;
 
 @Category(UnitTest.class)
 public class ImportControllerTest {
@@ -138,6 +143,22 @@ public class ImportControllerTest {
         assertNotNull(skosCode2.getPrefLabel().get("no"));
 
     }
+
+    @Test
+    public void importDatasets() throws DatasetNotFoundException, CatalogNotFoundException, IOException {
+
+        ImportController importController = new ImportController(null, null, null);
+        ImportController spyImportController = Mockito.spy(importController);
+
+    // URL url = new URL("www.barnehagefakta.no:80/swagger/docs/v1");
+        /*URL url = new URL("http://www.barnehagefakta.no:80/swagger/docs/v1");
+        when(url.getProtocol()).thenReturn("htt");*/
+        String catalogId = "974760673";
+
+
+
+    }
+
 
 
 }
