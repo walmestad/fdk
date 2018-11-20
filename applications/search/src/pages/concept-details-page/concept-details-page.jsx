@@ -11,7 +11,7 @@ import { HarvestDate } from '../../components/harvest-date/harvest-date.componen
 import { SearchHitHeader } from '../../components/search-hit-header/search-hit-header.component';
 import { ShowMore } from '../../components/show-more/show-more';
 import { LinkExternal } from '../../components/link-external/link-external.component';
-import {StickyMenu} from '../../components/sticky-menu/sticky-menu.component';
+import { StickyMenu } from '../../components/sticky-menu/sticky-menu.component';
 import './concept-details-page.scss';
 
 const renderDescription = description => {
@@ -149,7 +149,6 @@ export const ConceptDetailsPage = props => {
 
   const { conceptItem, publisherItems } = props;
 
-
   if (!conceptItem) {
     return null;
   }
@@ -180,17 +179,19 @@ export const ConceptDetailsPage = props => {
         </div>
 
         <div className="row">
-          <div className="col-12 col-lg-4 ">{renderStickyMenu(conceptItem)}</div>
-            <section className="col-12 col-lg-8 mt-3">
-              {renderDescription(_.get(conceptItem, ['definition', 'text']))}
-              {renderSource(_.get(conceptItem, ['definition', 'source']))}
-              {renderRemark(_.get(conceptItem, ['definition', 'remark']))}
-              {renderSubject(_.get(conceptItem, 'subject'))}
-              {renderTerms(
-                _.get(conceptItem, 'altLabel'),
-                _.get(conceptItem, 'hiddenLabel')
-              )}
-              {renderIdentifiers(_.get(conceptItem, 'identifiers'))}
+          <div className="col-12 col-lg-4 ">
+            {renderStickyMenu(conceptItem)}
+          </div>
+          <section className="col-12 col-lg-8 mt-3">
+            {renderDescription(_.get(conceptItem, ['definition', 'text']))}
+            {renderSource(_.get(conceptItem, ['definition', 'source']))}
+            {renderRemark(_.get(conceptItem, ['definition', 'remark']))}
+            {renderSubject(_.get(conceptItem, 'subject'))}
+            {renderTerms(
+              _.get(conceptItem, 'altLabel'),
+              _.get(conceptItem, 'hiddenLabel')
+            )}
+            {renderIdentifiers(_.get(conceptItem, 'identifiers'))}
             <div style={{ height: '75vh' }} />
           </section>
         </div>
