@@ -11,6 +11,7 @@ import { HarvestDate } from '../../components/harvest-date/harvest-date.componen
 import { SearchHitHeader } from '../../components/search-hit-header/search-hit-header.component';
 import { ShowMore } from '../../components/show-more/show-more';
 import { LinkExternal } from '../../components/link-external/link-external.component';
+import {StickyMenu} from '../../components/sticky-menu/sticky-menu.component';
 import './concept-details-page.scss';
 
 const renderDescription = description => {
@@ -123,39 +124,31 @@ const renderIdentifiers = identifiers => {
 
 const renderStickyMenu = conceptItem => {
   const menuItems = [];
-  console.log(conceptItem);
-  if (_.get(conceptItem, 'prefLabel.no')) {
+  if (_.get(conceptItem, 'prefLabel.nb')) {
     menuItems.push({
-      name: _.get(conceptItem, 'prefLabel.no'),
-      prefLabel: localization.facet.concept
+      name: _.get(conceptItem, 'prefLabel.nb'),
+      prefLabel: localization.concept.definition
     });
   }
-  if (_.get(conceptItem, 'publisher.prefLabel.no')) {
+  if (_.get(conceptItem, 'definition.remark.nb')) {
     menuItems.push({
-      name: _.get(conceptItem, 'publisher.prefLabel.no'),
-      prefLabel: localization.description
+      name: localization.concept.remarkHeader,
+      prefLabel: localization.concept.remarkHeader
+    });
+  }
+  if (_.get(conceptItem, 'subject.nb')) {
+    menuItems.push({
+      name: localization.concept.subjectHeader,
+      prefLabel: localization.concept.subjectHeader
     });
   }
   return <StickyMenu menuItems={menuItems} />;
 };
-
-const renderContactPoints = contactPoints => {
-  if (!contactPoints) {
-    return null;
-  }
-  const children = items => items.map(item => renderContactPoint(item));
-
-  return (
-    <ListRegular title={localization.contactInfo}>
-      {children(contactPoints)}
-    </ListRegular>
-  );
-};
-
 export const ConceptDetailsPage = props => {
   props.fetchPublishersIfNeeded();
 
   const { conceptItem, publisherItems } = props;
+
 
   if (!conceptItem) {
     return null;
@@ -169,14 +162,12 @@ export const ConceptDetailsPage = props => {
   return (
     <main id="content" className="container">
       <article>
-        <div className="row2">
-          <div className="col-12 col-lg-4 ">{renderStickyMenu(conceptItem)}</div>
-          <div className="col-12 col-lg-8 offset-lg-4">
+        <div className="row">
+          <div className="col-12 col-lg-8  offset-lg-4">
             <DocumentMeta {...meta} />
 
             <div className="fdk-detail-date mb-5">
               <HarvestDate harvest={_.get(conceptItem, 'harvest')} />
-
             </div>
 
             <SearchHitHeader
@@ -189,52 +180,17 @@ export const ConceptDetailsPage = props => {
         </div>
 
         <div className="row">
-          <div className="col-12 col-lg-4 " />
-
-          <section className="col-12 col-lg-8 mt-3">
-            {renderDescription(_.get(conceptItem, ['definition', 'text']))}
-            {renderSource(_.get(conceptItem, ['definition', 'source']))}
-            {renderRemark(_.get(conceptItem, ['definition', 'remark']))}
-            {renderSubject(_.get(conceptItem, 'subject'))}
-            {renderTerms(
-              _.get(conceptItem, 'altLabel'),
-              _.get(conceptItem, 'hiddenLabel')
-            )}
-            {renderIdentifiers(_.get(conceptItem, 'identifiers'))}
-
-            <ListRegular title="Merknad">
-            </ListRegular>
-
-            <ListRegular title="Eksempel">
-            </ListRegular>
-
-            <ListRegular title="Fag- og bruksområde">
-              <TwoColRow
-                col1="Preflabel.no"
-                col2={_.get(conceptItem, "prefLabel.no")}
-              />
-            </ListRegular>
-
-            <ListRegular title="Tillat og frarådet term">
-              <TwoColRow
-                col1="Preflabel.no"
-                col2={_.get(conceptItem, "prefLabel.no")}
-              />
-            </ListRegular>
-
-            <ListRegular title="Identifikator">
-            </ListRegular>
-
-            <ListRegular title="Kontakt">
-              <TwoColRow
-                col1="Preflabel.no"
-                col2={_.get(conceptItem, "prefLabel.no")}
-              />
-            </ListRegular>
-
-            <ListRegular title="Brukt i datasett">
-            </ListRegular>
-
+          <div className="col-12 col-lg-4 ">{renderStickyMenu(conceptItem)}</div>
+            <section className="col-12 col-lg-8 mt-3">
+              {renderDescription(_.get(conceptItem, ['definition', 'text']))}
+              {renderSource(_.get(conceptItem, ['definition', 'source']))}
+              {renderRemark(_.get(conceptItem, ['definition', 'remark']))}
+              {renderSubject(_.get(conceptItem, 'subject'))}
+              {renderTerms(
+                _.get(conceptItem, 'altLabel'),
+                _.get(conceptItem, 'hiddenLabel')
+              )}
+              {renderIdentifiers(_.get(conceptItem, 'identifiers'))}
             <div style={{ height: '75vh' }} />
           </section>
         </div>
