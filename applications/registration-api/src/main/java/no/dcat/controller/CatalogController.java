@@ -58,17 +58,21 @@ public class CatalogController {
     @Value("${saml.sso.context-provider.lb.include-server-port-in-request-url}")
     private boolean includeServerPortInUrl;
 
-    @Value("${application.openDataEnhet}")
     private String openDataEnhetsregisteret;
 
-
     @Autowired
-    public CatalogController(CatalogRepository catalogRepository, SpringSecurityContextBean springSecurityContextBean, EntityNameService entityNameService, HarvesterService harvesterService, EnhetService enhetService) {
+    public CatalogController(CatalogRepository catalogRepository,
+                             SpringSecurityContextBean springSecurityContextBean,
+                             EntityNameService entityNameService,
+                             HarvesterService harvesterService,
+                             EnhetService enhetService,
+                             @Value("${application.openDataEnhet}") String openDataEnhetsregisteret) {
         this.catalogRepository = catalogRepository;
         this.springSecurityContextBean = springSecurityContextBean;
         this.entityNameService = entityNameService;
         this.harvesterService = harvesterService;
         this.enhetService = enhetService;
+        this.openDataEnhetsregisteret=openDataEnhetsregisteret;
     }
 
 

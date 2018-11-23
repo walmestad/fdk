@@ -4,31 +4,50 @@ import no.dcat.authorization.EntityNameService;
 import no.dcat.model.Catalog;
 import no.dcat.service.CatalogRepository;
 import no.dcat.service.EnhetService;
+import no.dcat.shared.Publisher;
 import no.dcat.shared.testcategories.UnitTest;
+import no.dcat.webutils.exceptions.BadRequestException;
+import no.dcat.webutils.exceptions.NotFoundException;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.springframework.http.HttpEntity;
+
+import java.util.Optional;
 
 import static org.mockito.Mockito.*;
+import static org.hamcrest.Matchers.*;
 
 @Category(UnitTest.class)
 public class CatalogControllerTest {
 
     CatalogController spyCatalogController;
-    CatalogRepository catalogRepository;
-
+    @Mock
+    CatalogRepository mockCatalogRepository;
+    @Mock
     EnhetService mockEnhetService;
+    @Mock
     EntityNameService mockEntityNameService;
 
+    private String catalogId = "1234";
 
     @Before
     public void setup() {
+        MockitoAnnotations.initMocks(this);
+        CatalogController catalogController = new CatalogController(
+            mockCatalogRepository,
+            null,
+            mockEntityNameService,
+            null,
+            mockEnhetService,
+            "https://data.brreg.no/enhetsregisteret/api/enheter/");
 
-        mockEnhetService = mock(EnhetService.class);
-        mockEntityNameService = mock(EntityNameService.class);
-        CatalogController catalogController = new CatalogController(catalogRepository, null, mockEntityNameService, null, mockEnhetService);
-        spyCatalogController = Mockito.spy(catalogController);
+        spyCatalogController = spy(catalogController);
+
 
     }
 
@@ -42,10 +61,9 @@ public class CatalogControllerTest {
     }
 
     @Test
-    public void checkGetPublisherIfUriIsNotNullShouldFail(){
+    public void checkIfPublisherReturnSuccess(){
 
-        mockEntityNameService = mock(EntityNameService.class);
-
+        //mockEntityNameService = mock(EntityNameService.class);
 
         Enhet enhet = mock(Enhet.class);
         String orgNr = "12345";
@@ -55,10 +73,19 @@ public class CatalogControllerTest {
 
         when(mockEnhetService.getByOrgNr(anyString(), anyString(), any())).thenReturn(enhet);
 
-        when(mockEntityNameService.getOrganizationName(orgNr)).thenReturn("orgnametest");
-        spyCatalogController.getPublisher(catalog);
+        Publisher actual = spyCatalogController.getPublisher(catalog);
 
+        Assert.assertThat(actual, is(notNullValue()));
     }
 
+    @Test(expected = no.dcat.webutils.exceptions.NotFoundException.class)
+    public void checkIfUpdateCatalogWithNullIdNotFound(){
 
+        Catalog catalog = new Catalog();
+        catalog.setId(catalogId);
+        //when(mockCatalogRepository.findById(anyString())).thenReturn(Optional.of(catalog));
+
+        spyCatalogController.updateCatalog("", catalog);
     }
+
+}
