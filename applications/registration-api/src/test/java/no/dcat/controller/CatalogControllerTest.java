@@ -6,7 +6,6 @@ import no.dcat.service.CatalogRepository;
 import no.dcat.service.EnhetService;
 import no.dcat.shared.Publisher;
 import no.dcat.shared.testcategories.UnitTest;
-import no.dcat.webutils.exceptions.BadRequestException;
 import no.dcat.webutils.exceptions.NotFoundException;
 import org.junit.Assert;
 import org.junit.Before;
@@ -16,6 +15,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.ResponseEntity;
 
 import java.util.Optional;
 
@@ -78,14 +78,15 @@ public class CatalogControllerTest {
         Assert.assertThat(actual, is(notNullValue()));
     }
 
-    @Test(expected = no.dcat.webutils.exceptions.NotFoundException.class)
+    @Test
     public void checkIfUpdateCatalogWithNullIdNotFound(){
 
         Catalog catalog = new Catalog();
         catalog.setId(catalogId);
-        //when(mockCatalogRepository.findById(anyString())).thenReturn(Optional.of(catalog));
 
-        spyCatalogController.updateCatalog("", catalog);
+        ResponseEntity<Catalog> catalogHttpEntity = (ResponseEntity) spyCatalogController.updateCatalog("", catalog);
+
+        Assert.assertThat(catalogHttpEntity.getStatusCodeValue(), is(404));
     }
 
 }
