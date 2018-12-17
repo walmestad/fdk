@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Select from 'react-select';
 import ReactPaginate from 'react-paginate';
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import cx from 'classnames';
@@ -175,6 +176,18 @@ export class ResultsDataset extends React.Component {
           </div>
           <div className="col-6 col-lg-4 offset-lg-4">
             <div className="d-flex justify-content-end">
+            <div cssStyle="width:100px">
+              <Select
+                placeholder="Vis 10 treff per side"
+                searchPromptText={localization.report.typeToSearch}
+                value="10"
+                onChange={(function(){})}
+                valueKey="c"
+                labelKey="namae"
+                options={[]}
+                backspaceRemoves
+              />
+              </div>
               <Button
                 className={sortByScoreClass}
                 onClick={onSortByScoreClick}
