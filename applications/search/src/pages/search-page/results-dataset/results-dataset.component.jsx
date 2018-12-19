@@ -1,7 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactPaginate from 'react-paginate';
-import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+import {
+  Button,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem
+} from 'reactstrap';
 import cx from 'classnames';
 import _ from 'lodash';
 
@@ -180,6 +190,31 @@ export class ResultsDataset extends React.Component {
           </div>
           <div className="col-6 col-lg-4 offset-lg-4">
             <div className="d-flex justify-content-end">
+              <UncontrolledDropdown
+                id="search-result-dropdown-1"
+                className="ml-auto"
+                title={`${localization.sort.by} ${'10 sider'}`}
+                aria-label={`Sorter søkeresultat, ${
+                  localization.sort.by
+                } ${'10 sider'}`}
+              >
+                <DropdownToggle
+                  className="fdk-button"
+                  caret
+                  color="primary"
+                  title=""
+                >
+                  Viser 10 sider
+                </DropdownToggle>
+                <DropdownMenu right className="fdk-dropdownmenu">
+                  <DropdownItem key="a1" onClick={() => {}} title="aaaa">
+                    aaaa
+                  </DropdownItem>
+                  <DropdownItem key="b1" onClick={() => {}} title="bbbb">
+                    bbbb
+                  </DropdownItem>
+                </DropdownMenu>
+              </UncontrolledDropdown>
               <Button
                 className={sortByScoreClass}
                 onClick={onSortByScoreClick}
