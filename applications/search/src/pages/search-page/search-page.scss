@@ -28,6 +28,12 @@
   border-top-right-radius:0;
   border-bottom-right-radius:0;
 }
+.dropdown .fdk-button.fdk-button-black-toggle:first-child {
+  border-right:1px solid;
+  border-top-right-radius:0.25em;
+  border-bottom-right-radius:0.25em;
+  margin-left:10px;
+}
 .fdk-button.fdk-button-black-toggle:nth-child(2) {
   border-left:none;
   border-top-left-radius:0;

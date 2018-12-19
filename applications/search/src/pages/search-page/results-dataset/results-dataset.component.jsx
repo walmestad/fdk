@@ -199,7 +199,7 @@ export class ResultsDataset extends React.Component {
                 } ${'10 sider'}`}
               >
                 <DropdownToggle
-                  className="fdk-button"
+                  className="fdk-button fdk-button-black-toggle btn btn-primary"
                   caret
                   color="primary"
                   title=""
@@ -208,10 +208,10 @@ export class ResultsDataset extends React.Component {
                 </DropdownToggle>
                 <DropdownMenu right className="fdk-dropdownmenu">
                   <DropdownItem key="a1" onClick={() => {}} title="aaaa">
-                    aaaa
+                    10
                   </DropdownItem>
                   <DropdownItem key="b1" onClick={() => {}} title="bbbb">
-                    bbbb
+                    10
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
