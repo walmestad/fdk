@@ -2,7 +2,6 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { ResultsConcepts } from './results-concepts.component';
 import concepts from '../../../../test/fixtures/concepts';
-import { HITS_PER_PAGE } from '../../../constants/constants';
 
 let onClearFilters;
 let onPageChange;
@@ -23,7 +22,7 @@ beforeEach(() => {
     onPageChange,
     onFilterPublisherHierarchy,
     searchQuery: {},
-    hitsPerPage: HITS_PER_PAGE,
+    hitsPerPage: 10,
     showFilterModal: false,
     closeFilterModal,
     showClearFilterButton: false,

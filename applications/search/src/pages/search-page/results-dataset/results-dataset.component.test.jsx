@@ -3,7 +3,6 @@ import { shallow } from 'enzyme';
 import { ResultsDataset } from './results-dataset.component';
 import datasetsResponse from '../__fixtures/datasetsApiResponse.json';
 import { normalizeAggregations } from '../../../lib/normalizeAggregations';
-import { HITS_PER_PAGE } from '../../../constants/constants';
 
 const datasetItems = normalizeAggregations(datasetsResponse);
 
@@ -37,7 +36,7 @@ beforeEach(() => {
     publisherArray: [],
     publishers: {},
     showClearFilterButton: false,
-    hitsPerPage: HITS_PER_PAGE,
+    hitsPerPage: 10,
     closeFilterModal,
     onFilterTheme,
     onFilterAccessRights,
