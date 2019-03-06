@@ -12,6 +12,8 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.*;
+import org.elasticsearch.search.aggregations.bucket.filters.FiltersAggregator;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.aggregations.Aggregation;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
@@ -27,10 +29,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Arrays;
+import java.util.Date;
 
 @CrossOrigin
 @RestController
@@ -38,6 +44,8 @@ import java.util.Map;
 public class ApiSearchController {
     public static final String MISSING = "MISSING";
     public static final int MAX_AGGREGATIONS = 10000;
+    public static final String AGGREGATE_API = "/aggregateApi";
+    public static final long DAY_IN_MS = 1000 * 3600 * 24;
     private static final Logger logger = LoggerFactory.getLogger(ApiSearchController.class);
     private ElasticsearchService elasticsearch;
     private ObjectMapper mapper;
@@ -197,6 +205,64 @@ public class ApiSearchController {
     }
 
 
+    /**
+     * Aggregation based on orgPath.
+     *
+     * @param query the first part or complete orgPath
+     * @return the aggregations of apis with terms, accessRights, subjects, publishers, orgPath and distributions
+     */
+
+    @CrossOrigin
+    @ApiOperation(value = "Aggregates api count per organization path.")
+    @RequestMapping(value = AGGREGATE_API, method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<String> aggregateAPIs(@RequestParam(value = "q", defaultValue = "") String query) {
+
+        logger.info("{} of {}", AGGREGATE_API, query);
+
+        QueryBuilder search;
+
+        if ("".equals(query)) {
+            search = QueryBuilders.matchAllQuery();
+        } else {
+            search = QueryBuilders.termQuery("publisher.orgPath", query);
+        }
+
+        logger.trace(search.toString());
+
+        AggregationBuilder apisWithDistribution = AggregationBuilders.filter("distCount", QueryBuilders.existsQuery("distribution"));
+
+        AggregationBuilder openAPIsWithDistribution = AggregationBuilders.filter("distOnPublicAccessCount",
+            QueryBuilders.boolQuery()
+                .must(QueryBuilders.existsQuery("distribution"))
+                .must(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"))
+        );
+
+        AggregationBuilder apisWithSubject = AggregationBuilders.filter("subjectCount", QueryBuilders.existsQuery("subject.prefLabel"));
+
+        // set up search query with aggregations
+        SearchRequestBuilder searchBuilder = elasticsearch.getClient().prepareSearch("acat")
+            .setTypes("api")
+            .setQuery(search)
+            .setSize(0)
+            .addAggregation(QueryUtil.createTermsAggregation("isFree", "isFree"))
+            .addAggregation(QueryUtil.createTermsAggregation("isOpenAccess", "isOpenAccess"))
+            .addAggregation(QueryUtil.createTermsAggregation("isOpenLicense", "isOpenLicense"))
+            .addAggregation(QueryUtil.createTermsAggregation("orgPath", "publisher.orgPath"))
+            .addAggregation(QueryUtil.createTermsAggregation("catalogs", "catalog.uri"))
+            .addAggregation(QueryUtil.createTemporalAggregation("firstHarvested", "harvest.firstHarvested"))
+            .addAggregation(AggregationBuilders.missing("missingFirstHarvested").field("harvest.firstHarvested"))
+            .addAggregation(QueryUtil.createTemporalAggregation("lastChanged", "harvest.lastChanged"))
+            .addAggregation(AggregationBuilders.missing("missingLastChanged").field("harvest.lastChanged"));
+
+        // Execute search
+        SearchResponse response = searchBuilder.execute().actionGet();
+
+        logger.trace("Search response: " + response.toString());
+
+        // return response
+        return new ResponseEntity<>(response.toString(), HttpStatus.OK);
+    }
+
     QueryResponse convertFromElasticResponse(SearchResponse elasticResponse) {
         logger.debug("converting response");
         QueryResponse queryResponse = new QueryResponse();
@@ -265,6 +331,20 @@ public class ApiSearchController {
                 .field(field)
                 .size(MAX_AGGREGATIONS)
                 .order(Terms.Order.count(false));
+        }
+
+        static RangeQueryBuilder createRangeQueryFromXdaysToNow(int days, String dateField) {
+            long now = new Date().getTime();
+
+            return QueryBuilders.rangeQuery(dateField).from(now - days * DAY_IN_MS).to(now).format("epoch_millis");
+        }
+
+        static AggregationBuilder createTemporalAggregation(String name, String dateField) {
+
+            return AggregationBuilders.filters(name,
+                new FiltersAggregator.KeyedFilter("last7days", QueryUtil.createRangeQueryFromXdaysToNow(7, dateField)),
+                new FiltersAggregator.KeyedFilter("last30days", QueryUtil.createRangeQueryFromXdaysToNow(30, dateField)),
+                new FiltersAggregator.KeyedFilter("last365days", QueryUtil.createRangeQueryFromXdaysToNow(365, dateField)));
         }
     }
 }
