@@ -345,8 +345,31 @@ public class DatasetsSearchController {
                     .must(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"))
             ));
         }
-        if (selectedAggregationFields.contains("subjectCount")) {
+        if (selectedAggregationFields.contains("distOnNonPublicAccessCount")) {
 
+            searchBuilder.addAggregation(AggregationBuilders.filter("distOnNonPublicAccessCount",
+                QueryBuilders.boolQuery()
+                    .must(QueryBuilders.existsQuery("distribution"))
+                    .mustNot(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"))
+            ));
+        }
+        if (selectedAggregationFields.contains("nonDistOnPublicAccessCount")) {
+
+            searchBuilder.addAggregation(AggregationBuilders.filter("nonDistOnPublicAccessCount",
+                QueryBuilders.boolQuery()
+                    .mustNot(QueryBuilders.existsQuery("distribution"))
+                    .must(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"))
+            ));
+        }
+        if (selectedAggregationFields.contains("nonDistOnNonPublicAccessCount")) {
+
+            searchBuilder.addAggregation(AggregationBuilders.filter("nonDistOnNonPublicAccessCount",
+                QueryBuilders.boolQuery()
+                    .mustNot(QueryBuilders.existsQuery("distribution"))
+                    .mustNot(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"))
+            ));
+        }
+        if (selectedAggregationFields.contains("subjectCount")) {
             searchBuilder.addAggregation(AggregationBuilders.filter("subjectCount", QueryBuilders.existsQuery("subject.prefLabel")));
         }
 

@@ -38,7 +38,7 @@ export function extractStats(data) {
   };
 }
 
-const statsAggregations = `${searchAggregations},distCount,distOnPublicAccessCount,distOnPublicAccessCount,subjectCount`;
+const statsAggregations = `${searchAggregations},distCount,distOnPublicAccessCount,distOnNonPublicAccessCount,nonDistOnPublicAccessCount,nonDistOnNonPublicAccessCount,subjectCount`;
 
 export const statsUrl = query =>
   `${datasetsUrlBase}${qs.stringify(
